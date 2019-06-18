@@ -1,0 +1,768 @@
+<html>
+<!-- v1.16 -->
+
+<head>
+  <!--
+	<script src='https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js'></script>
+    -->
+  <script src='./Assets/JavaScript/MIDIFile.js'></script>
+  <script src='./Assets/JavaScript/WebAudioFontPlayer.js'></script>
+  <link rel="stylesheet" href="Assets/Stylesheets/main.css" type="text/css">
+  <link type="prerender" href="Assets/chorales-mid/">
+</head>
+<header id="header">
+  <h1>Welcome to Bach Dictation Generator.</h1>
+  <h2>Enter Practice mode to hide the score and limit volume changing abilities.</h2>
+</header>
+
+<body>
+  <div id='cntls'>
+    <p>
+      <!-- <input type="file" id="filesinput" name="filesarr[]" /> -->
+      <div class="dropdown">
+        <button onclick='dropDown()' class="btn">Chorales</button>
+        <div id="myDropdown" class="dropdown-content">
+          <input type="text" placeholder="Search..." id="myInput" onkeyup="filterFunction()">
+        </div>
+      </div>
+
+      <!-- populate dropdown with files in ./Assets/chorales mid -->
+      <script>
+        var dropMenu = document.getElementById("myDropdown");
+        var fileNameArray = [
+          './Assets/chorales-mid/bwv1.6.mid',
+          './Assets/chorales-mid/bwv2.6.mid',
+          './Assets/chorales-mid/bwv3.6.mid',
+          './Assets/chorales-mid/bwv4.8.mid',
+          './Assets/chorales-mid/bwv5.7.mid',
+          './Assets/chorales-mid/bwv6.6.mid',
+          './Assets/chorales-mid/bwv7.7.mid',
+          './Assets/chorales-mid/bwv8.6.mid',
+          './Assets/chorales-mid/bwv9.7.mid',
+          './Assets/chorales-mid/bwv10.7.mid',
+          './Assets/chorales-mid/bwv11.6.mid',
+          './Assets/chorales-mid/bwv12.7.mid',
+          './Assets/chorales-mid/bwv13.6.mid',
+          './Assets/chorales-mid/bwv14.5.mid',
+          './Assets/chorales-mid/bwv16.6.mid',
+          './Assets/chorales-mid/bwv17.7.mid',
+          './Assets/chorales-mid/bwv18.5 - lz.mid',
+          './Assets/chorales-mid/bwv18.5 - w.mid',
+          './Assets/chorales-mid/bwv19.7.mid',
+          './Assets/chorales-mid/bwv20.7.mid',
+          './Assets/chorales-mid/bwv20.11.mid',
+          './Assets/chorales-mid/bwv24.6.mid',
+          './Assets/chorales-mid/bwv25.6.mid',
+          './Assets/chorales-mid/bwv26.6.mid',
+          './Assets/chorales-mid/bwv27.6.mid',
+          './Assets/chorales-mid/bwv28.6.mid',
+          './Assets/chorales-mid/bwv29.8.mid',
+          './Assets/chorales-mid/bwv30.6.mid',
+          './Assets/chorales-mid/bwv31.9.mid',
+          './Assets/chorales-mid/bwv32.6.mid',
+          './Assets/chorales-mid/bwv33.6.mid',
+          './Assets/chorales-mid/bwv36.4 - 2.mid',
+          './Assets/chorales-mid/bwv36.8 - 2.mid',
+          './Assets/chorales-mid/bwv37.6.mid',
+          './Assets/chorales-mid/bwv38.6.mid',
+          './Assets/chorales-mid/bwv39.7.mid',
+          './Assets/chorales-mid/bwv40.3.mid',
+          './Assets/chorales-mid/bwv40.6.mid',
+          './Assets/chorales-mid/bwv40.8.mid',
+          './Assets/chorales-mid/bwv41.6.mid',
+          './Assets/chorales-mid/bwv42.7.mid',
+          './Assets/chorales-mid/bwv43.11.mid',
+          './Assets/chorales-mid/bwv44.7.mid',
+          './Assets/chorales-mid/bwv45.7.mid',
+          './Assets/chorales-mid/bwv46.6.mid',
+          './Assets/chorales-mid/bwv47.5.mid',
+          './Assets/chorales-mid/bwv48.3.mid',
+          './Assets/chorales-mid/bwv48.7.mid',
+          './Assets/chorales-mid/bwv52.6.mid',
+          './Assets/chorales-mid/bwv55.5.mid',
+          './Assets/chorales-mid/bwv56.5.mid',
+          './Assets/chorales-mid/bwv57.8.mid',
+          './Assets/chorales-mid/bwv59.3.mid',
+          './Assets/chorales-mid/bwv60.5.mid',
+          './Assets/chorales-mid/bwv62.6.mid',
+          './Assets/chorales-mid/bwv64.2.mid',
+          './Assets/chorales-mid/bwv64.4.mid',
+          './Assets/chorales-mid/bwv64.8.mid',
+          './Assets/chorales-mid/bwv65.2.mid',
+          './Assets/chorales-mid/bwv65.7.mid',
+          './Assets/chorales-mid/bwv66.6.mid',
+          './Assets/chorales-mid/bwv67.7.mid',
+          './Assets/chorales-mid/bwv69.6 - a.mid',
+          './Assets/chorales-mid/bwv70.7.mid',
+          './Assets/chorales-mid/bwv70.11.mid',
+          './Assets/chorales-mid/bwv72.6.mid',
+          './Assets/chorales-mid/bwv73.5.mid',
+          './Assets/chorales-mid/bwv74.8.mid',
+          './Assets/chorales-mid/bwv77.6.mid',
+          './Assets/chorales-mid/bwv78.7.mid',
+          './Assets/chorales-mid/bwv79.3.mid',
+          './Assets/chorales-mid/bwv79.6.mid',
+          './Assets/chorales-mid/bwv80.8.mid',
+          './Assets/chorales-mid/bwv81.7.mid',
+          './Assets/chorales-mid/bwv83.5.mid',
+          './Assets/chorales-mid/bwv84.5.mid',
+          './Assets/chorales-mid/bwv85.6.mid',
+          './Assets/chorales-mid/bwv86.6.mid',
+          './Assets/chorales-mid/bwv87.7.mid',
+          './Assets/chorales-mid/bwv88.7.mid',
+          './Assets/chorales-mid/bwv89.6.mid',
+          './Assets/chorales-mid/bwv90.5.mid',
+          './Assets/chorales-mid/bwv91.6.mid',
+          './Assets/chorales-mid/bwv92.9.mid',
+          './Assets/chorales-mid/bwv93.7.mid',
+          './Assets/chorales-mid/bwv94.8.mid',
+          './Assets/chorales-mid/bwv95.7.mid',
+          './Assets/chorales-mid/bwv96.6.mid',
+          './Assets/chorales-mid/bwv97.9.mid',
+          './Assets/chorales-mid/bwv99.6.mid',
+          './Assets/chorales-mid/bwv101.7.mid',
+          './Assets/chorales-mid/bwv102.7.mid',
+          './Assets/chorales-mid/bwv103.6.mid',
+          './Assets/chorales-mid/bwv104.6.mid',
+          './Assets/chorales-mid/bwv108.6.mid',
+          './Assets/chorales-mid/bwv110.7.mid',
+          './Assets/chorales-mid/bwv111.6.mid',
+          './Assets/chorales-mid/bwv112.5 - sc.mid',
+          './Assets/chorales-mid/bwv112.5.mid',
+          './Assets/chorales-mid/bwv113.8.mid',
+          './Assets/chorales-mid/bwv114.7.mid',
+          './Assets/chorales-mid/bwv115.6.mid',
+          './Assets/chorales-mid/bwv116.6.mid',
+          './Assets/chorales-mid/bwv117.4.mid',
+          './Assets/chorales-mid/bwv119.9.mid',
+          './Assets/chorales-mid/bwv120.6.mid',
+          './Assets/chorales-mid/bwv120.8 - a.mid',
+          './Assets/chorales-mid/bwv121.6.mid',
+          './Assets/chorales-mid/bwv122.6.mid',
+          './Assets/chorales-mid/bwv123.6.mid',
+          './Assets/chorales-mid/bwv124.6.mid',
+          './Assets/chorales-mid/bwv125.6.mid',
+          './Assets/chorales-mid/bwv126.6.mid',
+          './Assets/chorales-mid/bwv127.5.mid',
+          './Assets/chorales-mid/bwv128.5.mid',
+          './Assets/chorales-mid/bwv130.6.mid',
+          './Assets/chorales-mid/bwv133.6.mid',
+          './Assets/chorales-mid/bwv135.6.mid',
+          './Assets/chorales-mid/bwv136.6.mid',
+          './Assets/chorales-mid/bwv137.5.mid',
+          './Assets/chorales-mid/bwv139.6.mid',
+          './Assets/chorales-mid/bwv140.7.mid',
+          './Assets/chorales-mid/bwv144.3.mid',
+          './Assets/chorales-mid/bwv144.6.mid',
+          './Assets/chorales-mid/bwv145 - a.mid',
+          './Assets/chorales-mid/bwv145.5.mid',
+          './Assets/chorales-mid/bwv146.8.mid',
+          './Assets/chorales-mid/bwv148.6.mid',
+          './Assets/chorales-mid/bwv149.7.mid',
+          './Assets/chorales-mid/bwv151.5.mid',
+          './Assets/chorales-mid/bwv153.1.mid',
+          './Assets/chorales-mid/bwv153.5.mid',
+          './Assets/chorales-mid/bwv153.9.mid',
+          './Assets/chorales-mid/bwv154.3.mid',
+          './Assets/chorales-mid/bwv154.8.mid',
+          './Assets/chorales-mid/bwv155.5.mid',
+          './Assets/chorales-mid/bwv156.6.mid',
+          './Assets/chorales-mid/bwv157.5.mid',
+          './Assets/chorales-mid/bwv158.4.mid',
+          './Assets/chorales-mid/bwv159.5.mid',
+          './Assets/chorales-mid/bwv161.6.mid',
+          './Assets/chorales-mid/bwv162.6 - lpz.mid',
+          './Assets/chorales-mid/bwv164.6.mid',
+          './Assets/chorales-mid/bwv165.6.mid',
+          './Assets/chorales-mid/bwv166.6.mid',
+          './Assets/chorales-mid/bwv168.6.mid',
+          './Assets/chorales-mid/bwv169.7.mid',
+          './Assets/chorales-mid/bwv171.6.mid',
+          './Assets/chorales-mid/bwv172.6.mid',
+          './Assets/chorales-mid/bwv174.5.mid',
+          './Assets/chorales-mid/bwv175.7.mid',
+          './Assets/chorales-mid/bwv176.6.mid',
+          './Assets/chorales-mid/bwv177.4.mid',
+          './Assets/chorales-mid/bwv177.5.mid',
+          './Assets/chorales-mid/bwv178.7.mid',
+          './Assets/chorales-mid/bwv179.6.mid',
+          './Assets/chorales-mid/bwv180.7.mid',
+          './Assets/chorales-mid/bwv183.5.mid',
+          './Assets/chorales-mid/bwv184.5.mid',
+          './Assets/chorales-mid/bwv185.6.mid',
+          './Assets/chorales-mid/bwv187.7.mid',
+          './Assets/chorales-mid/bwv188.6.mid',
+          './Assets/chorales-mid/bwv190.7 - inst.mid',
+          './Assets/chorales-mid/bwv190.7.mid',
+          './Assets/chorales-mid/bwv194.6.mid',
+          './Assets/chorales-mid/bwv194.12.mid',
+          './Assets/chorales-mid/bwv195.6.mid',
+          './Assets/chorales-mid/bwv197.5.mid',
+          './Assets/chorales-mid/bwv197.7 - a.mid',
+          './Assets/chorales-mid/bwv197.10.mid',
+          './Assets/chorales-mid/bwv226.2.mid',
+          './Assets/chorales-mid/bwv227.1.mid',
+          './Assets/chorales-mid/bwv227.3.mid',
+          './Assets/chorales-mid/bwv227.7.mid',
+          './Assets/chorales-mid/bwv227.11.mid',
+          './Assets/chorales-mid/bwv229.2.mid',
+          './Assets/chorales-mid/bwv244.3.mid',
+          './Assets/chorales-mid/bwv244.10.mid',
+          './Assets/chorales-mid/bwv244.15.mid',
+          './Assets/chorales-mid/bwv244.17.mid',
+          './Assets/chorales-mid/bwv244.25.mid',
+          './Assets/chorales-mid/bwv244.29 - a.mid',
+          './Assets/chorales-mid/bwv244.32.mid',
+          './Assets/chorales-mid/bwv244.37.mid',
+          './Assets/chorales-mid/bwv244.40.mid',
+          './Assets/chorales-mid/bwv244.44.mid',
+          './Assets/chorales-mid/bwv244.46.mid',
+          './Assets/chorales-mid/bwv244.54.mid',
+          './Assets/chorales-mid/bwv244.62.mid',
+          './Assets/chorales-mid/bwv245.3.mid',
+          './Assets/chorales-mid/bwv245.5.mid',
+          './Assets/chorales-mid/bwv245.11.mid',
+          './Assets/chorales-mid/bwv245.14.mid',
+          './Assets/chorales-mid/bwv245.15.mid',
+          './Assets/chorales-mid/bwv245.17.mid',
+          './Assets/chorales-mid/bwv245.22.mid',
+          './Assets/chorales-mid/bwv245.26.mid',
+          './Assets/chorales-mid/bwv245.28.mid',
+          './Assets/chorales-mid/bwv245.37.mid',
+          './Assets/chorales-mid/bwv245.40.mid',
+          './Assets/chorales-mid/bwv248.5.mid',
+          './Assets/chorales-mid/bwv248.9 - 1.mid',
+          './Assets/chorales-mid/bwv248.9 - s.mid',
+          './Assets/chorales-mid/bwv248.12 - 2.mid',
+          './Assets/chorales-mid/bwv248.17.mid',
+          './Assets/chorales-mid/bwv248.23 - 2.mid',
+          './Assets/chorales-mid/bwv248.23 - s.mid',
+          './Assets/chorales-mid/bwv248.28.mid',
+          './Assets/chorales-mid/bwv248.33 - 3.mid',
+          './Assets/chorales-mid/bwv248.35 - 3.mid',
+          './Assets/chorales-mid/bwv248.35 - 3c.mid',
+          './Assets/chorales-mid/bwv248.42 - 4.mid',
+          './Assets/chorales-mid/bwv248.42 - s.mid',
+          './Assets/chorales-mid/bwv248.46 - 5.mid',
+          './Assets/chorales-mid/bwv248.53 - 5.mid',
+          './Assets/chorales-mid/bwv248.59 - 6.mid',
+          './Assets/chorales-mid/bwv248.64 - 6.mid',
+          './Assets/chorales-mid/bwv248.64 - s.mid',
+          './Assets/chorales-mid/bwv250.mid',
+          './Assets/chorales-mid/bwv251.mid',
+          './Assets/chorales-mid/bwv252.mid',
+          './Assets/chorales-mid/bwv253.mid',
+          './Assets/chorales-mid/bwv254.mid',
+          './Assets/chorales-mid/bwv255.mid',
+          './Assets/chorales-mid/bwv256.mid',
+          './Assets/chorales-mid/bwv257.mid',
+          './Assets/chorales-mid/bwv258.mid',
+          './Assets/chorales-mid/bwv259.mid',
+          './Assets/chorales-mid/bwv260.mid',
+          './Assets/chorales-mid/bwv261.mid',
+          './Assets/chorales-mid/bwv262.mid',
+          './Assets/chorales-mid/bwv263.mid',
+          './Assets/chorales-mid/bwv264.mid',
+          './Assets/chorales-mid/bwv265.mid',
+          './Assets/chorales-mid/bwv266.mid',
+          './Assets/chorales-mid/bwv267.mid',
+          './Assets/chorales-mid/bwv268.mid',
+          './Assets/chorales-mid/bwv269.mid',
+          './Assets/chorales-mid/bwv270.mid',
+          './Assets/chorales-mid/bwv271.mid',
+          './Assets/chorales-mid/bwv272.mid',
+          './Assets/chorales-mid/bwv273.mid',
+          './Assets/chorales-mid/bwv274.mid',
+          './Assets/chorales-mid/bwv275.mid',
+          './Assets/chorales-mid/bwv276.mid',
+          './Assets/chorales-mid/bwv277.mid',
+          './Assets/chorales-mid/bwv278.mid',
+          './Assets/chorales-mid/bwv279.mid',
+          './Assets/chorales-mid/bwv280.mid',
+          './Assets/chorales-mid/bwv281.mid',
+          './Assets/chorales-mid/bwv282.mid',
+          './Assets/chorales-mid/bwv283.mid',
+          './Assets/chorales-mid/bwv284.mid',
+          './Assets/chorales-mid/bwv285.mid',
+          './Assets/chorales-mid/bwv286.mid',
+          './Assets/chorales-mid/bwv287.mid',
+          './Assets/chorales-mid/bwv288.mid',
+          './Assets/chorales-mid/bwv289.mid',
+          './Assets/chorales-mid/bwv290.mid',
+          './Assets/chorales-mid/bwv291.mid',
+          './Assets/chorales-mid/bwv292.mid',
+          './Assets/chorales-mid/bwv293.mid',
+          './Assets/chorales-mid/bwv294.mid',
+          './Assets/chorales-mid/bwv295.mid',
+          './Assets/chorales-mid/bwv296.mid',
+          './Assets/chorales-mid/bwv297.mid',
+          './Assets/chorales-mid/bwv298.mid',
+          './Assets/chorales-mid/bwv299.mid',
+          './Assets/chorales-mid/bwv300.mid',
+          './Assets/chorales-mid/bwv301.mid',
+          './Assets/chorales-mid/bwv302.mid',
+          './Assets/chorales-mid/bwv303.mid',
+          './Assets/chorales-mid/bwv304.mid',
+          './Assets/chorales-mid/bwv305.mid',
+          './Assets/chorales-mid/bwv306.mid',
+          './Assets/chorales-mid/bwv307.mid',
+          './Assets/chorales-mid/bwv308.mid',
+          './Assets/chorales-mid/bwv309.mid',
+          './Assets/chorales-mid/bwv310.mid',
+          './Assets/chorales-mid/bwv311.mid',
+          './Assets/chorales-mid/bwv312.mid',
+          './Assets/chorales-mid/bwv313.mid',
+          './Assets/chorales-mid/bwv314.mid',
+          './Assets/chorales-mid/bwv315.mid',
+          './Assets/chorales-mid/bwv316.mid',
+          './Assets/chorales-mid/bwv317.mid',
+          './Assets/chorales-mid/bwv318.mid',
+          './Assets/chorales-mid/bwv319.mid',
+          './Assets/chorales-mid/bwv320.mid',
+          './Assets/chorales-mid/bwv321.mid',
+          './Assets/chorales-mid/bwv322.mid',
+          './Assets/chorales-mid/bwv323.mid',
+          './Assets/chorales-mid/bwv324.mid',
+          './Assets/chorales-mid/bwv325.mid',
+          './Assets/chorales-mid/bwv326.mid',
+          './Assets/chorales-mid/bwv327.mid',
+          './Assets/chorales-mid/bwv328.mid',
+          './Assets/chorales-mid/bwv329.mid',
+          './Assets/chorales-mid/bwv330.mid',
+          './Assets/chorales-mid/bwv331.mid',
+          './Assets/chorales-mid/bwv332.mid',
+          './Assets/chorales-mid/bwv333.mid',
+          './Assets/chorales-mid/bwv334.mid',
+          './Assets/chorales-mid/bwv335.mid',
+          './Assets/chorales-mid/bwv336.mid',
+          './Assets/chorales-mid/bwv337.mid',
+          './Assets/chorales-mid/bwv338.mid',
+          './Assets/chorales-mid/bwv339.mid',
+          './Assets/chorales-mid/bwv340.mid',
+          './Assets/chorales-mid/bwv341.mid',
+          './Assets/chorales-mid/bwv342.mid',
+          './Assets/chorales-mid/bwv343.mid',
+          './Assets/chorales-mid/bwv344.mid',
+          './Assets/chorales-mid/bwv345.mid',
+          './Assets/chorales-mid/bwv346.mid',
+          './Assets/chorales-mid/bwv347.mid',
+          './Assets/chorales-mid/bwv348.mid',
+          './Assets/chorales-mid/bwv349.mid',
+          './Assets/chorales-mid/bwv350.mid',
+          './Assets/chorales-mid/bwv351.mid',
+          './Assets/chorales-mid/bwv352.mid',
+          './Assets/chorales-mid/bwv353.mid',
+          './Assets/chorales-mid/bwv354.mid',
+          './Assets/chorales-mid/bwv355.mid',
+          './Assets/chorales-mid/bwv356.mid',
+          './Assets/chorales-mid/bwv357.mid',
+          './Assets/chorales-mid/bwv358.mid',
+          './Assets/chorales-mid/bwv359.mid',
+          './Assets/chorales-mid/bwv360.mid',
+          './Assets/chorales-mid/bwv361.mid',
+          './Assets/chorales-mid/bwv362.mid',
+          './Assets/chorales-mid/bwv363.mid',
+          './Assets/chorales-mid/bwv364.mid',
+          './Assets/chorales-mid/bwv365.mid',
+          './Assets/chorales-mid/bwv366.mid',
+          './Assets/chorales-mid/bwv367.mid',
+          './Assets/chorales-mid/bwv368.mid',
+          './Assets/chorales-mid/bwv369.mid',
+          './Assets/chorales-mid/bwv370.mid',
+          './Assets/chorales-mid/bwv371.mid',
+          './Assets/chorales-mid/bwv372.mid',
+          './Assets/chorales-mid/bwv373.mid',
+          './Assets/chorales-mid/bwv374.mid',
+          './Assets/chorales-mid/bwv375.mid',
+          './Assets/chorales-mid/bwv376.mid',
+          './Assets/chorales-mid/bwv377.mid',
+          './Assets/chorales-mid/bwv378.mid',
+          './Assets/chorales-mid/bwv379.mid',
+          './Assets/chorales-mid/bwv380.mid',
+          './Assets/chorales-mid/bwv381.mid',
+          './Assets/chorales-mid/bwv382.mid',
+          './Assets/chorales-mid/bwv383.mid',
+          './Assets/chorales-mid/bwv384.mid',
+          './Assets/chorales-mid/bwv385.mid',
+          './Assets/chorales-mid/bwv386.mid',
+          './Assets/chorales-mid/bwv387.mid',
+          './Assets/chorales-mid/bwv388.mid',
+          './Assets/chorales-mid/bwv389.mid',
+          './Assets/chorales-mid/bwv390.mid',
+          './Assets/chorales-mid/bwv391.mid',
+          './Assets/chorales-mid/bwv392.mid',
+          './Assets/chorales-mid/bwv393.mid',
+          './Assets/chorales-mid/bwv394.mid',
+          './Assets/chorales-mid/bwv395.mid',
+          './Assets/chorales-mid/bwv396.mid',
+          './Assets/chorales-mid/bwv397.mid',
+          './Assets/chorales-mid/bwv398.mid',
+          './Assets/chorales-mid/bwv399.mid',
+          './Assets/chorales-mid/bwv400.mid',
+          './Assets/chorales-mid/bwv401.mid',
+          './Assets/chorales-mid/bwv402.mid',
+          './Assets/chorales-mid/bwv403.mid',
+          './Assets/chorales-mid/bwv404.mid',
+          './Assets/chorales-mid/bwv405.mid',
+          './Assets/chorales-mid/bwv406.mid',
+          './Assets/chorales-mid/bwv407.mid',
+          './Assets/chorales-mid/bwv408.mid',
+          './Assets/chorales-mid/bwv409.mid',
+          './Assets/chorales-mid/bwv410.mid',
+          './Assets/chorales-mid/bwv411.mid',
+          './Assets/chorales-mid/bwv412.mid',
+          './Assets/chorales-mid/bwv413.mid',
+          './Assets/chorales-mid/bwv414.mid',
+          './Assets/chorales-mid/bwv415.mid',
+          './Assets/chorales-mid/bwv416.mid',
+          './Assets/chorales-mid/bwv417.mid',
+          './Assets/chorales-mid/bwv418.mid',
+          './Assets/chorales-mid/bwv419.mid',
+          './Assets/chorales-mid/bwv420.mid',
+          './Assets/chorales-mid/bwv421.mid',
+          './Assets/chorales-mid/bwv422.mid',
+          './Assets/chorales-mid/bwv423.mid',
+          './Assets/chorales-mid/bwv424.mid',
+          './Assets/chorales-mid/bwv425.mid',
+          './Assets/chorales-mid/bwv426.mid',
+          './Assets/chorales-mid/bwv427.mid',
+          './Assets/chorales-mid/bwv428.mid',
+          './Assets/chorales-mid/bwv429.mid',
+          './Assets/chorales-mid/bwv430.mid',
+          './Assets/chorales-mid/bwv431.mid',
+          './Assets/chorales-mid/bwv432.mid',
+          './Assets/chorales-mid/bwv433.mid',
+          './Assets/chorales-mid/bwv434.mid',
+          './Assets/chorales-mid/bwv435.mid',
+          './Assets/chorales-mid/bwv436.mid',
+          './Assets/chorales-mid/bwv437.mid',
+          './Assets/chorales-mid/bwv438.mid',
+          './Assets/chorales-mid/bwv846.mid',]
+
+        for (var i = 0; i < fileNameArray.length; i++) {
+          var a = document.createElement("a"),
+            txt = document.createTextNode(fileNameArray[i].substr(22));
+          a.appendChild(txt);
+          a.setAttribute("href", "#");
+          // var onClickString = 'handleExample("'+
+          a.setAttribute('onclick', 'handleExample("' + fileNameArray[i] + '")');
+          dropMenu.insertBefore(a, dropMenu.lastChild);
+        }
+      </script>
+
+      <div class="four-option">
+        <!-- <button type="button" onClick='practiceMode()' class="btn" id="to-toggle">Practice Mode</button> -->
+        <input type="checkbox" id="fourpart">
+        <label for="fourpart" class="btn">Practice Mode</label>
+      </div>
+    </p>
+  </div>
+  <hr />
+  <p><a href="https://surikov.github.io/webaudiofont/">source</a></p>
+  <script>
+    console.log('start');
+    var audioContext = null;
+    var player = null;
+    var reverberator = null;
+    var songStart = 0;
+    var input = null;
+    var currentSongTime = 0;
+    var nextStepTime = 0;
+    var nextPositionTime = 0;
+    var loadedsong = null;
+    var maxChannels = 0;
+    var practice = false;
+
+    //Toggle dropdown 
+    function dropDown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+    //Toggle practice mode 
+    function practiceMode() {
+      if (practice === false) {
+        practice = true;
+      } else {
+        practice = false;
+      }
+    }
+
+    // Filter chorales by search 
+    function filterFunction() {
+      var input, filter, ul, li, array;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      div = document.getElementById("myDropdown");
+      array = div.getElementsByTagName('a');
+      for (var i = 0; i < array.length; i++) {
+        txtValue = array[i].textContext || array[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          array[i].style.display = "";
+        } else {
+          array[i].style.display = "none";
+        }
+      }
+    }
+
+    function go() {
+      document.getElementById('tmr').innerHTML = 'starting...';
+      try {
+        startPlay(loadedsong);
+        document.getElementById('tmr').innerHTML = 'playing...';
+      } catch (expt) {
+        document.getElementById('tmr').innerHTML = 'error ' + expt;
+      }
+    }
+    function startPlay(song) {
+      currentSongTime = 0;
+      songStart = audioContext.currentTime;
+      nextStepTime = audioContext.currentTime;
+      var stepDuration = 44 / 1000;
+      tick(song, stepDuration);
+    }
+    function tick(song, stepDuration) {
+      if (audioContext.currentTime > nextStepTime - stepDuration) {
+        sendNotes(song, songStart, currentSongTime, currentSongTime + stepDuration, audioContext, input, player);
+        currentSongTime = currentSongTime + stepDuration;
+        nextStepTime = nextStepTime + stepDuration;
+        if (currentSongTime > song.duration) {
+          currentSongTime = currentSongTime - song.duration;
+          sendNotes(song, songStart, 0, currentSongTime, audioContext, input, player);
+          songStart = songStart + song.duration;
+        }
+      }
+      if (nextPositionTime < audioContext.currentTime) {
+        var o = document.getElementById('position');
+        o.value = 100 * currentSongTime / song.duration;
+        document.getElementById('tmr').innerHTML = '' + Math.round(100 * currentSongTime / song.duration) + '%';
+        nextPositionTime = audioContext.currentTime + 3;
+      }
+      window.requestAnimationFrame(function (t) {
+        tick(song, stepDuration);
+      });
+    }
+    function sendNotes(song, songStart, start, end, audioContext, input, player) {
+      for (var t = 0; t < song.tracks.length; t++) {
+        var track = song.tracks[t];
+        for (var i = 0; i < track.notes.length; i++) {
+          if (track.notes[i].when >= start && track.notes[i].when < end) {
+            var when = songStart + track.notes[i].when;
+            var duration = track.notes[i].duration;
+            if (duration > 3) {
+              duration = 3;
+            }
+            var instr = track.info.variable;
+            var v = track.volume / 7;
+            player.queueWaveTable(audioContext, input, window[instr], when, track.notes[i].pitch, duration, v, track.notes[i].slides);
+          }
+        }
+      }
+      for (var b = 0; b < song.beats.length; b++) {
+        var beat = song.beats[b];
+        for (var i = 0; i < beat.notes.length; i++) {
+          if (beat.notes[i].when >= start && beat.notes[i].when < end) {
+            var when = songStart + beat.notes[i].when;
+            var duration = 1.5;
+            var instr = beat.info.variable;
+            var v = beat.volume / 2;
+            player.queueWaveTable(audioContext, input, window[instr], when, beat.n, duration, v);
+          }
+        }
+      }
+    }
+    function startLoad(song) {
+      console.log(song);
+      var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+      audioContext = new AudioContextFunc();
+      player = new WebAudioFontPlayer();
+      reverberator = player.createReverberator(audioContext);
+      reverberator.output.connect(audioContext.destination);
+      input = reverberator.input;
+      for (var i = 0; i < song.tracks.length; i++) {
+        var nn = player.loader.findInstrument(song.tracks[i].program);
+        var info = player.loader.instrumentInfo(nn);
+        song.tracks[i].info = info;
+        song.tracks[i].id = nn;
+        player.loader.startLoad(audioContext, info.url, info.variable);
+      }
+      for (var i = 0; i < song.beats.length; i++) {
+        var nn = player.loader.findDrum(song.beats[i].n);
+        var info = player.loader.drumInfo(nn);
+        song.beats[i].info = info;
+        song.beats[i].id = nn;
+        player.loader.startLoad(audioContext, info.url, info.variable);
+      }
+      player.loader.waitLoad(function () {
+        console.log('buildControls');
+        buildControls(song);
+      });
+    }
+    function buildControls(song) {
+      audioContext.resume();
+      var o = document.getElementById('cntls');
+      var h = document.getElementById('header');
+      var fourpart = document.getElementById('fourpart');
+      //Experiment 
+      var htmlWrng = '<h2 id="wrng">Refresh browser page to load another song.</h2>';
+      h.innerHTML += htmlWrng;
+      //
+      var html = '<p id="tmr"><button onclick="go();" class="btn">Play</button></p>';
+      html = html + '<p><input id="position" type="range" min="0" max="100" value="0" step="1" /></p>';
+      html = html + '<h3>Channels</h3>';
+
+      //If in practice mode, limit to two volume controllers 
+      if (document.getElementById('fourpart').checked == true) {
+        maxChannels = 4;
+      }
+      if (maxChannels === 4) {
+        var v = 100 * song.tracks[0].volume;
+        html = html + '<p>' + chooserIns(song.tracks[0].id, 0) + '<input id="channel' + 0 + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
+        html = html + '<p>' + chooserIns(song.tracks[1].id, 1) + '<div id=channel' + 1 + '></div></p>';
+        var v2 = 100 * song.tracks[2].volume;
+        html = html + '<p>' + chooserIns(song.tracks[2].id, 2) + '<input id="channel' + 2 + '" type="range" min="0" max="100" value="' + v2 + '" step="1" /></p>';
+        html = html + '<p>' + chooserIns(song.tracks[3].id, 3) + '<div id=channel' + 3 + '></div></p>';
+      } else {
+        for (var i = 0; i < song.tracks.length; i++) {
+          var v = 100 * song.tracks[i].volume;
+          html = html + '<p>' + chooserIns(song.tracks[i].id, i) + '<input id="channel' + i + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
+        }
+      }
+      html = html + '<h3>Drums</h3>';
+      for (var i = 0; i < song.beats.length; i++) {
+        var v = 100 * song.beats[i].volume;
+        html = html + '<p>' + chooserDrum(song.beats[i].id, i) + '<input id="drum' + i + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
+      }
+      o.innerHTML = html;
+      console.log('Loaded');
+      var pos = document.getElementById('position');
+      pos.oninput = function (e) {
+        if (loadedsong) {
+          player.cancelQueue(audioContext);
+          var next = song.duration * pos.value / 100;
+          songStart = songStart - (next - currentSongTime);
+          currentSongTime = next;
+        }
+      };
+      console.log('Tracks');
+      for (var i = 0; i < song.tracks.length; i++) {
+        setVolumeAction(i, song);
+      }
+      console.log('Drums');
+      for (var i = 0; i < song.beats.length; i++) {
+        setDrVolAction(i, song);
+      }
+      loadedsong = song;
+    }
+    function setVolumeAction(i, song) {
+      var vlm = document.getElementById('channel' + i);
+      vlm.oninput = function (e) {
+        if (maxChannels === 4) {
+          if (i === 0) {
+            player.cancelQueue(audioContext);
+            var v = vlm.value / 100;
+            if (v < 0.000001) {
+              v = 0.000001;
+            }
+            song.tracks[0].volume = v;
+            song.tracks[1].volume = v;
+          } else if (i === 2) {
+            player.cancelQueue(audioContext);
+            var v = vlm.value / 100;
+            if (v < 0.000001) {
+              v = 0.000001;
+            }
+            song.tracks[2].volume = v;
+            song.tracks[3].volume = v;
+          }
+        }
+      };
+      var sl = document.getElementById('selins' + i);
+      sl.onchange = function (e) {
+        var nn = sl.value;
+        var info = player.loader.instrumentInfo(nn);
+        player.loader.startLoad(audioContext, info.url, info.variable);
+        player.loader.waitLoad(function () {
+          console.log('loaded');
+          song.tracks[i].info = info;
+          song.tracks[i].id = nn;
+        });
+      };
+    }
+    function setDrVolAction(i, song) {
+      var vlm = document.getElementById('drum' + i);
+      vlm.oninput = function (e) {
+        player.cancelQueue(audioContext);
+        var v = vlm.value / 100;
+        if (v < 0.000001) {
+          v = 0.000001;
+        }
+        song.beats[i].volume = v;
+      };
+      var sl = document.getElementById('seldrm' + i);
+      sl.onchange = function (e) {
+        var nn = sl.value;
+        var info = player.loader.drumInfo(nn);
+        player.loader.startLoad(audioContext, info.url, info.variable);
+        player.loader.waitLoad(function () {
+          console.log('loaded');
+          song.beats[i].info = info;
+          song.beats[i].id = nn;
+        });
+      };
+    }
+    function chooserIns(n, track) {
+      var html = '<select id="selins' + track + '">';
+      for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
+        var sel = '';
+        if (i == n) {
+          sel = ' selected';
+        }
+        html = html + '<option value="' + i + '"' + sel + '>' + i + ': ' + player.loader.instrumentInfo(i).title + '</option>';
+      }
+      html = html + '</select>';
+      return html;
+    }
+    function chooserDrum(n, beat) {
+      var html = '<select id="seldrm' + beat + '">';
+      for (var i = 0; i < player.loader.drumKeys().length; i++) {
+        var sel = '';
+        if (i == n) {
+          sel = ' selected';
+        }
+        html = html + '<option value="' + i + '"' + sel + '>' + i + ': ' + player.loader.drumInfo(i).title + '</option>';
+      }
+      html = html + '</select>';
+      return html;
+    }
+    function handleFileSelect(event) {
+      console.log(event);
+      var file = event.target.files[0];
+      console.log(file);
+      var fileReader = new FileReader();
+      fileReader.onload = function (progressEvent) {
+        console.log(progressEvent);
+        var arrayBuffer = progressEvent.target.result;
+        console.log(arrayBuffer);
+        var midiFile = new MIDIFile(arrayBuffer);
+        var song = midiFile.parseSong();
+        startLoad(song);
+      };
+      fileReader.readAsArrayBuffer(file);
+    }
+    function handleExample(path) {
+      console.log(path);
+      var xmlHttpRequest = new XMLHttpRequest();
+      xmlHttpRequest.open("GET", path, true);
+      xmlHttpRequest.responseType = "arraybuffer";
+      xmlHttpRequest.onload = function (e) {
+        var arrayBuffer = xmlHttpRequest.response;
+        var midiFile = new MIDIFile(arrayBuffer);
+        var song = midiFile.parseSong();
+        startLoad(song);
+      };
+      xmlHttpRequest.send(null);
+    }
+        // document.getElementById('filesinput').addEventListener('change', handleFileSelect, false);
+  </script>
+</body>
+
+</html>
