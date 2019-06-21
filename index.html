@@ -621,7 +621,16 @@
         var o = document.getElementById('position');
         o.value = 100 * currentSongTime / song.duration; //how much of range is filled 
         // document.getElementById('tmr').innerHTML = '' + Math.round(100 * currentSongTime / song.duration) + '%';
-        document.getElementById('tmr').innerHTML = '' + Math.round(currentSongTime);
+        //time formatting: 
+        var secs = Math.round(currentSongTime);
+        var mins = Math.floor(secs / 60);
+        secs = secs % 60;
+        if (secs < 10) {
+          timeStamp = mins + ':0' + secs;
+        } else {
+          timeStamp = mins + ':' + secs;
+        }
+        document.getElementById('tmr').innerHTML = '' + timeStamp;
         nextPositionTime = audioContext.currentTime + 3;
       }
       window.requestAnimationFrame(function (t) {
