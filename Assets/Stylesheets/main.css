@@ -87,7 +87,7 @@ input[type=checkbox]:checked ~ label {
   height: 30%; 
 }
 .music {
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 1.00), rgba(255, 255, 255, 0.0));
+background-color: white;
 }
 /* Dropdown Button */
 .btn {
@@ -97,6 +97,7 @@ input[type=checkbox]:checked ~ label {
   font-size: 16px;
   border: none;
   cursor: pointer;
+  margin-right: 2em; 
 }
 
 /* Dropdown button on hover & focus */

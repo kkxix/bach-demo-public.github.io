@@ -582,6 +582,10 @@
       }
     }
 
+    function stop() {
+      audioContext.suspend();
+    }
+
     function go() {
       document.getElementById('tmr').innerHTML = 'starting...';
       try {
@@ -592,11 +596,15 @@
       }
     }
     function startPlay(song) {
-      currentSongTime = 0;
-      songStart = audioContext.currentTime;
-      nextStepTime = audioContext.currentTime;
-      var stepDuration = 44 / 1000;
-      tick(song, stepDuration);
+      if (audioContext.state == 'suspended') {
+        audioContext.resume();
+      } else {
+        currentSongTime = 0;
+        songStart = audioContext.currentTime; //global 
+        nextStepTime = audioContext.currentTime; //global 
+        var stepDuration = 44 / 1000;
+        tick(song, stepDuration);
+      }
     }
     function tick(song, stepDuration) {
       if (audioContext.currentTime > nextStepTime - stepDuration) {
@@ -611,8 +619,9 @@
       }
       if (nextPositionTime < audioContext.currentTime) {
         var o = document.getElementById('position');
-        o.value = 100 * currentSongTime / song.duration;
-        document.getElementById('tmr').innerHTML = '' + Math.round(100 * currentSongTime / song.duration) + '%';
+        o.value = 100 * currentSongTime / song.duration; //how much of range is filled 
+        // document.getElementById('tmr').innerHTML = '' + Math.round(100 * currentSongTime / song.duration) + '%';
+        document.getElementById('tmr').innerHTML = '' + Math.round(currentSongTime);
         nextPositionTime = audioContext.currentTime + 3;
       }
       window.requestAnimationFrame(function (t) {
@@ -680,18 +689,16 @@
       var o = document.getElementById('cntls');
       var h = document.getElementById('header');
       var fourpart = document.getElementById('fourpart');
-      //Experiment 
       var htmlWrng = '<h2 id="wrng">Refresh browser page to load another song.</h2>';
       h.innerHTML += htmlWrng;
-      //
-      var html = '<p id="tmr"><button onclick="go();" class="btn">Play</button></p>';
+      var html = '<p id="soundCntls"><button onclick="go();" class="btn">Play</button> <button onclick="stop();" class="btn">Pause</button></p>';
+      html = html + '<p id="tmr"><p>';
       html = html + '<p><input id="position" type="range" min="0" max="100" value="0" step="1" /></p>';
       html = html + '<h3>Channels</h3>';
 
       //If in practice mode, limit to two volume controllers 
       if (document.getElementById('fourpart').checked == true) {
         maxChannels = 4;
-        //TODO: add listener for music element, add invisilbe style 
         var musics = document.getElementsByClassName('music');
         for (var i = 0; i < musics.length; i++) {
           musics[i].style.visibility = 'hidden';
@@ -862,7 +869,6 @@
       console.log(mxlUrl);
       readLocalFile(mxlUrl);
     }
-        // document.getElementById('filesinput').addEventListener('change', handleFileSelect, false);
   </script>
 </body>
 
