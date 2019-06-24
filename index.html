@@ -452,7 +452,7 @@
           a.appendChild(txt);
           a.setAttribute("href", "#");
           a.setAttribute('class', 'fknp');
-          a.setAttribute('id', i);
+          a.setAttribute('id', i);        
           a.setAttribute('onclick', 'handleExample("' + fileNameArray[i] + '")');
           dropMenu.insertBefore(a, dropMenu.lastChild);
         }
@@ -463,7 +463,7 @@
         <input type="checkbox" id="fourpart">
         <label for="fourpart" class="btn">Practice Mode</label>
       </div>
-
+      
     </p>
   </div>
   <hr />
@@ -583,7 +583,7 @@
     }
 
     function stop() {
-      audioContext.suspend();
+      audioContext.suspend(); 
     }
 
     function go() {
@@ -596,8 +596,8 @@
       }
     }
     function startPlay(song) {
-      if (audioContext.state == 'suspended') {
-        audioContext.resume();
+      if(audioContext.state == 'suspended') {
+        audioContext.resume(); 
       } else {
         currentSongTime = 0;
         songStart = audioContext.currentTime; //global 
@@ -618,20 +618,23 @@
         }
       }
       if (nextPositionTime < audioContext.currentTime) {
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        console.log(time);
         var o = document.getElementById('position');
         o.value = 100 * currentSongTime / song.duration; //how much of range is filled 
         // document.getElementById('tmr').innerHTML = '' + Math.round(100 * currentSongTime / song.duration) + '%';
         //time formatting: 
         var secs = Math.round(currentSongTime);
         var mins = Math.floor(secs / 60);
-        secs = secs % 60;
-        if (secs < 10) {
+        secs = secs % 60; 
+        if(secs < 10 ) {
           timeStamp = mins + ':0' + secs;
         } else {
           timeStamp = mins + ':' + secs;
         }
-        document.getElementById('tmr').innerHTML = '' + timeStamp;
-        nextPositionTime = audioContext.currentTime + 3;
+        document.getElementById('tmr').innerHTML = '' + timeStamp; 
+        nextPositionTime = audioContext.currentTime;
       }
       window.requestAnimationFrame(function (t) {
         tick(song, stepDuration);
@@ -701,7 +704,7 @@
       var htmlWrng = '<h2 id="wrng">Refresh browser page to load another song.</h2>';
       h.innerHTML += htmlWrng;
       var html = '<p id="soundCntls"><button onclick="go();" class="btn">Play</button> <button onclick="stop();" class="btn">Pause</button></p>';
-      html = html + '<p id="tmr"><p>';
+      html = html + '<p id="tmr"><p>'; 
       html = html + '<p><input id="position" type="range" min="0" max="100" value="0" step="1" /></p>';
       html = html + '<h3>Channels</h3>';
 
@@ -709,7 +712,7 @@
       if (document.getElementById('fourpart').checked == true) {
         maxChannels = 4;
         var musics = document.getElementsByClassName('music');
-        for (var i = 0; i < musics.length; i++) {
+        for(var i = 0; i < musics.length; i++) {
           musics[i].style.visibility = 'hidden';
         }
       }
@@ -875,8 +878,8 @@
       mxlUrl = mxlUrl.substring(0, mxlUrl.length - 3)
       mxlUrl += "musicxml";
       a.setAttribute("title", mxlUrl);
-      console.log(mxlUrl);
-      readLocalFile(mxlUrl);
+      console.log(mxlUrl); 
+      readLocalFile(mxlUrl); 
     }
   </script>
 </body>
