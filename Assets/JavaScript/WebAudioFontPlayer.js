@@ -266,7 +266,8 @@
                 return {
                     variable: '_tone_' + key,
                     url: 'https://surikov.github.io/webaudiofontdata/sound/' + key + '.js',
-                    title: this.instrumentTitles()[p]
+                    title: this.instrumentTitles()[p],
+                    p: p
                 };
             };
             this.findInstrument = function (program) {
