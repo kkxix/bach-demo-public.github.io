@@ -26,7 +26,7 @@
     <p>
       <!-- <input type="file" id="filesinput" name="filesarr[]" /> -->
       <div class="dropdown">
-        <button onclick='dropDown()' class="btn">Chorales</button>
+        <button onclick='dropDown()' class="btn">Chorales ▼</button>
         <div id="myDropdown" class="dropdown-content">
           <input type="text" placeholder="Search..." id="myInput" onkeyup="filterFunction()">
         </div>
@@ -451,8 +451,8 @@
             txt = document.createTextNode(fileNameArray[i].substr(22));
           a.appendChild(txt);
           a.setAttribute("href", "#");
-          a.setAttribute('class', 'fknp');
-          a.setAttribute('id', i);        
+          // a.setAttribute('class', 'fknp');
+          a.setAttribute('id', i);
           a.setAttribute('onclick', 'handleExample("' + fileNameArray[i] + '")');
           dropMenu.insertBefore(a, dropMenu.lastChild);
         }
@@ -463,7 +463,7 @@
         <input type="checkbox" id="fourpart">
         <label for="fourpart" class="btn">Practice Mode</label>
       </div>
-      
+
     </p>
   </div>
   <hr />
@@ -556,6 +556,9 @@
     function dropDown() {
       document.getElementById("myDropdown").classList.toggle("show");
     }
+    function dropDownIns(i) {
+      document.getElementById("selins" + i).classList.toggle("show");
+    }
     //Toggle practice mode 
     function practiceMode() {
       if (practice === false) {
@@ -565,6 +568,7 @@
       }
     }
 
+    //TODO: optimize filterFunction so there doesn't need to be 2 
     // Filter chorales by search 
     function filterFunction() {
       var input, filter, ul, li, array;
@@ -581,9 +585,25 @@
         }
       }
     }
+    //Filter instruments by search 
+    function filterFunctionIns(i) {
+      var input, filter, ul, li, array;
+      input = document.getElementById("myInputIns");
+      filter = input.value.toUpperCase();
+      div = document.getElementById("selins" + i);
+      array = div.getElementsByTagName('a');
+      for (var i = 0; i < array.length; i++) {
+        txtValue = array[i].textContext || array[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          array[i].style.display = "";
+        } else {
+          array[i].style.display = "none";
+        }
+      }
+    }
 
     function stop() {
-      audioContext.suspend(); 
+      audioContext.suspend();
     }
 
     function go() {
@@ -596,13 +616,13 @@
       }
     }
     function startPlay(song) {
-      if(audioContext.state == 'suspended') {
-        audioContext.resume(); 
+      if (audioContext.state == 'suspended') {
+        audioContext.resume();
       } else {
         currentSongTime = 0;
         songStart = audioContext.currentTime; //global 
         nextStepTime = audioContext.currentTime; //global 
-        var stepDuration = 44 / 1000;
+        var stepDuration = 44 / 1000; //where does this number come from 
         tick(song, stepDuration);
       }
     }
@@ -627,13 +647,13 @@
         //time formatting: 
         var secs = Math.round(currentSongTime);
         var mins = Math.floor(secs / 60);
-        secs = secs % 60; 
-        if(secs < 10 ) {
+        secs = secs % 60;
+        if (secs < 10) {
           timeStamp = mins + ':0' + secs;
         } else {
           timeStamp = mins + ':' + secs;
         }
-        document.getElementById('tmr').innerHTML = '' + timeStamp; 
+        document.getElementById('tmr').innerHTML = '' + timeStamp;
         nextPositionTime = audioContext.currentTime;
       }
       window.requestAnimationFrame(function (t) {
@@ -704,29 +724,39 @@
       var htmlWrng = '<h2 id="wrng">Refresh browser page to load another song.</h2>';
       h.innerHTML += htmlWrng;
       var html = '<p id="soundCntls"><button onclick="go();" class="btn">Play</button> <button onclick="stop();" class="btn">Pause</button></p>';
-      html = html + '<p id="tmr"><p>'; 
+      html = html + '<p id="tmr"><p>';
       html = html + '<p><input id="position" type="range" min="0" max="100" value="0" step="1" /></p>';
+      html = html + '<p>Tempo: <span id="tempo-display">80</span> bpm<p>';
+      html = html + '<p><input id="tempo" type="range" min="50" max="200" onchange="stop();setTempo(this.value);go()" /></p>';
       html = html + '<h3>Channels</h3>';
 
       //If in practice mode, limit to two volume controllers 
       if (document.getElementById('fourpart').checked == true) {
         maxChannels = 4;
         var musics = document.getElementsByClassName('music');
-        for(var i = 0; i < musics.length; i++) {
+        for (var i = 0; i < musics.length; i++) {
           musics[i].style.visibility = 'hidden';
         }
       }
       if (maxChannels === 4) {
         var v = 100 * song.tracks[0].volume;
-        html = html + '<p>' + chooserIns(song.tracks[0].id, 0) + '<input id="channel' + 0 + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
-        html = html + '<p>' + chooserIns(song.tracks[1].id, 1) + '<div id=channel' + 1 + '></div></p>';
+        html = html + '<p id="track">' + chooserIns(song.tracks[0].id, 0) + '<input id="channel' + 0 + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
+        html = html + '<p id="track">' + chooserIns(song.tracks[1].id, 1) + '<div id=channel' + 1 + '></div></p>';
+        // populateIns(song.tracks[0].id, 0);        
+        // populateIns(song.tracks[1].id, 1);
         var v2 = 100 * song.tracks[2].volume;
-        html = html + '<p>' + chooserIns(song.tracks[2].id, 2) + '<input id="channel' + 2 + '" type="range" min="0" max="100" value="' + v2 + '" step="1" /></p>';
-        html = html + '<p>' + chooserIns(song.tracks[3].id, 3) + '<div id=channel' + 3 + '></div></p>';
+        html = html + '<p id="track">' + chooserIns(song.tracks[2].id, 2) + '<input id="channel' + 2 + '" type="range" min="0" max="100" value="' + v2 + '" step="1" /></p>';
+        html = html + '<p id="track">' + chooserIns(song.tracks[3].id, 3) + '<div id=channel' + 3 + '></div></p>';
+        // populateIns(song.tracks[2].id, 2);
+        // populateIns(song.tracks[3].id, 3);
       } else {
         for (var i = 0; i < song.tracks.length; i++) {
           var v = 100 * song.tracks[i].volume;
-          html = html + '<p>' + chooserIns(song.tracks[i].id, i) + '<input id="channel' + i + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
+          html = html + '<p id="track">' + chooserIns(song.tracks[i].id, i) + '<input id="channel' + i + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
+          // populateIns(song.tracks[i].id, i);        
+          //how to put instrument drop down and volume bar in same line? 
+          //also Maybe add a label for each channel
+          //also is there  a way to change button label to the current instrument selected? 
         }
       }
       html = html + '<h3>Drums</h3>';
@@ -745,6 +775,14 @@
           currentSongTime = next;
         }
       };
+      //maybe add an oninput for the tempo input that has a callback in player 
+      var tempo = document.getElementById('tempo');
+      tempo.oninput = function (e) {
+        if (loadedsong) {
+          player.cancelQueue(audioContext);
+          //whatt totoo dooooo ???????? how to change the speed of playign thingss??
+        }
+      }
       console.log('Tracks');
       for (var i = 0; i < song.tracks.length; i++) {
         setVolumeAction(i, song);
@@ -753,6 +791,11 @@
       for (var i = 0; i < song.beats.length; i++) {
         setDrVolAction(i, song);
       }
+
+      for (var i = 0; i < song.tracks.length; i++) {
+        populateIns(song.tracks[i].id, i);
+      }
+
       loadedsong = song;
     }
     function setVolumeAction(i, song) {
@@ -786,16 +829,28 @@
         }
       };
       var sl = document.getElementById('selins' + i);
-      sl.onchange = function (e) {
-        var nn = sl.value;
-        var info = player.loader.instrumentInfo(nn);
-        player.loader.startLoad(audioContext, info.url, info.variable);
-        player.loader.waitLoad(function () {
-          console.log('loaded');
-          song.tracks[i].info = info;
-          song.tracks[i].id = nn;
-        });
-      };
+      // sl.onchange = function (e) {
+      //   var nn = sl.value;
+      //   var info = player.loader.instrumentInfo(nn);
+      //   player.loader.startLoad(audioContext, info.url, info.variable);
+      //   player.loader.waitLoad(function () {
+      //     console.log('loaded');
+      //     song.tracks[i].info = info;
+      //     song.tracks[i].id = nn;
+      //   });
+      // };
+    }
+    function handleInstrument(i, track) {
+      // var sl = document.getElementById('selins' + i);
+      // var nn = sl.value;
+      var info = player.loader.instrumentInfo(i);
+      player.loader.startLoad(audioContext, info.url, info.variable);
+      document.getElementById('instButton' + track).textContent = info.title;
+      player.loader.waitLoad(function () {
+        console.log('loaded');
+        loadedsong.tracks[track].info = info;
+        loadedsong.tracks[track].id = i;
+      });
     }
     function setDrVolAction(i, song) {
       var vlm = document.getElementById('drum' + i);
@@ -820,16 +875,45 @@
       };
     }
     function chooserIns(n, track) {
-      var html = '<select id="selins' + track + '">';
+      var html = '<button id="instButton' + track + '" onclick="dropDownIns(' + track + ')" class = "btn">Instruments ▼</button>';
+      html = html + '<div id="selins' + track + '" class="dropdown-content">';
+      // html = html + '<input type="text" placeholder="Search..." id="myInputIns" onkeyup="filterFunctionIns('+track+')">';    
+      html = html + '</div>';
+
+      // html = html + '</select>';
+      return html;
+    }
+
+    function populateIns(n, track) {
+      var dropMenuIns = document.getElementById("selins" + track);
+      var instType = -1;
+      var counter = 0;
       for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
         var sel = '';
         if (i == n) {
           sel = ' selected';
         }
-        html = html + '<option value="' + i + '"' + sel + '>' + i + ': ' + player.loader.instrumentInfo(i).title + '</option>';
+        if (instType != player.loader.instrumentInfo(i).p) {
+          // html = html + '<option value="' + i + '"' + sel + '>' + counter + ': ' + player.loader.instrumentInfo(i).title + '</option>';
+          var option = document.createElement("a"),
+            txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
+          option.setAttribute("href", "#");
+          option.appendChild(txt);
+          option.setAttribute('value', i + sel);
+          option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
+          dropMenuIns.insertBefore(option, dropMenuIns.lastChild);
+          // '<option value="' + i + '"' + sel + '>' + counter + ': ' + player.loader.instrumentInfo(i).title + '</option>';
+          counter++;
+        }
+        instType = player.loader.instrumentInfo(i).p;
       }
-      html = html + '</select>';
-      return html;
+      // var search = '<input type="text" placeholder="Search..." id="myInputIns" onkeyup="filterFunctionIns(' + track +')">';
+      var search = document.createElement("input");
+      search.setAttribute('type', "text");
+      search.setAttribute('placeholder', "Search...");
+      search.setAttribute('id', "myInputIns");
+      search.setAttribute('onkeyup', 'filterFunctionIns(' + track + ')');
+      dropMenuIns.insertBefore(search, dropMenuIns.firstChild);
     }
     function chooserDrum(n, beat) {
       var html = '<select id="seldrm' + beat + '">';
@@ -870,6 +954,7 @@
         startLoad(song);
       };
       xmlHttpRequest.send(null);
+
       //call xmlplay 
       var mxlUrl = path.substr(0, 9);
       mxlUrl += "chorales-musicxml";
@@ -878,8 +963,8 @@
       mxlUrl = mxlUrl.substring(0, mxlUrl.length - 3)
       mxlUrl += "musicxml";
       a.setAttribute("title", mxlUrl);
-      console.log(mxlUrl); 
-      readLocalFile(mxlUrl); 
+      console.log(mxlUrl);
+      readLocalFile(mxlUrl);
     }
   </script>
 </body>
