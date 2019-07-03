@@ -1,0 +1,22 @@
+{
+  "name": "bach-demo-public.github.io",
+  "version": "1.0.0",
+  "description": "live site at: \r https://kkxix.github.io/bach-demo-public.github.io/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kkxix/bach-demo-public.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kkxix/bach-demo-public.github.io/issues"
+  },
+  "homepage": "https://github.com/kkxix/bach-demo-public.github.io#readme",
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
+}

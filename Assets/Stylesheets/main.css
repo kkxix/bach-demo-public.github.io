@@ -10,14 +10,17 @@ body {
 .container {
     padding-top: 2%;
     padding-bottom: 2%;
-    background-color: rgba(255, 255, 255, 0.8);
+    /* background-color: rgba(255, 255, 255, 0.8); */
     width: 100%;
     margin: 0 auto;
     position: relative;
-    box-shadow: 2px 0 40px;
+    /* box-shadow: 2px 0 40px; */
 }
 h1 {
     color: black; 
+}
+#site-title {
+  max-width: 25%;
 }
 h2 {
     color: darkgray;
@@ -27,7 +30,7 @@ header
     background-size: auto !important;
     background-position-x: right !important;
     font-weight: 400;
-    background-color: rgba(255, 255, 255, 0.8);
+    /* background-color: rgba(255, 255, 255, 0.8); */
     width: 100%;
     margin: 0 auto;
     position: relative;
@@ -36,13 +39,23 @@ header
     padding-top: 2%;
     padding-bottom: 2%;
     padding-left: 2%;
-    margin-bottom: 6%;
+    margin-bottom: 2%;
+}
+img {
+  width: 103px;
+}
+nav {
+    float: right;
+}
+#title {
+  float: right;
 }
 #cntls {
     padding-bottom: 2%;
     padding-left: 2%;
+    font-family: Arial;
 }
-header div {
+/* header div {
     width: 100%;
     font-size: 3em;
     font-family: 'Montserrat', sans-serif;
@@ -51,13 +64,13 @@ header div {
     letter-spacing: 0.2em;
     text-transform: lowercase;
     color: rgba(24, 23, 12, 1.0);
+} */
+.navbar {
+  font-size: 2rem; 
 }
 .first {
     color:darkblue;
     font-family: sans-serif;
-}
-#cntls {
-    font-family: Arial;
 }
 .channel1 {
     visibility: hidden;
@@ -77,6 +90,9 @@ input[type=checkbox]:checked ~ label {
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 0 2px #fff;
 }
+label {
+   margin-bottom: 0rem;
+}
 #btns {
   visibility: hidden;
 }
@@ -89,6 +105,12 @@ input[type=checkbox]:checked ~ label {
 .music {
 background-color: white;
 }
+#posAndTempo {
+  width: 75% !important; 
+}
+#channels {
+  width: 75% !important;   
+}
 /* Dropdown Button */
 .btn {
   background-color: #3498DB;
@@ -97,9 +119,37 @@ background-color: white;
   font-size: 16px;
   border: none;
   cursor: pointer;
-  margin-right: 2em; 
+  margin: 2em; 
 }
-
+.container {
+  display: flex;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.container-header {
+  display: flex;
+  width: 100%;
+}
+.container-cntls {
+  display: flex;
+  width: 100%;
+}
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.col-md-4 {
+  -ms-flex: 0 0 33.333333%;
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
 /* Dropdown button on hover & focus */
 .btn:hover, .btn:focus {
   background-color: #2980B9;
@@ -127,6 +177,9 @@ background-color: white;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+}
+#select-cntls {
+  margin: auto; 
 }
 #track {
   display: inline-block;
@@ -166,7 +219,7 @@ background-color: white;
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
-/* 
+
 input[type=range] {
   -webkit-appearance: none;
   margin: 10px 0;
@@ -181,7 +234,7 @@ input[type=range]::-webkit-slider-runnable-track {
   cursor: pointer;
   animate: 0.2s;
   box-shadow: 0px 0px 0px #000000;
-  background: #3498DB;
+  background: white;
   border-radius: 1px;
   border: 0px solid #000000;
 }
@@ -191,13 +244,13 @@ input[type=range]::-webkit-slider-thumb {
   height: 18px;
   width: 18px;
   border-radius: 25px;
-  background: #A1D0FF;
+  background: #3498DB;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -7px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #3498DB;
+  background: white;
 }
 input[type=range]::-moz-range-track {
   width: 100%;
@@ -205,7 +258,7 @@ input[type=range]::-moz-range-track {
   cursor: pointer;
   animate: 0.2s;
   box-shadow: 0px 0px 0px #000000;
-  background: #3498DB;
+  background: white;
   border-radius: 1px;
   border: 0px solid #000000;
 }
@@ -215,7 +268,7 @@ input[type=range]::-moz-range-thumb {
   height: 18px;
   width: 18px;
   border-radius: 25px;
-  background: #A1D0FF;
+  background: #3498DB;
   cursor: pointer;
 }
 input[type=range]::-ms-track {
@@ -228,13 +281,13 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #3498DB;
+  background: white;
   border: 0px solid #000000;
   border-radius: 2px;
   box-shadow: 0px 0px 0px #000000;
 }
 input[type=range]::-ms-fill-upper {
-  background: #3498DB;
+  background: white;
   border: 0px solid #000000;
   border-radius: 2px;
   box-shadow: 0px 0px 0px #000000;
@@ -242,16 +295,43 @@ input[type=range]::-ms-fill-upper {
 input[type=range]::-ms-thumb {
   margin-top: 1px;
   box-shadow: 0px 0px 0px #000000;
-  border: 1px solid #2497E3;
+  border: 1px solid #3498DB;
   height: 18px;
   width: 18px;
   border-radius: 25px;
-  background: #A1D0FF;
+  background: #3498DB;
   cursor: pointer;
 }
 input[type=range]:focus::-ms-fill-lower {
-  background: #3498DB;
+  background: white;
 }
 input[type=range]:focus::-ms-fill-upper {
+  background: white;
+}
+.range-slider {
+  margin: 60px 0 0 0%;
+  width: 100% !important; 
+}
+.range-slider_value {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  color: white;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 3px;
   background: #3498DB;
-} */
+  padding: 5px 10px;
+  margin-left: 8px;
+}
+.range-slider_value:after {
+    position: absolute;
+    top: 8px;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-right: 7px solid #3498DB;
+    border-bottom: 7px solid transparent;
+    content: '';
+}

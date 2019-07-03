@@ -2,6 +2,9 @@
 <!-- v1.16 -->
 
 <head>
+  <!-- Bootstrap -->
+  <link href="../Assets/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
+  <script src="./Assets/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
   <!--
 	<script src='https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js'></script>
     -->
@@ -17,13 +20,32 @@
 </head>
 
 <header id="header">
-  <h1>Welcome to Bach Dictation Generator.</h1>
-  <h2>Enter Practice mode to hide the score and limit volume changing abilities.</h2>
+  <div class="container-header">
+    <!-- <div class="logo">
+      <img src="./Assets/Images/swarthmore.png">
+    </div> -->
+    <h1 id="site-title">Welcome to Bach Dictation Generator.</h1>
+    <!-- <h2>Enter Practice mode to hide the score and limit volume changing abilities.</h2> -->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-cntls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="./index.html">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="./Assets/Pages/about.html">About</a>
+          <a class="nav-item nav-link" href="#">Credits</a>
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>
 
+
 <body>
-  <div id='cntls'>
-    <p>
+  <div id="container-cntls">
+    <div id='select-cntls'>
       <!-- <input type="file" id="filesinput" name="filesarr[]" /> -->
       <div class="dropdown">
         <button onclick='dropDown()' class="btn">Chorales ▼</button>
@@ -453,7 +475,7 @@
           a.setAttribute("href", "#");
           // a.setAttribute('class', 'fknp');
           a.setAttribute('id', i);
-          a.setAttribute('onclick', 'handleExample("' + fileNameArray[i] + '")');
+          a.setAttribute('onclick', 'loadNewChorale("' + fileNameArray[i] + '", 120)');
           dropMenu.insertBefore(a, dropMenu.lastChild);
         }
       </script>
@@ -463,10 +485,9 @@
         <input type="checkbox" id="fourpart">
         <label for="fourpart" class="btn">Practice Mode</label>
       </div>
-
-    </p>
+    </div>
+    <div id="cntls" class="container"></div>
   </div>
-  <hr />
   <p><a href="https://surikov.github.io/webaudiofont/">source</a></p>
 
   <div class="rat" id="notation">
@@ -551,6 +572,18 @@
     var loadedsong = null;
     var maxChannels = 0;
     var practice = false;
+    var sentWhen = 0;
+    var inPath = "";
+
+    //check for existing path and tempo 
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.toString());
+    if (urlParams.has('tempo') && urlParams.has('path')) {
+      console.log('has params');
+      handleExample(urlParams.get('path'), urlParams.get('tempo'));
+      // call function 
+      //future -- encode path 
+    }
 
     //Toggle dropdown 
     function dropDown() {
@@ -560,13 +593,13 @@
       document.getElementById("selins" + i).classList.toggle("show");
     }
     //Toggle practice mode 
-    function practiceMode() {
-      if (practice === false) {
-        practice = true;
-      } else {
-        practice = false;
-      }
-    }
+    // function practiceMode() {
+    //   if (practice === false) {
+    //     practice = true;
+    //   } else {
+    //     practice = false;
+    //   }
+    // }
 
     //TODO: optimize filterFunction so there doesn't need to be 2 
     // Filter chorales by search 
@@ -615,6 +648,12 @@
         document.getElementById('tmr').innerHTML = 'error ' + expt;
       }
     }
+
+    function setTempo(inTempo) {
+      stop();
+      document.location.href = "/index.html" + "?tempo=" + inTempo + "&path=" + inPath + "&practice=" + practice;
+    }
+
     function startPlay(song) {
       if (audioContext.state == 'suspended') {
         audioContext.resume();
@@ -627,6 +666,11 @@
       }
     }
     function tick(song, stepDuration) {
+      // var beatDuration = .15; 
+      // var t = audioContext.currentTime; 
+      // while(sentWhen < t + beatDuration) {
+      //   sendNotes(song, songStart, currentSongTime, currentSongTime + beatDuration, audioContext, input, player);        
+      // }
       if (audioContext.currentTime > nextStepTime - stepDuration) {
         sendNotes(song, songStart, currentSongTime, currentSongTime + stepDuration, audioContext, input, player);
         currentSongTime = currentSongTime + stepDuration;
@@ -717,22 +761,41 @@
       });
     }
     function buildControls(song) {
-      audioContext.resume();
+      // audioContext.resume();
       var o = document.getElementById('cntls');
       var h = document.getElementById('header');
       var fourpart = document.getElementById('fourpart');
-      var htmlWrng = '<h2 id="wrng">Refresh browser page to load another song.</h2>';
-      h.innerHTML += htmlWrng;
-      var html = '<p id="soundCntls"><button onclick="go();" class="btn">Play</button> <button onclick="stop();" class="btn">Pause</button></p>';
-      html = html + '<p id="tmr"><p>';
-      html = html + '<p><input id="position" type="range" min="0" max="100" value="0" step="1" /></p>';
-      html = html + '<p>Tempo: <span id="tempo-display">80</span> bpm<p>';
-      html = html + '<p><input id="tempo" type="range" min="50" max="200" onchange="stop();setTempo(this.value);go()" /></p>';
-      html = html + '<h3>Channels</h3>';
+      // var htmlWrng = '<h2 id="wrng">Refresh browser page to load another song.</h2>';
+      // h.innerHTML += htmlWrng;
+      var html = '<div id="soundcontrols"><button onclick="go();" class="btn">Play</button> <button onclick="stop();" class="btn">Pause</button></div>';
+      html = html + '<div id="posAndTempo"><h3>Song Duration</h3><div id="tmr"></div>';
+      html = html + '<div><input id="position" type="range" min="0" max="100" value="0" step="1" /></div>';
+
+      if (urlParams.has('tempo')) {
+        var oldTempo = urlParams.get("tempo");
+        // html = html + '<p>Tempo: <span id="tempo-display">' + oldTempo + '</span> bpm<p>';
+        html = html + '<div class="range-slider"><h3>Tempo</h3>';
+        html = html + '<input class="range-slider_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="' + oldTempo + '" />';
+        html = html + '<span class="range-slider_value">' + oldTempo + '</span></div>';
+      } else {
+        // html = html + '<p>Tempo: <span id="tempo-display">120</span> bpm<p>';
+        html = html + '<div class="range-slider"><h3>Tempo</h3>';
+        html = html + '<input class="range-slider_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="120" />';
+        html = html + '<span class="range-slider__value">120</span></div>';
+      }
+      html = html += "</div>"
+
+      html = html + '<div id="channels"><h3>Channels</h3>';
 
       //If in practice mode, limit to two volume controllers 
-      if (document.getElementById('fourpart').checked == true) {
+      console.log("outside practice if statement" + practice);
+      if ((document.getElementById('fourpart').checked == true)) {
+        practice = true;
+      }
+      if (practice == true) {
+        console.log("inside practice if statement" + practice);
         maxChannels = 4;
+        practice = true;
         var musics = document.getElementsByClassName('music');
         for (var i = 0; i < musics.length; i++) {
           musics[i].style.visibility = 'hidden';
@@ -759,11 +822,13 @@
           //also is there  a way to change button label to the current instrument selected? 
         }
       }
-      html = html + '<h3>Drums</h3>';
-      for (var i = 0; i < song.beats.length; i++) {
-        var v = 100 * song.beats[i].volume;
-        html = html + '<p>' + chooserDrum(song.beats[i].id, i) + '<input id="drum' + i + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
-      }
+      html = html + '</div>';
+
+      // html = html + '<h3>Drums</h3>';
+      // for (var i = 0; i < song.beats.length; i++) {
+      //   var v = 100 * song.beats[i].volume;
+      //   html = html + '<p>' + chooserDrum(song.beats[i].id, i) + '<input id="drum' + i + '" type="range" min="0" max="100" value="' + v + '" step="1" /></p>';
+      // }
       o.innerHTML = html;
       console.log('Loaded');
       var pos = document.getElementById('position');
@@ -775,14 +840,28 @@
           currentSongTime = next;
         }
       };
-      //maybe add an oninput for the tempo input that has a callback in player 
-      var tempo = document.getElementById('tempo');
-      tempo.oninput = function (e) {
-        if (loadedsong) {
-          player.cancelQueue(audioContext);
-          //whatt totoo dooooo ???????? how to change the speed of playign thingss??
-        }
-      }
+      //control range output label 
+      // var rangeSlider = function () {
+      var slider = $('.range-slider'),
+        range = $('.range-slider__range'),
+        value = $('.range-slider__value');
+
+      slider.each(function () {
+
+        value.each(function () {
+          var value = $(this).prev().attr('value');
+          $(this).html(value);
+        });
+
+        range.on('input', function () {
+          $(this).next(value).html(this.value);
+        });
+      });
+      // };
+
+      // rangeSlider();
+
+
       console.log('Tracks');
       for (var i = 0; i < song.tracks.length; i++) {
         setVolumeAction(i, song);
@@ -797,6 +876,7 @@
       }
 
       loadedsong = song;
+
     }
     function setVolumeAction(i, song) {
       var vlm = document.getElementById('channel' + i);
@@ -936,21 +1016,31 @@
         console.log(progressEvent);
         var arrayBuffer = progressEvent.target.result;
         console.log(arrayBuffer);
-        var midiFile = new MIDIFile(arrayBuffer);
-        var song = midiFile.parseSong();
+        midiFile = new MIDIFile(arrayBuffer);
+        var song = midiFile.parseSong(80);
         startLoad(song);
       };
       fileReader.readAsArrayBuffer(file);
     }
-    function handleExample(path) {
+    function loadNewChorale(path, tempo) {
+      if (loadedsong) {
+        inPath = path;
+        setTempo(120);
+      } else {
+        handleExample(path, tempo);
+      }
+    }
+    function handleExample(path, tempo) {
+      //call function to check query for tempo and file path 
+      inPath = path;
       console.log(path);
       var xmlHttpRequest = new XMLHttpRequest();
       xmlHttpRequest.open("GET", path, true);
       xmlHttpRequest.responseType = "arraybuffer";
       xmlHttpRequest.onload = function (e) {
         var arrayBuffer = xmlHttpRequest.response;
-        var midiFile = new MIDIFile(arrayBuffer);
-        var song = midiFile.parseSong();
+        midiFile = new MIDIFile(arrayBuffer);
+        var song = midiFile.parseSong(tempo);
         startLoad(song);
       };
       xmlHttpRequest.send(null);
@@ -965,6 +1055,15 @@
       a.setAttribute("title", mxlUrl);
       console.log(mxlUrl);
       readLocalFile(mxlUrl);
+
+      //set practice mode 
+      if (urlParams.has('practice')) {
+        practice = urlParams.get('practice');
+        console.log("practice: " + practice);
+      }
+      else {
+        practice = false;
+      }
     }
   </script>
 </body>
