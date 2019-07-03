@@ -13,6 +13,7 @@
                 from.connect(filter);
                 return filter;
             };
+            this.tempo = 120; 
             this.input = this.audioContext.createDynamicsCompressor();
             this.input.threshold.setValueAtTime(-3, 0);// = -3; //-50
             this.input.knee.setValueAtTime(30, 0); //40
@@ -266,7 +267,7 @@
                 return {
                     variable: '_tone_' + key,
                     url: 'https://surikov.github.io/webaudiofontdata/sound/' + key + '.js',
-                    title: this.instrumentTitles()[p],
+                    title: this.instrumentTitles()[p], 
                     p: p
                 };
             };
@@ -440,7 +441,7 @@
             this.loader = new WebAudioFontLoader(this);
             this.onCacheFinish = null;
             this.onCacheProgress = null;
-            this.afterTime = 0.05;
+            this.afterTime = .05; // seems to make no difference ??? 
             this.nearZero = 0.000001;
             this.createChannel = function (audioContext) {
                 return new WebAudioFontChannel(audioContext);
@@ -496,15 +497,15 @@
                     audioContext.resume();
                 }
                 volume = this.limitVolume(volume);
-                var zone = this.findZone(audioContext, preset, pitch);
+                var zone = this.findZone(audioContext, preset, pitch); //find pitch zone 
                 if (!(zone.buffer)) {
                     console.log('empty buffer ', zone);
                     return;
                 }
                 var baseDetune = zone.originalPitch - 100.0 * zone.coarseTune - zone.fineTune;
-                var playbackRate = 1.0 * Math.pow(2, (100.0 * pitch - baseDetune) / 1200.0);
+                var playbackRate = (1.0 * Math.pow(2, (100.0 * pitch - baseDetune) / 1200.0)); //controls pitch
                 var sampleRatio = zone.sampleRate / audioContext.sampleRate;
-                var startWhen = when;
+                var startWhen = when; 
                 if (startWhen < audioContext.currentTime) {
                     startWhen = audioContext.currentTime;
                 }
@@ -522,7 +523,7 @@
                 this.setupEnvelope(audioContext, envelope, zone, volume, startWhen, waveDuration, duration);
                 envelope.audioBufferSourceNode = audioContext.createBufferSource();
                 envelope.audioBufferSourceNode.playbackRate.setValueAtTime(playbackRate, 0);
-                if (slides) {
+                if (slides) { //if there is bend on a note ??
                     if (slides.length > 0) {
                         envelope.audioBufferSourceNode.playbackRate.setValueAtTime(playbackRate, when);
                         for (var i = 0; i < slides.length; i++) {
@@ -594,20 +595,20 @@
                 }
                 envelope.gain.cancelScheduledValues(when);
                 envelope.gain.setValueAtTime(this.noZeroVolume(ahdsr[0].volume * volume), when);
-                for (var i = 0; i < ahdsr.length; i++) {
-                    if (ahdsr[i].duration > 0) {
-                        if (ahdsr[i].duration + lastTime > duration) {
-                            var r = 1 - (ahdsr[i].duration + lastTime - duration) / ahdsr[i].duration;
-                            var n = lastVolume - r * (lastVolume - ahdsr[i].volume);
-                            envelope.gain.linearRampToValueAtTime(this.noZeroVolume(volume * n), when + duration);
-                            break;
-                        }
-                        lastTime = lastTime + ahdsr[i].duration;
-                        lastVolume = ahdsr[i].volume;
-                        envelope.gain.linearRampToValueAtTime(this.noZeroVolume(volume * lastVolume), when + lastTime);
-                    }
-                }
-                envelope.gain.linearRampToValueAtTime(this.noZeroVolume(0), when + duration + this.afterTime);
+                // for (var i = 0; i < ahdsr.length; i++) {
+                //     if (ahdsr[i].duration > 0) {
+                //         // if (ahdsr[i].duration + lastTime > duration) {
+                //         //     var r = 1 - (ahdsr[i].duration + lastTime - duration) / ahdsr[i].duration;
+                //         //     var n = lastVolume - r * (lastVolume - ahdsr[i].volume);
+                //         //     envelope.gain.linearRampToValueAtTime(this.noZeroVolume(volume * n), when + duration);
+                //         //     break;
+                //         // }
+                //         lastTime = (lastTime + ahdsr[i].duration);
+                //         lastVolume = ahdsr[i].volume;
+                //         envelope.gain.linearRampToValueAtTime(this.noZeroVolume(volume * lastVolume), when + lastTime);
+                //     }
+                // }
+                // envelope.gain.linearRampToValueAtTime(this.noZeroVolume(0), when + duration + this.afterTime);
             };
             this.numValue = function (aValue, defValue) {
                 if (typeof aValue === "number") {
@@ -641,7 +642,7 @@
                             envelope.gain.cancelScheduledValues(0);
                             envelope.gain.setTargetAtTime(0.00001, audioContext.currentTime, 0.1);
                             envelope.when = audioContext.currentTime + 0.00001;
-                            envelope.duration = 0;
+                            envelope.duration = 0; 
                         }
                     };
                     this.envelopes.push(envelope);

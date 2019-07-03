@@ -323,6 +323,10 @@ MIDIEvents.createParser = function midiEventsCreateParser(stream, startAt, stric
                                 (stream.readUint8() << 8) +
                                 stream.readUint8());
                             event.tempoBPM = 60000000 / event.tempo;
+                            // event.tempoBPM = this.inTempo; 
+                            // event.tempo = 60000000 / event.tempoBPM;
+                            // event.tempo = 60000000 / 80; 
+                            // event.tempoBPM = 80;
                             return event;
                         case MIDIEvents.EVENT_META_SMTPE_OFFSET:
                             if (strictMode && 5 !== event.length) {
@@ -741,7 +745,9 @@ MIDIFileHeader.prototype.getTickResolution = function (tempo) {
         // Ticks per beat
     }
     // Default MIDI tempo is 120bpm, 500ms per beat
-    tempo = tempo || 500000;
+    // tempo = (tempo) || 500000;
+    //80 BPM: 
+    tempo = 60000000 / tempo; 
     return tempo / this.getTicksPerBeat();
 };
 
@@ -944,6 +950,7 @@ function ensureArrayBuffer(buf) {
 }
 
 // Constructor
+//changes made here 
 function MIDIFile(buffer, strictMode) {
     var track;
     var curIndex;
@@ -1057,12 +1064,13 @@ MIDIFile.prototype.takeBeat = function (n, song) {
     song.beats.push(beat);
     return beat;
 }
-MIDIFile.prototype.parseSong = function () {
+MIDIFile.prototype.parseSong = function (inTempo) {
     var song = {
         duration: 0,
         tracks: [],
         beats: []
     };
+    this.inTempo = inTempo; 
     var events = this.getMidiEvents();
     console.log(events);
     for (var i = 0; i < events.length; i++) {
@@ -1131,7 +1139,7 @@ MIDIFile.prototype.getEvents = function (type, subtype) {
     var playTime = 0;
     var filteredEvents = [];
     var format = this.header.getFormat();
-    var tickResolution = this.header.getTickResolution();
+    var tickResolution = this.header.getTickResolution(this.inTempo);
     var i;
     var j;
     var trackParsers;
@@ -1151,7 +1159,8 @@ MIDIFile.prototype.getEvents = function (type, subtype) {
                 if (event.type === MIDIEvents.EVENT_META) {
                     // tempo change events
                     if (event.subtype === MIDIEvents.EVENT_META_SET_TEMPO) {
-                        tickResolution = this.header.getTickResolution(event.tempo);
+                        // tickResolution = this.header.getTickResolution(event.tempo);
+                        tickResolution = this.header.getTickResolution(this.inTempo);
                     }
                 }
                 // push the asked events
@@ -1200,7 +1209,8 @@ MIDIFile.prototype.getEvents = function (type, subtype) {
                 if (event.type === MIDIEvents.EVENT_META) {
                     // tempo change events
                     if (event.subtype === MIDIEvents.EVENT_META_SET_TEMPO) {
-                        tickResolution = this.header.getTickResolution(event.tempo);
+                        // tickResolution = this.header.getTickResolution(event.tempo);
+                        tickResolution = this.header.getTickResolution(this.inTempo);
                     }
                 }
                 // push midi events
@@ -1219,7 +1229,7 @@ MIDIFile.prototype.getEvents = function (type, subtype) {
 };
 
 MIDIFile.prototype.getMidiEvents = function () {
-    return this.getEvents(MIDIEvents.EVENT_MIDI);
+    return this.getEvents(MIDIEvents.EVENT_MIDI, );
 };
 
 MIDIFile.prototype.getLyrics = function () {
