@@ -1,36 +1,73 @@
 <!DOCTYPE html>
     <head>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Custom styles -->
         <link rel="stylesheet" href="../Stylesheets/main.css" type="text/css">
-        <!-- Bootstrap -->
-        <link href="../bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
-        <script src="../bootstrap-4.3.1-dist/js/bootstrap.js"></script>
     </head>
     <header id="header">
-        <h1>Welcome to Bach Dictation Generator.</h1>
-        <!-- <h2>Enter Practice mode to hide the score and limit volume changing abilities.</h2> -->
-    </header>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" href="../../index.html">Home </a>
-                <a class="nav-item nav-link active" href="./Assets/Pages/about.html">About <span
-                        class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Credits</a>
-            </div>
+        <div class="container-header">
+            <!-- <div class="logo">
+          <img src="./Assets/Images/swarthmore.png">
+        </div> -->
+            <h1 id="site-title">Bach Chorale Workshop</h1>
+            <!-- <h2>Enter Practice mode to hide the score and limit volume changing abilities.</h2> -->
+            <nav class="navbar sticky-top navbar-expand-lg navbar-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-cntls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="/index.html">Home </a>
+                        <a class="nav-item nav-link active" href="/Assets/Pages/about.html">About <span 
+                            class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="/Assets/Pages/credits.html">Credits</a>
+                    </div>
+                </div>
+            </nav>
         </div>
-    </nav>
+    </header>
     <body>
-        <p>
-            BACH CHORALE WORKSHOP
-            Welcome to Swarthmore College's Bach Chorale Workshop! This site is designed for anyone interested in learning to
-            analyze and transcribe multiple voices sounding simultaneously. The instrument assignment and volume of each voice are
-            customizable so that you can concentrate on particular elements in the texture and work up to being able to transcribe
-            all four voices at once.
-        </p>
+        <div id="paragraph">
+            <h4>Instructions</h4>
+                To use Bach Chorale Workshop, 
+                    <a id="inline-link" class="nav-item nav-link" href="../../index.html">
+                        navigate to the home page
+                    </a> 
+                and select or search for one of over 400 chorales. After loading, you will see a score of the piece to
+                the right and the sound controls to the left. Using the sliding bars, you can go to any second in the music and 
+                set the tempo anywhere between 50 and 200 bpm. There are also controls for each part in the music. You can 
+                set the instrumentation and volume of each separate part. 
+                <br>
+                <br>
+                For more of a challenge, toggle the practice mode button at the top. This will hide the score and limit your
+                volume-changing abilities so that you can only change the volume of the soprano/alto parts or tenor/bass parts
+                at the same time. You can still set separate instruments for each part.  
+            <h4>Project Background</h4>
+                
+            <h4>Code</h4>
+                This site hosted on GitHub Pages. Using a static collection of Bach chorales in MIDI and MUSICXML format and 
+                libraries that convert music events into data types that can be interpreted and adjsuted by your web browser's 
+                audio context, we created this simple player. Please visit 
+                    <a id="inline-link" href="https://github.com/kkxix/bach-demo-public.github.io"> 
+                        our GitHub page 
+                    </a> 
+                to see the source code and
+                    <a id="inline-link" href="/Assets/Pages/credits.html">
+                        the credits page
+                    </a> 
+                for more information about the JavaScript libraries we used to build this tool. 
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
     </body>
 </html>

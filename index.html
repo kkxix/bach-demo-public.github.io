@@ -2,12 +2,15 @@
 <!-- v1.16 -->
 
 <head>
+  <meta charset="utf-8">
+  <title>Bach Chorale Workshop</title>
   <!-- Bootstrap -->
-  <link href="../Assets/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
-  <script src="./Assets/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!--
 	<script src='https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js'></script>
     -->
+  <!-- Web player -->
   <script src='./Assets/JavaScript/MIDIFile.js'></script>
   <script src='./Assets/JavaScript/WebAudioFontPlayer.js'></script>
   <!-- Music score svg dependencies -->
@@ -25,18 +28,18 @@
     <!-- <div class="logo">
       <img src="./Assets/Images/swarthmore.png">
     </div> -->
-    <h1 id="site-title">Welcome to Bach Dictation Generator.</h1>
+    <h1 id="site-title">Bach Chorale Workshop</h1>
     <!-- <h2>Enter Practice mode to hide the score and limit volume changing abilities.</h2> -->
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-cntls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="./index.html">Home <span class="sr-only">(current)</span></a>
-          <a class="nav-item nav-link" href="./Assets/Pages/about.html">About</a>
-          <a class="nav-item nav-link" href="#">Credits</a>
+          <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="/Assets/Pages/about.html">About</a>
+          <a class="nav-item nav-link" href="/Assets/Pages/credits.html">Credits</a>
         </div>
       </div>
     </nav>
@@ -45,8 +48,24 @@
 
 
 <body>
-<!-- <div id="container-cntls"> -->
-  <div id='select-cntls'>
+  <div class="container">
+    <div id='welcome-message'>
+      <strong>Welcome to Swarthmore College's Bach Chorale Workshop!</strong> This site is designed for anyone
+      interested in learning to
+      analyze and transcribe multiple voices sounding simultaneously. The instrument assignment and volume of each voice
+      are
+      customizable so that you can concentrate on particular elements in the texture and work up to being able to
+      transcribe
+      all four voices at once.
+      <br>
+      <br>
+      To get started, select one of over 400 chorales from the drop-down menu. Enter practice mode at any time to make
+      it more challenging!
+      For more information,
+      <a style="display: inline; padding: initial;" class="nav-item nav-link" href="./Assets/Pages/about.html">see the
+        about page.</a>
+    </div>
+    <div id='select-cntls'>
       <!-- <input type="file" id="filesinput" name="filesarr[]" /> -->
       <div class="dropdown">
         <button onclick='dropDown()' class="btn">Chorales ▼</button>
@@ -475,66 +494,67 @@
           a.appendChild(txt);
           a.setAttribute("href", "#");
           // a.setAttribute('class', 'fknp');
-          a.setAttribute('id', i);        
+          a.setAttribute('id', i);
           a.setAttribute('onclick', 'loadNewChorale("' + fileNameArray[i] + '", 120)');
           dropMenu.insertBefore(a, dropMenu.lastChild);
-      }
+        }
       </script>
 
       <div class="four-option">
         <!-- <button type="button" onClick='practiceMode()' class="btn" id="to-toggle">Practice Mode</button> -->
         <input type="checkbox" id="fourpart">
         <label for="fourpart" class="btn">Practice Mode</label>
-      </div>      
+      </div>
     </div>
-
-    <!-- Loaded Song HTML -->
-    <div id="loadedsong" class="container-fluid">
-    <div id="cntls"></div>
-  <!-- </div> -->
-  <!-- <p><a href="https://surikov.github.io/webaudiofont/">source</a></p> -->
-
-  <div class="rat" id="notation">
   </div>
 
-  <!-- xmlpplay menu, need to edit but exists now for funcitonality -->
-  <span id="btns">
-    <div id="mbar" tabindex="1">Menu</div>
-    <form id="menu">
-      <label>
-        <span id="kwart"></span>
-        <input type="number" min="20" max="300" id="tempo">
-      </label>
-      <label>
-        <span>Play:</span>
-        <input type='button' id="play" value="play"> or click in the margin of the score
-      </label>
-      <label id="drplbl">
-        <span>Use Dropbox:</span>
-        <input id="drpuse" type="checkbox" tabindex="3" />
-      </label>
-      <label>
-        <span>Full Screen</span>
-        <input id="fscr" type="checkbox" />
-      </label>
-      <label id="savlbl">
-        <span>Save SVG</span>
-        <input type='button' id="save" value="save svg">
-      </label>
-      <label id="verlab" class="rflt"></label>
-      <label>
-        <span>Help</span>
-        <a href="xmlplay_readme.html" target="_blank">ReadMe</a>
-      </label>
-    </form>
-  </span>
+  <!-- Loaded Song HTML -->
+  <div id="loadedsong" class="container-fluid">
+    <div id="cntls"></div>
+    <!-- </div> -->
+    <!-- <p><a href="https://surikov.github.io/webaudiofont/">source</a></p> -->
 
-  <pre class="rat" id="err"></pre>
-  <div id="rollijn" class="dashed" title="drag to reposition the focussed staff"></div>
-  <!-- <div id="comp" class="dlog">wait until soundfonts are loaded ...<br></div> -->
-  <!-- <pre id="wait" class="dlog">Loading, please wait ...</pre> -->
-  <div id="saveDiv" style="display:none;"></div>
-  <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="mtrsvg" viewBox="0 0 220.31308 310.88881" width="20px">
+    <div class="rat" id="notation">
+    </div>
+
+    <!-- xmlpplay menu, need to edit but exists now for funcitonality -->
+    <span id="btns">
+      <div id="mbar" tabindex="1">Menu</div>
+      <form id="menu">
+        <label>
+          <span id="kwart"></span>
+          <input type="number" min="20" max="300" id="tempo">
+        </label>
+        <label>
+          <span>Play:</span>
+          <input type='button' id="play" value="play"> or click in the margin of the score
+        </label>
+        <label id="drplbl">
+          <span>Use Dropbox:</span>
+          <input id="drpuse" type="checkbox" tabindex="3" />
+        </label>
+        <label>
+          <span>Full Screen</span>
+          <input id="fscr" type="checkbox" />
+        </label>
+        <label id="savlbl">
+          <span>Save SVG</span>
+          <input type='button' id="save" value="save svg">
+        </label>
+        <label id="verlab" class="rflt"></label>
+        <label>
+          <span>Help</span>
+          <a href="xmlplay_readme.html" target="_blank">ReadMe</a>
+        </label>
+      </form>
+    </span>
+
+    <pre class="rat" id="err"></pre>
+    <div id="rollijn" class="dashed" title="drag to reposition the focussed staff"></div>
+    <!-- <div id="comp" class="dlog">wait until soundfonts are loaded ...<br></div> -->
+    <!-- <pre id="wait" class="dlog">Loading, please wait ...</pre> -->
+    <div id="saveDiv" style="display:none;"></div>
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="mtrsvg" viewBox="0 0 220.31308 310.88881" width="20px">
     <g transform="translate(-168.05564,-173.54485)" id="g3537">
       <g id="layer1">
         <path id="path9868" d="m 245.73622,175.45935 -76.37696,284.7106 217.71005,0 -75.66317,-285.61445 z"
@@ -557,7 +577,7 @@
       </g>
     </g>
   </svg> -->
-  <!-- <svg class="dlog" id="playbk" width="100" height="100" viewBox="0 0 20 20" style="z-index:8"
+    <!-- <svg class="dlog" id="playbk" width="100" height="100" viewBox="0 0 20 20" style="z-index:8"
     xmlns="http://www.w3.org/2000/svg">
     <path
       d="m8,14.5l6,-4.5l-6,-4.5l0,9l0,0zm2,-14.5c-5.5,0 -10,4.5 -10,10c0,5.5 4.5,10 10,10c5.5,0 10,-4.5 10,-10c0,-5.5 -4.5,-10 -10,-10l0,0zm0,18c-4.4,0 -8,-3.6 -8,-8c0,-4.4 3.6,-8 8,-8c4.4,0 8,3.6 8,8c0,4.4 -3.6,8 -8,8l0,0z" />
@@ -577,8 +597,8 @@
     var loadedsong = null;
     var maxChannels = 0;
     var practice = false;
-    var sentWhen = 0; 
-    var inPath = ""; 
+    var sentWhen = 0;
+    var inPath = "";
 
     //check for existing path and tempo 
     const urlParams = new URLSearchParams(window.location.search);
@@ -588,27 +608,27 @@
       handleExample(urlParams.get('path'), urlParams.get('tempo'));
       // call function 
       //future -- encode path 
-    } 
+    }
 
     //Toggle dropdown 
     function dropDown() {
       document.getElementById("myDropdown").classList.toggle("show");
     }
     function dropDownIns(i) {
-        document.getElementById("selins"+i).classList.toggle("show");
-      }
+      document.getElementById("selins" + i).classList.toggle("show");
+    }
     //Toggle practice mode 
     var practiceBtn = document.getElementById("fourpart");
-    practiceBtn.addEventListener("click", function() {
-      if(practice){
-        practice = false; 
+    practiceBtn.addEventListener("click", function () {
+      if (practice) {
+        practice = false;
         var tempo = document.getElementById('tempo');
-        setTempo(tempo.value); 
+        setTempo(tempo.value);
       } else {
         practice = true;
         var tempo = document.getElementById('tempo');
-        setTempo(tempo.value); 
-      }      
+        setTempo(tempo.value);
+      }
     })
     // function practiceMode() {
     //   if (practice === false) {
@@ -628,6 +648,7 @@
       array = div.getElementsByTagName('a');
       for (var i = 0; i < array.length; i++) {
         txtValue = array[i].textContext || array[i].innerText;
+        console.log(txtValue);
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
           array[i].style.display = "";
         } else {
@@ -637,23 +658,24 @@
     }
     //Filter instruments by search 
     function filterFunctionIns(i) {
-        var input, filter, ul, li, array;
-        input = document.getElementById("myInputIns");
-        filter = input.value.toUpperCase();
-        div = document.getElementById("selins"+i);
-        array = div.getElementsByTagName('a');
-        for (var i = 0; i < array.length; i++) {
-          txtValue = array[i].textContext || array[i].innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            array[i].style.display = "";
-          } else {
-            array[i].style.display = "none";
-          }
+      var input, filter, ul, li, array;
+      input = document.getElementById("myInputIns");
+      filter = input.value.toUpperCase();
+      div = document.getElementById("selins" + i);
+      array = div.getElementsByTagName('a');
+      for (var i = 0; i < array.length; i++) {
+        txtValue = array[i].textContext || array[i].innerText;
+        console.log(txtValue);
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          array[i].style.display = "";
+        } else {
+          array[i].style.display = "none";
         }
       }
+    }
 
     function stop() {
-      audioContext.suspend(); 
+      audioContext.suspend();
     }
 
     function go() {
@@ -667,13 +689,13 @@
     }
 
     function setTempo(inTempo) {
-      stop(); 
+      stop();
       document.location.href = "/index.html" + "?tempo=" + inTempo + "&path=" + inPath + "&practice=" + practice;
     }
 
     function startPlay(song) {
-      if(audioContext.state == 'suspended') {
-        audioContext.resume(); 
+      if (audioContext.state == 'suspended') {
+        audioContext.resume();
       } else {
         currentSongTime = 0;
         songStart = audioContext.currentTime; //global 
@@ -708,13 +730,13 @@
         //time formatting: 
         var secs = Math.round(currentSongTime);
         var mins = Math.floor(secs / 60);
-        secs = secs % 60; 
-        if(secs < 10 ) {
+        secs = secs % 60;
+        if (secs < 10) {
           timeStamp = mins + ':0' + secs;
         } else {
           timeStamp = mins + ':' + secs;
         }
-        document.getElementById('tmr').innerHTML = '' + timeStamp; 
+        document.getElementById('tmr').innerHTML = '' + timeStamp;
         nextPositionTime = audioContext.currentTime;
       }
       window.requestAnimationFrame(function (t) {
@@ -784,37 +806,37 @@
       var fourpart = document.getElementById('fourpart');
       // var htmlWrng = '<h2 id="wrng">Refresh browser page to load another song.</h2>';
       // h.innerHTML += htmlWrng;
-      var html = '<div id="soundcontrols"><button onclick="go();" class="btn">⏵</button> <button onclick="stop();" class="btn">⏸</button></div>';
-      html = html + '<div id="posAndTempo"><h3>Song Duration</h3>'; 
+      var html = '<div id="soundcontrols"><button onclick="go();" class="btn">Play</button> <button onclick="stop();" class="btn">Pause</button></div>';
+      html = html + '<div id="posAndTempo"><h3>Song Duration</h3>';
       html = html + '<div><input id="position" class="range-slider_range" type="range" min="0" max="100" value="0" step="1" /><span class="range-slider_value" id="tmr"></span></div>';
-      
-      if(urlParams.has('tempo')) {
-        var oldTempo =  urlParams.get("tempo");
+
+      if (urlParams.has('tempo')) {
+        var oldTempo = urlParams.get("tempo");
         // html = html + '<p>Tempo: <span id="tempo-display">' + oldTempo + '</span> bpm<p>';
         html = html + '<div class="range-slider"><h3>Tempo</h3>';
         html = html + '<input class="range-slider_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="' + oldTempo + '" />';
-        html = html + '<span class="range-slider_value">'+oldTempo+'</span></div>';
+        html = html + '<span class="range-slider_value">' + oldTempo + '</span></div>';
       } else {
         // html = html + '<p>Tempo: <span id="tempo-display">120</span> bpm<p>';
         html = html + '<div class="range-slider"><h3>Tempo</h3>';
         html = html + '<input class="range-slider_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="120" />';
         html = html + '<span class="range-slider_value">120</span></div>';
-      }      
+      }
       html = html += "</div>"
-      
+
       html = html + '<div id="channels"><h3>Channels</h3>';
 
       //If in practice mode, limit to two volume controllers 
       // console.log("outside practice if statement" + practice);
-      if((document.getElementById('fourpart').checked == true)) {
-        practice = true; 
-      } 
+      if ((document.getElementById('fourpart').checked == true)) {
+        practice = true;
+      }
       if (practice) {
         document.getElementById('fourpart').checked = true;
         maxChannels = 4;
-        practice = true; 
+        practice = true;
         var musics = document.getElementsByClassName('music');
-        for(var i = 0; i < musics.length; i++) {
+        for (var i = 0; i < musics.length; i++) {
           musics[i].style.visibility = 'hidden';
         }
       }
@@ -842,13 +864,13 @@
           var v = Math.round(100 * song.tracks[i].volume);
           html = html + '<div id="inst-name">' + fourPartArray[i] + '</div>';
           html = html + '<div class="range-slider">';
-          html = html + '<div id="track" class="container">' + chooserIns(song.tracks[i].id, i); 
+          html = html + '<div id="track" class="container">' + chooserIns(song.tracks[i].id, i);
           html = html + '<div><input class="range-slider_range"id="channel' + i + '" type="range" min="0" max="100" value="' + v + '" step="1" />';
           html = html + '<span class="range-slider_value">0</span></div></div></div>';
-        // populateIns(song.tracks[i].id, i);        
-        //how to put instrument drop down and volume bar in same line? 
-        //also Maybe add a label for each channel
-        //also is there  a way to change button label to the current instrument selected? 
+          // populateIns(song.tracks[i].id, i);        
+          //how to put instrument drop down and volume bar in same line? 
+          //also Maybe add a label for each channel
+          //also is there  a way to change button label to the current instrument selected? 
         }
       }
       html = html + '</div>';
@@ -861,7 +883,7 @@
       o.innerHTML = html;
       console.log('Loaded');
 
-      rangeSlider(); 
+      rangeSlider();
 
       var pos = document.getElementById('position');
       pos.oninput = function (e) {
@@ -903,7 +925,7 @@
       }
 
       for (var i = 0; i < song.tracks.length; i++) {
-        populateIns(song.tracks[i].id, i);        
+        populateIns(song.tracks[i].id, i);
       }
 
       loadedsong = song;
@@ -956,7 +978,7 @@
       // var nn = sl.value;
       var info = player.loader.instrumentInfo(i);
       player.loader.startLoad(audioContext, info.url, info.variable);
-      document.getElementById('instButton'+track).textContent = info.title; 
+      document.getElementById('instButton' + track).textContent = info.title;
       player.loader.waitLoad(function () {
         console.log('loaded');
         loadedsong.tracks[track].info = info;
@@ -986,17 +1008,17 @@
       };
     }
     function chooserIns(n, track) {
-      var html = '<button id="instButton'+track+'" onclick="dropDownIns('+track+')" class = "btn-instrument">Instruments ▼</button>'; 
+      var html = '<button id="instButton' + track + '" onclick="dropDownIns(' + track + ')" class = "btn-instrument">Instruments ▼</button>';
       html = html + '<div id="selins' + track + '" class="dropdown-content">';
       // html = html + '<input type="text" placeholder="Search..." id="myInputIns" onkeyup="filterFunctionIns('+track+')">';    
       html = html + '</div>';
-      
+
       // html = html + '</select>';
       return html;
     }
 
     function populateIns(n, track) {
-      var dropMenuIns = document.getElementById("selins"+track);
+      var dropMenuIns = document.getElementById("selins" + track);
       var instType = -1;
       var counter = 0;
       for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
@@ -1006,15 +1028,17 @@
         }
         if (instType != player.loader.instrumentInfo(i).p) {
           // html = html + '<option value="' + i + '"' + sel + '>' + counter + ': ' + player.loader.instrumentInfo(i).title + '</option>';
-          var option = document.createElement("a"),
-            txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
-          option.setAttribute("href", "#");          
-          option.appendChild(txt);
-          option.setAttribute('value', i + sel);
-          option.setAttribute('onclick', "handleInstrument("+i+", "+ track + ")"); 
-          dropMenuIns.insertBefore(option, dropMenuIns.lastChild); 
-          // '<option value="' + i + '"' + sel + '>' + counter + ': ' + player.loader.instrumentInfo(i).title + '</option>';
-          counter++;
+          if (player.loader.instrumentInfo(i).title) {
+            var option = document.createElement("a"),
+              txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
+            option.setAttribute("href", "#");
+            option.appendChild(txt);
+            option.setAttribute('value', i + sel);
+            option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
+            dropMenuIns.insertBefore(option, dropMenuIns.lastChild);
+            // '<option value="' + i + '"' + sel + '>' + counter + ': ' + player.loader.instrumentInfo(i).title + '</option>';
+            counter++;
+          }
         }
         instType = player.loader.instrumentInfo(i).p;
       }
@@ -1023,8 +1047,8 @@
       search.setAttribute('type', "text");
       search.setAttribute('placeholder', "Search...");
       search.setAttribute('id', "myInputIns");
-      search.setAttribute('onkeyup', 'filterFunctionIns(' + track +')');
-      dropMenuIns.insertBefore(search, dropMenuIns.firstChild); 
+      search.setAttribute('onkeyup', 'filterFunctionIns(' + track + ')');
+      dropMenuIns.insertBefore(search, dropMenuIns.firstChild);
     }
     function chooserDrum(n, beat) {
       var html = '<select id="seldrm' + beat + '">';
@@ -1054,16 +1078,19 @@
       fileReader.readAsArrayBuffer(file);
     }
     function loadNewChorale(path, tempo) {
-      if(loadedsong) {
+      if (loadedsong) {
         inPath = path;
         setTempo(120);
       } else {
-        handleExample(path, tempo); 
+        handleExample(path, tempo);
       }
     }
     function handleExample(path, tempo) {
+      //remove welcome message
+      var elem = document.getElementById("welcome-message");
+      elem.parentNode.removeChild(elem);
       //call function to check query for tempo and file path 
-      inPath = path; 
+      inPath = path;
       console.log(path);
       var xmlHttpRequest = new XMLHttpRequest();
       xmlHttpRequest.open("GET", path, true);
@@ -1075,7 +1102,7 @@
         startLoad(song);
       };
       xmlHttpRequest.send(null);
-      
+
       //call xmlplay 
       var mxlUrl = path.substr(0, 9);
       mxlUrl += "chorales-musicxml";
@@ -1084,19 +1111,28 @@
       mxlUrl = mxlUrl.substring(0, mxlUrl.length - 3)
       mxlUrl += "musicxml";
       a.setAttribute("title", mxlUrl);
-      console.log(mxlUrl); 
-      readLocalFile(mxlUrl); 
+      console.log(mxlUrl);
+      readLocalFile(mxlUrl);
 
       //set practice mode 
-      if(urlParams.has('practice')){
+      if (urlParams.has('practice')) {
         practice = urlParams.get('practice') == "true" ? true : false;
         console.log("practice: " + practice);
       }
       else {
-        practice = false; 
+        practice = false;
       }
     }
   </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
