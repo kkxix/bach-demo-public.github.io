@@ -103,7 +103,7 @@ function go() {
 
 function setTempo(inTempo) {
     stop(); 
-    document.location.href = "/index.html" + "?tempo=" + inTempo + "&path=" + inPath + "&practice=" + practice;
+    document.location.href = "/bach-demo-public.github.io/index.html" + "?tempo=" + inTempo + "&path=" + inPath + "&practice=" + practice;
 }
 
 function startPlay(song) {
