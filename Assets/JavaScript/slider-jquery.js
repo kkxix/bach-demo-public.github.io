@@ -13,12 +13,6 @@ var rangeSlider = function () {
 
         range.on('input', function () {
             $(this).next(value).html(this.value);
-            // if(this.attr('id')=='tmr'){
-            //     var secs = (this.value/100) * song.duration
-            //     $(this).next(value) =  
-            // }
         });
     });
 };
-
-// rangeSlider();
