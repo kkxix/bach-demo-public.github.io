@@ -6,12 +6,17 @@
 //~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 //~ See the GNU General Public License for more details. <http://www.gnu.org/licenses/gpl.html>.
 
+// Modified by Katie Knox 2019 
+
+// NOTE -- for Bach Chorale Workshop purposes, this library is only used for rendering an svg of
+//          the music score
+
 'use strict'
 var xmlplay_VERSION = 93;
 var instUrl = '';   // path to directory containing sound fonts
 var instTab = {};   // { instrument number -> instrument name } for non standard instrument names
 
-// (function () {
+
 var gAbcSave, gAbcTxt, opt = {}, allNotes, gBeats, gStaves, nVoices, scoreFnm;
 var iSeq = 0, iSeqStart, isPlaying = 0, timer1, gToSynth = 0, hasSmooth;
 var ntsSeq = [];
@@ -28,6 +33,7 @@ var isvgPrev = [];  // svg index of each marker
 var isvgAligned = 0;
 var rMarks = [];    // a marker for each voice
 var audioCtx = null;
+
 //custom current song time 
 var currentSongTime = 0;
 var golven = [];
@@ -104,14 +110,7 @@ function readLocalFile(url, audioContext) {
     fileURL = url;
     var freader = new FileReader();
     freader.onload = function (e) { readAbcOrXML(freader.result); } //ensure filetype
-    // if (drop_files) f = drop_files [0]
-    // else            f = fknElm.files [0]; //if not dropped, f = first file input
-
-    // if (f) {
-    //     scoreFnm = f.name.split ('.')[0];
     var request = new XMLHttpRequest();
-    // var url = '../Assets/xml/chorale 004.musicxml';
-    // var url = document.getElementById(id).getAttribute('title');
     request.open('GET', url, true);
     request.responseType = 'blob';
     request.onload = function () {
@@ -124,8 +123,6 @@ function readLocalFile(url, audioContext) {
     audioCtx = audioContext;
 
     addUnlockListener(playbtn, 'click', playBack);
-    // freader.readAsText(file);
-    // }
 }
 
 function getUrl() {
@@ -680,15 +677,12 @@ function changeCurTime(newTime) {
 function markeer() {
     isPlaying = 1;
     if (!audioCtx) { alert(alrtMsg2); return }
-    // console.log(audioCtx.currentTime); 
-    // var t0 = audioCtx.currentTime * 1000;
     var t0 = currentSongTime * 1000;
     console.log(t0);
     var dt = 0, t1, tf;
     var tfac = 60000 / 384;
     while (dt == 0) {
-        var nt = ntsSeq[iSeq];             // the current note 
-        // console.log(nt); 
+        var nt = ntsSeq[iSeq];             // the current note        
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('tempo')) {
             curTemp = urlParams.get('tempo');
@@ -696,16 +690,10 @@ function markeer() {
         } else {
             curTemp = 120;
         }
-        // if (nt.tmp != curTemp) {
-        //     curTemp = nt.tmp;
-        //     tmpElm.value = Math.round(curTemp * tempScale);
-        // }
-        // tf = tfac / (nt.tmp * tempScale);   // abc tijd -> echte tijd in msec
         console.log("curTempo: " + curTemp);
         tf = tfac / (curTemp * tempScale);
         if (iSeq == ntsSeq.length - 1) {    // laatste noot
             iSeq = -1;                      // want straks +1
-            // dt = nt.ns[0].dur + 1000;       // 1 sec extra voor herhaling  
             dt = nt.ns[0].dur;
         } else {
             t1 = ntsSeq[iSeq + 1].t;       // abc time of next note 
@@ -722,8 +710,7 @@ function markeer() {
     }
     clearTimeout(timer1);
     console.log('dt: ' + dt);
-    timer1 = setTimeout(markeer, dt); // wait note duration (dt with units of miliseconds) and then call makeer again
-    // console.log('past timeout');
+    timer1 = setTimeout(markeer, dt); // wait note duration (dt with units of miliseconds) and then call makeer again   
 }
 
 function keyDown(e) {
@@ -745,21 +732,11 @@ function playBack() {
     if (!ntsSeq.length) return;
     isPlaying = 1 - isPlaying //if 0 (false) 1-0=1, if 1 (true), 1-1 =0
     if (isPlaying) {
-        //     playbtn.value = 'Stop';
-        //     playbk.style.display = 'none';
-        // markeer(); 
         return;
     } else {
-        //     playbtn.value = 'Play';
         clearTimeout(timer1);
     }
-    // markeer(); 
 }
-
-// function setTempo(inc) {
-//     if (inc) tmpElm.value = (tmpElm.value - 0) + inc;
-//     tempScale = tmpElm.value / curTemp;
-// }
 
 function speel(tijd, noot, dur, vce, velo) { // tijd en duur in millisecs
     if (noot == -1) return; // een rust
@@ -1278,52 +1255,6 @@ document.addEventListener('DOMContentLoaded', function () {
     errElm = document.getElementById('err');
     rolElm = document.getElementById('rollijn');
     abcfile = document.getElementById('abcfile');
-    // fknElm = document.getElementsByClassName('fknp'); // add onClick with readLocalFile callback 
-    // tmpElm = document.getElementById('tempo');
-    // playbk = document.getElementById('playbk');
-    // playbtn = document.getElementById('play'); //moved to readLocalFile
-    // document.getElementById('kwart').appendChild(document.getElementById('mtrsvg'));
-    // addUnlockListener(playbtn, 'click', playBack); //moved to readLocalFile
-    // addUnlockListener(playbk, 'click', playBack);
-    // for(var i = 0; i<fknElm.length; i++){
-    //     fknElm[i].addEventListener('click', readLocalFile(i)); //changed from change to click 
-    // }
-    // document.getElementById('save').addEventListener('click', saveLayout);
-    // rolElm.addEventListener('mousedown', lijn_shift);
-    // rolElm.addEventListener('touchstart', lijn_shift);
-    // tmpElm.addEventListener('change', setTempo);
-    // window.addEventListener('resize', function () {
-    //     setScale();
-    //     resizeNotation();
-    //     alignSystem();
-    // });
-    // drag drop
-    // abcElm.addEventListener('drop', doDrop);
-    // abcElm.addEventListener('dragover', function (e) {   // this handler makes the element accept drops and generate drop-events
-    //     e.stopPropagation();
-    //     e.preventDefault();                        // the preventDefault is obligatory for drag/drop!
-    //     e.dataTransfer.dropEffect = 'copy';         // Explicitly show this is a copy.
-    // });
-    // abcElm.addEventListener('dragenter', function () { this.classList.add('indrag'); });
-    // abcElm.addEventListener('dragleave', function () { this.classList.remove('indrag'); });
-    // dropbox
-    // drpuse = document.getElementById('drpuse');
-    // drpuse.checked = false;
-    // drpuse.addEventListener('click', dropuse);
-    // drplbl = document.getElementById('drplbl');
-    // menu
-    // mbar = document.getElementById('mbar');
-    // menu = document.getElementById('menu');
-    // menu.style.display = 'none';
-    // mbar.addEventListener('click', function (ev) {
-    //     ev.stopPropagation();
-    //     var hidden = menu.style.display == 'none';
-    //     menu.style.display = hidden ? 'block' : 'none';
-    //     mbar.style.background = hidden ? '#aaa' : '';
-    // });
-    // menu.addEventListener('click', function (ev) {
-    //     ev.stopPropagation();  // anders krijgt notation/body/svg ook de click
-    // });
     hasSmooth = CSS.supports('scroll-behavior', 'smooth');
     parsePreload();
     resizeNotation();
@@ -1355,4 +1286,3 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.addEventListener('keydown', keyDown);
 });
 
-// })();

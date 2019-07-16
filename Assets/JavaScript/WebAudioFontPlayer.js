@@ -328,13 +328,15 @@
                         , [50, 547] //String Ensemble 2
                     ];
                 }
-                /*
+                /* //Uncomment this for-loop to access all intruments
                 for (var i = 0; i < this.choosenInfos.length; i++) {
                     if (program+1 == this.choosenInfos[i][0]) {
                         return this.choosenInfos[i][1]-1;
                     }
                 }
                 */
+
+                //Limit instruments to one sound font per instrument name 
                 for (var i = 0; i < this.instrumentKeys().length; i++) {
                     if (program == 1 * this.instrumentKeys()[i].substring(0, 3)) {
                         return i;
@@ -443,7 +445,7 @@
             this.loader = new WebAudioFontLoader(this);
             this.onCacheFinish = null;
             this.onCacheProgress = null;
-            this.afterTime = .05; // seems to make no difference ??? 
+            this.afterTime = .05; 
             this.nearZero = 0.000001;
             this.createChannel = function (audioContext) {
                 return new WebAudioFontChannel(audioContext);
@@ -525,7 +527,7 @@
                 this.setupEnvelope(audioContext, envelope, zone, volume, startWhen, waveDuration, duration);
                 envelope.audioBufferSourceNode = audioContext.createBufferSource();
                 envelope.audioBufferSourceNode.playbackRate.setValueAtTime(playbackRate, 0);
-                if (slides) { //if there is bend on a note ??
+                if (slides) { 
                     if (slides.length > 0) {
                         envelope.audioBufferSourceNode.playbackRate.setValueAtTime(playbackRate, when);
                         for (var i = 0; i < slides.length; i++) {
@@ -597,20 +599,20 @@
                 }
                 envelope.gain.cancelScheduledValues(when);
                 envelope.gain.setValueAtTime(this.noZeroVolume(ahdsr[0].volume * volume), when);
-                // for (var i = 0; i < ahdsr.length; i++) {
-                //     if (ahdsr[i].duration > 0) {
-                //         // if (ahdsr[i].duration + lastTime > duration) {
-                //         //     var r = 1 - (ahdsr[i].duration + lastTime - duration) / ahdsr[i].duration;
-                //         //     var n = lastVolume - r * (lastVolume - ahdsr[i].volume);
-                //         //     envelope.gain.linearRampToValueAtTime(this.noZeroVolume(volume * n), when + duration);
-                //         //     break;
-                //         // }
-                //         lastTime = (lastTime + ahdsr[i].duration);
-                //         lastVolume = ahdsr[i].volume;
-                //         envelope.gain.linearRampToValueAtTime(this.noZeroVolume(volume * lastVolume), when + lastTime);
-                //     }
-                // }
-                // envelope.gain.linearRampToValueAtTime(this.noZeroVolume(0), when + duration + this.afterTime);
+                for (var i = 0; i < ahdsr.length; i++) {
+                    if (ahdsr[i].duration > 0) {
+                        // if (ahdsr[i].duration + lastTime > duration) {
+                        //     var r = 1 - (ahdsr[i].duration + lastTime - duration) / ahdsr[i].duration;
+                        //     var n = lastVolume - r * (lastVolume - ahdsr[i].volume);
+                        //     envelope.gain.linearRampToValueAtTime(this.noZeroVolume(volume * n), when + duration);
+                        //     break;
+                        // }
+                        lastTime = (lastTime + ahdsr[i].duration);
+                        lastVolume = ahdsr[i].volume;
+                        envelope.gain.linearRampToValueAtTime(this.noZeroVolume(volume * lastVolume), when + lastTime);
+                    }
+                }
+                envelope.gain.linearRampToValueAtTime(this.noZeroVolume(0), when + duration + this.afterTime);
             };
             this.numValue = function (aValue, defValue) {
                 if (typeof aValue === "number") {
