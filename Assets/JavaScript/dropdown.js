@@ -1,5 +1,5 @@
 var dropMenu = document.getElementById("myDropdown");
-var baseURL = "https://kkxix.github.io/bach-demo-public.github.io/"
+// var baseURL = "https://kkxix.github.io/bach-demo-public.github.io/"
 
 //array of all filenames stored in `/Assets/chorales-mid`
 var fileNameArray = [
@@ -422,6 +422,6 @@ for (var i = 0; i < fileNameArray.length; i++) {
     a.setAttribute("id", i);
 
     //loadNewChorale is the entry-point into main.js
-    a.setAttribute("onclick", `loadNewChorale("${baseURL}${fileNameArray[i]}", 120)`);
+    a.setAttribute("onclick", `loadNewChorale("${fileNameArray[i]}", 72)`);
     dropMenu.insertBefore(a, dropMenu.lastChild);
 }

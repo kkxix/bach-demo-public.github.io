@@ -13,7 +13,7 @@
                 from.connect(filter);
                 return filter;
             };
-            this.tempo = 120;
+            this.tempo = 72;
             this.input = this.audioContext.createDynamicsCompressor();
             this.input.threshold.setValueAtTime(-3, 0);// = -3; //-50
             this.input.knee.setValueAtTime(30, 0); //40

@@ -100,9 +100,9 @@ function setTempo(inTempo) {
     stop(); 
     document.location.href = `${baseURL}?tempo=${inTempo}&path=${inPath}&practice=${practice}`;
 }
-// function reload() {
-//     document.location.href = inPath; 
-// }
+function reload() {
+    document.location.href = inPath; 
+}
 
 function startPlay(song) {
     if(audioContext.state == 'suspended') {
@@ -219,7 +219,7 @@ function buildControls(song) {
     var html = `<div id="soundcontrols"><button onclick="go(); markeer();" class="btn" id="play">Play</button> <button onclick="stop();" class="btn" id="pause">Pause</button></div>`;
 
     //Start div for song duration and tempo ranges 
-    html = html + `<div id="posAndTempo"><h3>Song Duration</h3>`; 
+    html = html + `<div id="posAndTempo"><h3>Chorale Duration</h3>`; 
     html = html + `<div><input id="position" class="range-slider_range" type="range" min="0" max="100" value="0" step="1" /><span class="range-slider_value" id="tmr"></span></div>`;    
     if(urlParams.has('tempo')) {
         var oldTempo =  urlParams.get("tempo");
@@ -228,8 +228,8 @@ function buildControls(song) {
         html = html + `<span class="${range}_value">${oldTempo}</span></div>`;
     } else {
         html = html + `<div class="${range}r"><h3>Tempo</h3>`;
-        html = html + `<input class="${range}_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="120" />`;
-        html = html + `<span class="${range}_value">120</span></div>`;
+        html = html + `<input class="${range}_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="72" />`;
+        html = html + `<span class="${range}_value">72</span></div>`;
     }      
     html = html += `</div>`; //end #posAndTempo div
     
@@ -431,9 +431,9 @@ function populateIns(n, track) {
 function loadNewChorale(path, tempo) {
     if(loadedsong) {
         inPath = path;
-        handleExample(path, tempo);
+        setTempo(72);
     } else {
-        handleExample(path, tempo); 
+        handleExample(`${baseURL}${path}`, tempo); 
     }
 }
 

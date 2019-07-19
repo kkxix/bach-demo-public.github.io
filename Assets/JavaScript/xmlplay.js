@@ -78,7 +78,7 @@ var inst_tb = ["acoustic_grand_piano", "bright_acoustic_piano", "electric_grand_
     "woodblock", "taiko_drum", "melodic_tom", "synth_drum", "reverse_cymbal", "guitar_fret_noise",
     "breath_noise", "seashore", "bird_tweet", "telephone_ring", "helicopter", "applause", "gunshot"]
 var urlLoaded = {}; // onthoud welke scripts geladen zijn
-var gTempo = 120, curTemp = 120, tempScale = 1;
+var gTempo = 72, curTemp = 72, tempScale = 1;
 var params = [];    // [instr][key] note parameters per instrument
 var rates = [];     // [instr][key] playback rates
 var withRT = 1;     // enable real time synthesis, otherwise pre-rendered waves (MIDIjs)
@@ -274,7 +274,7 @@ function doModel(abctxt) {
     gAbcTxt = abctxt;
     allNotes = [];
     gTrans = [];
-    tmpElm.value = curTemp = gTempo = 120;
+    tmpElm.value = curTemp = gTempo = 72;
     console.log("tmpElm.value " + tmpElm.value);
     midiVol = [];       // volume for each voice from midi controller 7
     midiPan = [];       // panning for each voice from midi controller 10
@@ -688,7 +688,7 @@ function markeer() {
             curTemp = urlParams.get('tempo');
             console.log(curTemp);
         } else {
-            curTemp = 120;
+            curTemp = 72;
         }
         console.log("curTempo: " + curTemp);
         tf = tfac / (curTemp * tempScale);
