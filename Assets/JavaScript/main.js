@@ -405,7 +405,7 @@ function chooserIns(n, track) {
             Instruments ▼
         </button>
         <div id="selins${track}" class="dropdown-content"></div>
-    <div>
+    </div>
     `.trim();
 
     return html;
