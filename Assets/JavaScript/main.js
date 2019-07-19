@@ -219,19 +219,32 @@ function buildControls(song) {
     var html = `<div id="soundcontrols"><button onclick="go(); markeer();" class="btn" id="play">Play</button> <button onclick="stop();" class="btn" id="pause">Pause</button></div>`;
 
     //Start div for song duration and tempo ranges 
-    html = html + `<div id="posAndTempo"><h3>Chorale Duration</h3>`; 
-    html = html + `<div><input id="position" class="range-slider_range" type="range" min="0" max="100" value="0" step="1" /><span class="range-slider_value" id="tmr"></span></div>`;    
+    html = html + `
+        <div id="posAndTempo">
+            <h3>Chorale Duration</h3>
+            <div>
+                <input id="position" class="range-slider_range" type="range" min="0" max="100" value="0" step="1" />
+                <span class="range-slider_value" id="tmr">
+                </span>
+            </div>`.trim();    
     if(urlParams.has('tempo')) {
         var oldTempo =  urlParams.get("tempo");
-        html = html + `<div class="${range}"><h3>Tempo</h3>`;
-        html = html + `<input class="${range}_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="${oldTempo}" />`;
-        html = html + `<span class="${range}_value">${oldTempo}</span></div>`;
+        html = html + `
+            <div class="${range}">
+                <h3>Tempo</h3>
+                <input class="${range}_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="${oldTempo}" />
+                <span class="${range}_value">${oldTempo}</span>
+            </div>`.trim();
     } else {
-        html = html + `<div class="${range}r"><h3>Tempo</h3>`;
-        html = html + `<input class="${range}_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="72" />`;
-        html = html + `<span class="${range}_value">72</span></div>`;
+        html = html + `
+            <div class="${range}r">
+                <h3>Tempo</h3>
+                <input class="${range}_range" id="tempo" type="range" min="50" max="200" onchange="setTempo(this.value)" value="72" />
+                <span class="${range}_value">72</span>
+            </div>`.trim();
     }      
-    html = html += `</div>`; //end #posAndTempo div
+    html = html += `
+        </div>`.trim(); //end #posAndTempo div
     
     //Start div for each channel (SATB)
     html = html + `<div id="channels"><h3>Channels</h3>`;
@@ -387,10 +400,12 @@ function handleInstrument(i, track) {
 
 function chooserIns(n, track) {
     var html = `
-    <button id="instButton${track}" onclick="dropDownIns(${track})" class = "btn-instrument">
-        Instruments ▼
-    </button>
-    <div id="selins${track}" class="dropdown-content"></div>
+    <div>
+        <button id="instButton${track}" onclick="dropDownIns(${track})" class = "btn-instrument">
+            Instruments ▼
+        </button>
+        <div id="selins${track}" class="dropdown-content"></div>
+    <div>
     `.trim();
 
     return html;
