@@ -223,7 +223,7 @@ function buildControls(song) {
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`.trim();
-        controls.innerHTML = html;        
+        controls.innerHTML = html;
         return; 
     }
 
@@ -300,7 +300,15 @@ function buildControls(song) {
                     </div>
                 </div>
             </div>`.trim();     
-        } 
+        } else {
+            html = html + `
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Sorry but practice mode is not available for chorales for more than four voices at this time. 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`.trim();
+        }
     } else {        //if not practice mode 
         var fourPartArray = ['Soprano', 'Alto', 'Tenor', 'Bass'];
         for (var i = 0; i < song.tracks.length; i++) {
