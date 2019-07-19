@@ -11,6 +11,8 @@ var maxChannels = 0;
 var practice = false;
 var sentWhen = 0; 
 var inPath = ""; 
+var baseURL = "https://kkxix.github.io/bach-demo-public.github.io/"
+
 
 //check for existing path and tempo 
 const urlParams = new URLSearchParams(window.location.search);
@@ -96,7 +98,7 @@ function go() {
 
 function setTempo(inTempo) {
     stop(); 
-    document.location.href = "/bach-demo-public.github.io/index.html" + "?tempo=" + inTempo + "&path=" + inPath + "&practice=" + practice;
+    document.location.href = `${baseURL}?tempo=${inTempo}&path=${inPath}&practice=${practice}`;
 }
 
 function startPlay(song) {
@@ -404,7 +406,7 @@ function populateIns(n, track) {
             if(player.loader.instrumentInfo(i).title){
                 var option = document.createElement("a"),
                     txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
-                option.setAttribute("href", "#");
+                option.setAttribute("href", `${baseURL}`);
                 option.appendChild(txt);
                 option.setAttribute('value', i + sel);
                 option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
