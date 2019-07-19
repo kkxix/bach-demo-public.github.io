@@ -100,6 +100,9 @@ function setTempo(inTempo) {
     stop(); 
     document.location.href = `${baseURL}?tempo=${inTempo}&path=${inPath}&practice=${practice}`;
 }
+function reload() {
+    document.location.href = inPath; 
+}
 
 function startPlay(song) {
     if(audioContext.state == 'suspended') {
@@ -428,7 +431,7 @@ function populateIns(n, track) {
 function loadNewChorale(path, tempo) {
     if(loadedsong) {
         inPath = path;
-        setTempo(120);
+        reload();
     } else {
         handleExample(path, tempo); 
     }
