@@ -406,7 +406,7 @@ function populateIns(n, track) {
             if(player.loader.instrumentInfo(i).title){
                 var option = document.createElement("a"),
                     txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
-                option.setAttribute("href", window.location);
+                // option.setAttribute("href", window.location);
                 option.appendChild(txt);
                 option.setAttribute('value', i + sel);
                 option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
