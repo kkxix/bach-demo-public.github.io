@@ -265,8 +265,10 @@ function buildControls(song) {
             <div id="inst-name">Soprano and Alto</div>
             <div class="${range}">
                 <div id="track" class="container"> 
-                    ${chooserIns(song.tracks[0].id, 0)}
-                    ${chooserIns(song.tracks[1].id, 1)}
+                    <div class="container">
+                        ${chooserIns(song.tracks[0].id, 0)}
+                        ${chooserIns(song.tracks[1].id, 1)}
+                    </div>
                     <div id=channel1>
                         <input class="${range}_range" id="channel0" type="range" min="0" max="100" value="${v}" step="1" />
                         <span class="${range}_value">0</span>
@@ -276,8 +278,10 @@ function buildControls(song) {
             <div id="inst-name">Tenor and Bass</div>
             <div class="${range}">
                 <div id="track" class="container">
-                    ${chooserIns(song.tracks[2].id, 2)}
-                    ${chooserIns(song.tracks[3].id, 3)}
+                    <div class="container">
+                        ${chooserIns(song.tracks[2].id, 2)}
+                        ${chooserIns(song.tracks[3].id, 3)}
+                    </div>
                     <div id=channel3>
                         <input class="${range}_range" id="channel2" type="range" min="0" max="100" value="${v2}" step="1" />
                         <span class="${range}_value">0</span>
