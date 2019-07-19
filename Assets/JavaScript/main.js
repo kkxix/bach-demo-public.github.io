@@ -215,6 +215,18 @@ function buildControls(song) {
     var fourpart = document.getElementById('fourpart');
     const range = "range-slider";
 
+    if (fourpart.checked && song.tracks.length != 4) {       //if not exactly four voices, no practice mode available -- future feature
+        var html = html + `
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Sorry but practice mode is not available for chorales for more than four voices at this time. 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`.trim();
+        controls.innerHTML = html;        
+        return; 
+    }
+
     // Play and Pause 
     var html = `<div id="soundcontrols"><button onclick="go(); markeer();" class="btn" id="play">Play</button> <button onclick="stop();" class="btn" id="pause">Pause</button></div>`;
 
@@ -256,7 +268,7 @@ function buildControls(song) {
     if (practice) {
         fourpart.checked = true;
         maxChannels = 4;
-        if (maxChannels == song.tracks.length) {    //if not exactly four voices, no practice mode available -- future feature
+        if (maxChannels == song.tracks.length) {    
             var v = Math.round(100 * song.tracks[0].volume);
             var v2 = Math.round(100 * song.tracks[2].volume);
 
@@ -288,15 +300,7 @@ function buildControls(song) {
                     </div>
                 </div>
             </div>`.trim();     
-        } else {
-        html = html + `
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                Sorry but practice mode is not available for chorales for more than four voices at this time. 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>`.trim();
-        }
+        } 
     } else {        //if not practice mode 
         var fourPartArray = ['Soprano', 'Alto', 'Tenor', 'Bass'];
         for (var i = 0; i < song.tracks.length; i++) {
