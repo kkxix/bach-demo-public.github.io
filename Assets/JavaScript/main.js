@@ -433,7 +433,7 @@ function loadNewChorale(path, tempo) {
         inPath = path;
         setTempo(72);
     } else {
-        handleExample(`${baseURL}${path}`, tempo); 
+        handleExample(path, tempo); 
     }
 }
 

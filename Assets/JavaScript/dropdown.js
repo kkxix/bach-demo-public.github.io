@@ -418,7 +418,7 @@ for (var i = 0; i < fileNameArray.length; i++) {
     var a = document.createElement("a"),
         txt = document.createTextNode(fileNameArray[i].substr(20));
     a.appendChild(txt);
-    a.setAttribute("href", "#");
+    // a.setAttribute("href", "#");
     a.setAttribute("id", i);
 
     //loadNewChorale is the entry-point into main.js
