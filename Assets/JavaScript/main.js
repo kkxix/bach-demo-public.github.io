@@ -256,7 +256,7 @@ function buildControls(song) {
     if (practice) {
         fourpart.checked = true;
         maxChannels = 4;
-        if (maxChannels <= song.tracks.length) {    //if five parts or more, no practice mode available 
+        if (maxChannels == song.tracks.length) {    //if not exactly four voices, no practice mode available -- future feature
             var v = Math.round(100 * song.tracks[0].volume);
             var v2 = Math.round(100 * song.tracks[2].volume);
 
