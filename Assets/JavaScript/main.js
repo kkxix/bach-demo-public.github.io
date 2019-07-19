@@ -38,11 +38,11 @@ practiceBtn.addEventListener("click", function() {
     if(practice){
     practice = false; 
     var tempo = document.getElementById('tempo');
-    setTempo(tempo.value); 
+    setTempo(72); 
     } else {
     practice = true;
     var tempo = document.getElementById('tempo');
-    setTempo(tempo.value); 
+    setTempo(72); 
     }      
 })
 
@@ -67,7 +67,7 @@ function filterFunction() {
 //Filter instruments by search 
 function filterFunctionIns(i) {
     var input, filter, ul, li, array;
-    input = document.getElementById("myInputIns");
+    input = document.getElementById("myInputIns"+i);
     filter = input.value.toUpperCase();
     div = document.getElementById("selins"+i);
     array = div.getElementsByTagName('a');
@@ -423,7 +423,7 @@ function populateIns(n, track) {
     var search = document.createElement("input");
     search.setAttribute('type', "text");
     search.setAttribute('placeholder', "Search...");
-    search.setAttribute('id', "myInputIns");
+    search.setAttribute('id', "myInputIns"+track);
     search.setAttribute('onkeyup', 'filterFunctionIns(' + track +')');
     dropMenuIns.insertBefore(search, dropMenuIns.firstChild); 
 }
