@@ -100,9 +100,9 @@ function setTempo(inTempo) {
     stop(); 
     document.location.href = `${baseURL}?tempo=${inTempo}&path=${inPath}&practice=${practice}`;
 }
-function reload() {
-    document.location.href = inPath; 
-}
+// function reload() {
+//     document.location.href = inPath; 
+// }
 
 function startPlay(song) {
     if(audioContext.state == 'suspended') {
@@ -431,7 +431,7 @@ function populateIns(n, track) {
 function loadNewChorale(path, tempo) {
     if(loadedsong) {
         inPath = path;
-        reload();
+        handleExample(path, tempo);
     } else {
         handleExample(path, tempo); 
     }
@@ -441,7 +441,9 @@ function handleExample(path, tempo) {
 
     //remove welcome message
     var elem = document.getElementById("welcome-message");
-    elem.parentNode.removeChild(elem); 
+    if(elem) {
+        elem.parentNode.removeChild(elem); 
+    }
 
     //call function to check query for tempo and file path 
     inPath = path; 
