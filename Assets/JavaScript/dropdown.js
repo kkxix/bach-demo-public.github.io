@@ -422,6 +422,6 @@ for (var i = 0; i < fileNameArray.length; i++) {
     a.setAttribute("id", i);
 
     //loadNewChorale is the entry-point into main.js
-    a.setAttribute("onclick", `loadNewChorale("${fileNameArray[i]}", 72)`);
+    a.setAttribute("onclick", `loadNewChorale("./${fileNameArray[i]}", 72)`);
     dropMenu.insertBefore(a, dropMenu.lastChild);
 }
