@@ -11,6 +11,7 @@ var maxChannels = 0;
 var practice = false;
 var sentWhen = 0; 
 var inPath = ""; 
+var choraleDropped = false; 
 var baseURL = "https://kkxix.github.io/bach-demo-public.github.io/"
 
 
@@ -25,7 +26,17 @@ if (urlParams.has('tempo') && urlParams.has('path')) {
 //Toggle dropdown 
 function dropDown() {
     document.getElementById("myDropdown").classList.toggle("show");
+    if(dropped) {
+        dropped = false
+    } else {
+        dropped = true;
+    }
 }
+document.addEventListener("click", function() {
+    if(choraleDropped) {
+        dropDown()
+    }
+})
 
 //Toggle instrument selection dropdown
 function dropDownIns(i) {
@@ -191,22 +202,22 @@ function startLoad(song) {
     reverberator.output.connect(audioContext.destination);
     input = reverberator.input;
     for (var i = 0; i < song.tracks.length; i++) {
-    var nn = player.loader.findInstrument(song.tracks[i].program);
-    var info = player.loader.instrumentInfo(nn);
-    song.tracks[i].info = info;
-    song.tracks[i].id = nn;
-    player.loader.startLoad(audioContext, info.url, info.variable);
+        var nn = player.loader.findInstrument(song.tracks[i].program);
+        var info = player.loader.instrumentInfo(nn);
+        song.tracks[i].info = info;
+        song.tracks[i].id = nn;
+        player.loader.startLoad(audioContext, info.url, info.variable);
     }
     for (var i = 0; i < song.beats.length; i++) {
-    var nn = player.loader.findDrum(song.beats[i].n);
-    var info = player.loader.drumInfo(nn);
-    song.beats[i].info = info;
-    song.beats[i].id = nn;
-    player.loader.startLoad(audioContext, info.url, info.variable);
+        var nn = player.loader.findDrum(song.beats[i].n);
+        var info = player.loader.drumInfo(nn);
+        song.beats[i].info = info;
+        song.beats[i].id = nn;
+        player.loader.startLoad(audioContext, info.url, info.variable);
     }
     player.loader.waitLoad(function () {
-    console.log('buildControls');
-    buildControls(song);
+        console.log('buildControls');
+        buildControls(song);
     });
 }
 
@@ -456,8 +467,6 @@ function populateIns(n, track) {
         }
         instType = player.loader.instrumentInfo(i).p;
     }
-    const ins0 = document.getElementById("ins0");
-    dropMenuIns.insertBefore(ins0, dropDownIns.firstChild);
 
     var search = document.createElement("input");
     search.setAttribute('type', "text");

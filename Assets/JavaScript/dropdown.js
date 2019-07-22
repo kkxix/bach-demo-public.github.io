@@ -412,6 +412,11 @@ var fileNameArray = [
     `Assets/chorales-mid/bwv438.mid`,
     `Assets/chorales-mid/bwv846.mid`,]
 
+//44 non-fourpart chorales 
+// var irregularChorales = [
+//     ''
+// ]
+
 for (var i = 0; i < fileNameArray.length; i++) {
 
     //set visible chorale link 
