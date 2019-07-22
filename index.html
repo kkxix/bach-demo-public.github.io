@@ -67,8 +67,8 @@
     <!-- Select controls are the master controls that allow practice-mode toggling and choosing a chorale to load -->
     <div id='select-cntls'>
       <div class="dropdown">
-        <button onclick='dropDown()' class="btn">Chorales ▼</button>
-        <div id="myDropdown" class="dropdown-content">
+        <button onclick='dropDown()' class=" btn-secondary dropdown-toggle" id="dropdownMenuButton">Chorales ▼</button>
+        <div id="myDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <input type="text" placeholder="Search..." id="myInput" onkeyup="filterFunction()">
         </div>
       </div>

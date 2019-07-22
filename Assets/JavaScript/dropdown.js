@@ -425,6 +425,7 @@ for (var i = 0; i < fileNameArray.length; i++) {
     a.appendChild(txt);
     // a.setAttribute("href", "#");
     a.setAttribute("id", i);
+    a.setAttribute("class", "dropdown-item");
 
     //loadNewChorale is the entry-point into main.js
     a.setAttribute("onclick", `loadNewChorale("./${fileNameArray[i]}", 72)`);
