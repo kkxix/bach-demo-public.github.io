@@ -121,6 +121,9 @@
             this.instrumentTitles = function () {
                 if (!(this.instrumentNamesArray)) {
                     var insNames = [];
+
+                    //Uncomment for access to an instrument 
+
                     insNames[0] = "Acoustic Grand Piano: Piano";
                     insNames[1] = "Bright Acoustic Piano: Piano";
                     // insNames[2] = "Electric Grand Piano: Piano";
@@ -201,7 +204,7 @@
                     // insNames[77] = "Shakuhachi: Pipe";
                     // insNames[78] = "Whistle: Pipe";
                     // insNames[79] = "Ocarina: Pipe";
-                    /* //Uncomment for access to all instruments 
+                    /* 
                     insNames[80] = "Lead 1 (square): Synth Lead";
                     insNames[81] = "Lead 2 (sawtooth): Synth Lead";
                     insNames[82] = "Lead 3 (calliope): Synth Lead";
