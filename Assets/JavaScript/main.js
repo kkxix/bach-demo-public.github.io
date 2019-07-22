@@ -26,15 +26,15 @@ if (urlParams.has('tempo') && urlParams.has('path')) {
 //Toggle dropdown 
 function dropDown() {
     document.getElementById("myDropdown").classList.toggle("show");
-    if(dropped) {
-        dropped = false
+    if (choraleDropped) {
+        choraleDropped = false
     } else {
-        dropped = true;
+        choraleDropped = true;
     }
 }
 document.addEventListener("click", function() {
     if(choraleDropped) {
-        dropDown()
+        dropDown();
     }
 })
 
