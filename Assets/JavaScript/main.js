@@ -439,15 +439,16 @@ function populateIns(n, track) {
     var counter = 0;
     for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
         var sel = '';
-        // if (i == n) {
-        //     sel = ' selected';
-        // }
+        if (i == n) {
+            sel = ' selected';
+        }
         if (instType != player.loader.instrumentInfo(i).p) {
             if(player.loader.instrumentInfo(i).title){
                 var option = document.createElement("a"),
                     txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
                 option.appendChild(txt);
-                // option.setAttribute('value', i + sel);
+                option.setAttribute('value', i + sel);
+                option.setAttribute('id', `ins${counter}`);
                 option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
                 dropMenuIns.insertBefore(option, dropMenuIns.lastChild);
                 counter++;
@@ -455,6 +456,8 @@ function populateIns(n, track) {
         }
         instType = player.loader.instrumentInfo(i).p;
     }
+    const ins0 = getElementById("ins0");
+    dropMenuIns.insertBefore(ins0, dropDownIns.firstChild);
 
     var search = document.createElement("input");
     search.setAttribute('type', "text");
