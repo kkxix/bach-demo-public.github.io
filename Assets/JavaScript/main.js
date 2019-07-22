@@ -456,7 +456,7 @@ function populateIns(n, track) {
         }
         instType = player.loader.instrumentInfo(i).p;
     }
-    const ins0 = getElementById("ins0");
+    const ins0 = document.getElementById("ins0");
     dropMenuIns.insertBefore(ins0, dropDownIns.firstChild);
 
     var search = document.createElement("input");
