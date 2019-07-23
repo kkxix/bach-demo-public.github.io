@@ -55,6 +55,7 @@ practiceBtn.addEventListener("click", function() {
             }
         } else {
             alert(`${practiceAlert}`);
+            practiceBtn.checked = false;
         }
     }      
 })
