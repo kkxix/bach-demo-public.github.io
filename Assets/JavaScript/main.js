@@ -42,7 +42,7 @@ practiceBtn.addEventListener("click", function() {
         var tempo = document.getElementById('tempo');
         setTempo(72); 
     } else {
-        if(song.tracks.length == 4) {
+        if(loadedsong.tracks.length == 4) {
             practice = true;
             var tempo = document.getElementById('tempo');
             setTempo(72); 
