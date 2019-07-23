@@ -421,7 +421,7 @@ for (var i = 0; i < fileNameArray.length; i++) {
 
     //set visible chorale link 
     var a = document.createElement("a"),
-        txt = document.createTextNode(fileNameArray[i].substring(22, fileNameArray[i].length - 4));
+        txt = document.createTextNode(fileNameArray[i].substring(20, fileNameArray[i].length - 4));
     a.appendChild(txt);
     // a.setAttribute("href", "#");
     a.setAttribute("id", i);
