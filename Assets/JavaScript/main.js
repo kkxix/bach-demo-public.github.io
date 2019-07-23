@@ -17,7 +17,7 @@ let baseURL = "https://kkxix.github.io/bach-demo-public.github.io/"
 
 
 //check for existing path and tempo 
-const urlParams = new URLSearchParams(window.location.search);
+let urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.toString());
 if (urlParams.has('tempo') && urlParams.has('path')) {
     console.log('has params');
@@ -61,7 +61,7 @@ practiceBtn.addEventListener("click", function() {
 //TODO: optimize filterFunction so there doesn't need to be 2 
 // Filter chorales by search 
 function filterFunction() {
-    const input, filter, ul, li, array;
+    let input, filter, ul, li, array;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     div = document.getElementById("myDropdown");
@@ -78,7 +78,7 @@ function filterFunction() {
 }
 //Filter instruments by search 
 function filterFunctionIns(i) {
-    const input, filter, ul, li, array;
+    let input, filter, ul, li, array;
     input = document.getElementById("myInputIns"+i);
     filter = input.value.toUpperCase();
     div = document.getElementById("selins"+i);
@@ -123,7 +123,7 @@ function startPlay(song) {
     currentSongTime = 0;
     songStart = audioContext.currentTime; //global 
     nextStepTime = audioContext.currentTime; //global 
-    const stepDuration = 44 / 1000; //where does this number come from 
+    let stepDuration = 44 / 1000; //where does this number come from 
     tick(song, stepDuration);
     }
 }
@@ -141,12 +141,12 @@ function tick(song, stepDuration) {
     }
     }
     if (nextPositionTime < audioContext.currentTime) {
-        const o = document.getElementById('position');
+        let o = document.getElementById('position');
         o.value = 100 * currentSongTime / song.duration; //how much of range is filled 
 
         //time formatting: 
-        const secs = Math.round(currentSongTime);
-        const mins = Math.floor(secs / 60);
+        let secs = Math.round(currentSongTime);
+        let mins = Math.floor(secs / 60);
         secs = secs % 60; 
         if(secs < 10 ) {
             timeStamp = mins + ':0' + secs;
@@ -222,7 +222,7 @@ function startLoad(song) {
 function buildControls(song) {
     let controls = document.getElementById('cntls');
     let fourpart = document.getElementById('fourpart');
-    const range = "range-slider";
+    let range = "range-slider";
 
     if (fourpart.checked && song.tracks.length != 4) {       //if not exactly four voices, no practice mode available -- future feature
         alert(`${practiceAlert}`)
