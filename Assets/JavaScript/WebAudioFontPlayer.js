@@ -269,10 +269,12 @@
             this.instrumentInfo = function (n) {
                 var key = this.instrumentKeys()[n];
                 var p = 1 * key.substr(0, 3);
+                var instTitle = this.instrumentTitles()[p];
+                var pattern = new RegExp(".*(?=:)");
                 return {
                     variable: '_tone_' + key,
                     url: 'https://surikov.github.io/webaudiofontdata/sound/' + key + '.js',
-                    title: this.instrumentTitles()[p],
+                    title: pattern.exec(instTitle),
                     p: p
                 };
             };
