@@ -231,7 +231,7 @@ function buildControls(song) {
 
     // Play, Pause, Title  
     var html = `
-        <h3><strong>${inPath.substring(20, inPath.length - 4)}</strong></h3>
+        <h3><strong>${inPath.substring(22, inPath.length - 4)}</strong></h3>
         <div id="soundcontrols">
             <button onclick="go(); markeer();" class="btn" id="play">Play</button> 
             <button onclick="stop();" class="btn" id="pause">Pause</button>
