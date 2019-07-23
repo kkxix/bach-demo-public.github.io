@@ -47,6 +47,7 @@ practiceBtn.addEventListener("click", function() {
         }
     } else {
         if(loadedsong.tracks.length == 4) {
+            practice = true; 
             if (urlParams.has('tempo')) {
                 setTempo(urlParams.get('tempo'));
             } else {
