@@ -23,20 +23,11 @@ if (urlParams.has('tempo') && urlParams.has('path')) {
     handleExample(urlParams.get('path'), urlParams.get('tempo'));
 } 
 
+// TODO : don't think these fxns necessary anymore 
 //Toggle dropdown 
 function dropDown() {
     document.getElementById("myDropdown").classList.toggle("show");
-    // if (choraleDropped) {
-    //     choraleDropped = false
-    // } else {
-    //     choraleDropped = true;
-    // }
 }
-// document.addEventListener("click", function() {
-//     if(choraleDropped) {
-//         dropDown();
-//     }
-// })
 
 //Toggle instrument selection dropdown
 function dropDownIns(i) {
@@ -434,10 +425,10 @@ function handleInstrument(i, track) {
 function chooserIns(n, track) {
     var html = `
     <div>
-        <button id="instButton${track}" onclick="dropDownIns(${track})" class = "btn-instrument">
-            Instruments ▼
+        <button id="instButton${track}" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Instruments
         </button>
-        <div id="selins${track}" class="dropdown-content"></div>
+        <div id="selins${track}" class="dropdown-menu" aria-labelledby="instButton${track}"></div>
     </div>
     `.trim();
 
@@ -460,6 +451,7 @@ function populateIns(n, track) {
                 option.appendChild(txt);
                 option.setAttribute('value', i + sel);
                 option.setAttribute('id', `ins${counter}`);
+                option.setAttribute("class", "dropdown-item");
                 option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
                 dropMenuIns.insertBefore(option, dropMenuIns.lastChild);
                 counter++;
