@@ -439,6 +439,12 @@ function populateIns(n, track) {
     var dropMenuIns = document.getElementById("selins"+track);
     var instType = -1;
     var counter = 0;
+
+    //create invisible element to make sure element 0 is at top 
+    var invisible = document.createElement("a")
+    invisible.style.display = "hidden";
+    dropMenuIns.insertBefore(invisible, dropMenuIns.lastChild);
+
     for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
         var sel = '';
         if (i == n) {
