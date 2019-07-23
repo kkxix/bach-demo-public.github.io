@@ -430,7 +430,7 @@ function handleInstrument(i, track) {
 function chooserIns(n, track) {
     var html = `
     <div>
-        <button id="instButton${track}" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button id="instButton${track}" class="btn btn-instrument dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Instruments
         </button>
         <div id="selins${track}" class="dropdown-menu" aria-labelledby="instButton${track}"></div>
