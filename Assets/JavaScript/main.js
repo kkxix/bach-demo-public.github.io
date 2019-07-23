@@ -53,7 +53,7 @@ practiceBtn.addEventListener("click", function() {
                 setTempo(72);
             }
         } else {
-            alert(${practiceAlert});
+            alert(`${practiceAlert}`);
         }
     }      
 })
@@ -225,7 +225,7 @@ function buildControls(song) {
     const range = "range-slider";
 
     if (fourpart.checked && song.tracks.length != 4) {       //if not exactly four voices, no practice mode available -- future feature
-        alert(${practiceAlert})
+        alert(`${practiceAlert}`)
         fourpart.checked = false;
         setTempo(72);
         // return; 
@@ -310,7 +310,7 @@ function buildControls(song) {
                 </div>
             </div>`.trim();     
         } else {
-            alert(${practiceAlert});
+            alert(`${practiceAlert}`);
             fourpart.checked = false;
             setTempo(72);
         }
