@@ -27,7 +27,7 @@ h1 {
     padding: 2%;
     border-radius: 25px;
 }
-:hover {
+#site-title:hover {
   box-shadow: 2px 0 40px;
 }
 #title-link:hover {
