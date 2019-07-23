@@ -1,18 +1,19 @@
 console.log('start');
-var audioContext = null;
-var player = null;
-var songStart = 0;
-var input = null;
-var currentSongTime = 0;
-var nextStepTime = 0;
-var nextPositionTime = 0;
-var loadedsong = null;
-var maxChannels = 0;
-var practice = false;
-var sentWhen = 0; 
-var inPath = ""; 
-var choraleDropped = false; 
-var baseURL = "https://kkxix.github.io/bach-demo-public.github.io/"
+let audioContext = null;
+let player = null;
+let songStart = 0;
+let input = null;
+let currentSongTime = 0;
+let nextStepTime = 0;
+let nextPositionTime = 0;
+let loadedsong = null;
+let maxChannels = 0;
+let practice = false;
+let sentWhen = 0; 
+let inPath = ""; 
+let choraleDropped = false; 
+let practiceAlert = "Sorry but practice mode is not available for chorales for more than four voices at this time.";
+let baseURL = "https://kkxix.github.io/bach-demo-public.github.io/"
 
 
 //check for existing path and tempo 
@@ -35,19 +36,24 @@ function dropDownIns(i) {
 }
 
 //Toggle practice mode 
-var practiceBtn = document.getElementById("fourpart");
+let practiceBtn = document.getElementById("fourpart");
 practiceBtn.addEventListener("click", function() {
     if(practice){
         practice = false; 
-        var tempo = document.getElementById('tempo');
-        setTempo(72); 
+        if (urlParams.has('tempo')) {
+            setTempo(urlParams.get('tempo')); 
+        } else {
+            setTempo(72); 
+        }
     } else {
         if(loadedsong.tracks.length == 4) {
-            practice = true;
-            var tempo = document.getElementById('tempo');
-            setTempo(72); 
+            if (urlParams.has('tempo')) {
+                setTempo(urlParams.get('tempo'));
+            } else {
+                setTempo(72);
+            }
         } else {
-            alert("Sorry but practice mode is not available for chorales for more than four voices at this time.");
+            alert(${practiceAlert});
         }
     }      
 })
@@ -55,12 +61,12 @@ practiceBtn.addEventListener("click", function() {
 //TODO: optimize filterFunction so there doesn't need to be 2 
 // Filter chorales by search 
 function filterFunction() {
-    var input, filter, ul, li, array;
+    const input, filter, ul, li, array;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     div = document.getElementById("myDropdown");
     array = div.getElementsByTagName('a');
-    for (var i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
     txtValue = array[i].textContext || array[i].innerText;
     console.log(txtValue);
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -72,12 +78,12 @@ function filterFunction() {
 }
 //Filter instruments by search 
 function filterFunctionIns(i) {
-    var input, filter, ul, li, array;
+    const input, filter, ul, li, array;
     input = document.getElementById("myInputIns"+i);
     filter = input.value.toUpperCase();
     div = document.getElementById("selins"+i);
     array = div.getElementsByTagName('a');
-    for (var i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         txtValue = array[i].textContext || array[i].innerText;
         console.log(txtValue);  
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -117,7 +123,7 @@ function startPlay(song) {
     currentSongTime = 0;
     songStart = audioContext.currentTime; //global 
     nextStepTime = audioContext.currentTime; //global 
-    var stepDuration = 44 / 1000; //where does this number come from 
+    const stepDuration = 44 / 1000; //where does this number come from 
     tick(song, stepDuration);
     }
 }
@@ -135,15 +141,12 @@ function tick(song, stepDuration) {
     }
     }
     if (nextPositionTime < audioContext.currentTime) {
-        // var today = new Date();
-        // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-        var o = document.getElementById('position');
+        const o = document.getElementById('position');
         o.value = 100 * currentSongTime / song.duration; //how much of range is filled 
 
         //time formatting: 
-        var secs = Math.round(currentSongTime);
-        var mins = Math.floor(secs / 60);
+        const secs = Math.round(currentSongTime);
+        const mins = Math.floor(secs / 60);
         secs = secs % 60; 
         if(secs < 10 ) {
             timeStamp = mins + ':0' + secs;
@@ -159,29 +162,29 @@ function tick(song, stepDuration) {
 }
 
 function sendNotes(song, songStart, start, end, audioContext, input, player) {
-    for (var t = 0; t < song.tracks.length; t++) {
-    var track = song.tracks[t];
-    for (var i = 0; i < track.notes.length; i++) {
-        if (track.notes[i].when >= start && track.notes[i].when < end) {
-        var when = songStart + track.notes[i].when;
-        var duration = track.notes[i].duration;
-        if (duration > 3) {
-            duration = 3;
-        }
-        var instr = track.info.variable;
-        var v = track.volume / 7;
-        player.queueWaveTable(audioContext, input, window[instr], when, track.notes[i].pitch, duration, v, track.notes[i].slides);
+    for (let t = 0; t < song.tracks.length; t++) {
+        let track = song.tracks[t];
+        for (let i = 0; i < track.notes.length; i++) {
+            if (track.notes[i].when >= start && track.notes[i].when < end) {
+                let when = songStart + track.notes[i].when;
+                let duration = track.notes[i].duration;
+                if (duration > 3) {
+                    duration = 3;
+                }
+                let instr = track.info.variable;
+                let v = track.volume / 7;
+                player.queueWaveTable(audioContext, input, window[instr], when, track.notes[i].pitch, duration, v, track.notes[i].slides);
+            }
         }
     }
-    }
-    for (var b = 0; b < song.beats.length; b++) {
-    var beat = song.beats[b];
-    for (var i = 0; i < beat.notes.length; i++) {
+    for (let b = 0; b < song.beats.length; b++) {
+        let beat = song.beats[b];
+    for (let i = 0; i < beat.notes.length; i++) {
         if (beat.notes[i].when >= start && beat.notes[i].when < end) {
-        var when = songStart + beat.notes[i].when;
-        var duration = 1.5;
-        var instr = beat.info.variable;
-        var v = beat.volume / 2;
+        let when = songStart + beat.notes[i].when;
+        let duration = 1.5;
+        let instr = beat.info.variable;
+        let v = beat.volume / 2;
         player.queueWaveTable(audioContext, input, window[instr], when, beat.n, duration, v);
         }
     }
@@ -190,22 +193,22 @@ function sendNotes(song, songStart, start, end, audioContext, input, player) {
 
 function startLoad(song) {
     console.log(song);
-    var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+    let AudioContextFunc = window.AudioContext || window.webkitAudioContext;
     audioContext = new AudioContextFunc();
     player = new WebAudioFontPlayer();
     reverberator = player.createReverberator(audioContext);
     reverberator.output.connect(audioContext.destination);
     input = reverberator.input;
-    for (var i = 0; i < song.tracks.length; i++) {
-        var nn = player.loader.findInstrument(song.tracks[i].program);
-        var info = player.loader.instrumentInfo(nn);
+    for (let i = 0; i < song.tracks.length; i++) {
+        let nn = player.loader.findInstrument(song.tracks[i].program);
+        let info = player.loader.instrumentInfo(nn);
         song.tracks[i].info = info;
         song.tracks[i].id = nn;
         player.loader.startLoad(audioContext, info.url, info.variable);
     }
-    for (var i = 0; i < song.beats.length; i++) {
-        var nn = player.loader.findDrum(song.beats[i].n);
-        var info = player.loader.drumInfo(nn);
+    for (let i = 0; i < song.beats.length; i++) {
+        let nn = player.loader.findDrum(song.beats[i].n);
+        let info = player.loader.drumInfo(nn);
         song.beats[i].info = info;
         song.beats[i].id = nn;
         player.loader.startLoad(audioContext, info.url, info.variable);
@@ -217,19 +220,19 @@ function startLoad(song) {
 }
 
 function buildControls(song) {
-    var controls = document.getElementById('cntls');
-    var fourpart = document.getElementById('fourpart');
+    let controls = document.getElementById('cntls');
+    let fourpart = document.getElementById('fourpart');
     const range = "range-slider";
 
     if (fourpart.checked && song.tracks.length != 4) {       //if not exactly four voices, no practice mode available -- future feature
-        alert("Sorry but practice mode is not available for chorales for more than four voices at this time." )
+        alert(${practiceAlert})
         fourpart.checked = false;
         setTempo(72);
         // return; 
     }
 
     // Play, Pause, Title  
-    var html = `
+    let html = `
         <h3><strong>${inPath.substring(22, inPath.length - 4)}</strong></h3>
         <div id="soundcontrols">
             <button onclick="go(); markeer();" class="btn" id="play">Play</button> 
@@ -246,7 +249,7 @@ function buildControls(song) {
                 </span>
             </div>`.trim();    
     if(urlParams.has('tempo')) {
-        var oldTempo =  urlParams.get("tempo");
+        let oldTempo =  urlParams.get("tempo");
         html = html + `
             <div class="${range}">
                 <h3>Tempo</h3>
@@ -275,8 +278,8 @@ function buildControls(song) {
         fourpart.checked = true;
         maxChannels = 4;
         if (maxChannels == song.tracks.length) {    
-            var v = Math.round(100 * song.tracks[0].volume);
-            var v2 = Math.round(100 * song.tracks[2].volume);
+            let v = Math.round(100 * song.tracks[0].volume);
+            let v2 = Math.round(100 * song.tracks[2].volume);
 
             //Add HTML for track instrument and volume controls 
             html = html + `
@@ -307,19 +310,14 @@ function buildControls(song) {
                 </div>
             </div>`.trim();     
         } else {
-            // html = html + `
-            // <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            //     Sorry but practice mode is not available for chorales for more than four voices at this time. 
-            //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //         <span aria-hidden="true">&times;</span>
-            //     </button>
-            // </div>`.trim();
-            alert("Sorry but practice mode is not available for chorales for more than four voices at this time. ");
+            alert(${practiceAlert});
+            fourpart.checked = false;
+            setTempo(72);
         }
     } else {        //if not practice mode 
-        var fourPartArray = ['Soprano', 'Alto', 'Tenor', 'Bass'];
-        for (var i = 0; i < song.tracks.length; i++) {
-            var v = Math.round(100 * song.tracks[i].volume);
+        let fourPartArray = ['Soprano', 'Alto', 'Tenor', 'Bass'];
+        for (let i = 0; i < song.tracks.length; i++) {
+            let v = Math.round(100 * song.tracks[i].volume);
 
             //Add HTML for track instrument and volume controls 
             html = html + `
@@ -342,7 +340,7 @@ function buildControls(song) {
     console.log('Loaded');
 
     //create url for corresponding .musicxml chorale 
-    var mxlUrl = inPath.substr(0, 9);
+    let mxlUrl = inPath.substr(0, 9);
     mxlUrl += "chorales-musicxml";
     mxlUrl += inPath.substr(21);
     mxlUrl = mxlUrl.trim();
@@ -357,11 +355,11 @@ function buildControls(song) {
     //function located in Assets/JavaScript/slider-jquery.js
     rangeSlider(); 
 
-    var pos = document.getElementById('position');
+    let pos = document.getElementById('position');
     pos.oninput = function (e) {
     if (loadedsong) {
         player.cancelQueue(audioContext);
-        var next = song.duration * pos.value / 100;
+        let next = song.duration * pos.value / 100;
         songStart = songStart - (next - currentSongTime);
         currentSongTime = next;
 
@@ -371,12 +369,12 @@ function buildControls(song) {
     };
 
     console.log('Tracks');
-    for (var i = 0; i < song.tracks.length; i++) {
+    for (let i = 0; i < song.tracks.length; i++) {
         setVolumeAction(i, song);
     }
     
     //Add ahref instrument links to dropdown
-    for (var i = 0; i < song.tracks.length; i++) {
+    for (let i = 0; i < song.tracks.length; i++) {
         populateIns(song.tracks[i].id, i);        
     }
 
@@ -385,12 +383,12 @@ function buildControls(song) {
 }
 
 function setVolumeAction(i, song) {
-    var vlm = document.getElementById('channel' + i);
+    let vlm = document.getElementById('channel' + i);
     vlm.oninput = function (e) {
     if (maxChannels === 4) {
         if (i === 0) {
         player.cancelQueue(audioContext);
-        var v = vlm.value / 100;
+        let v = vlm.value / 100;
         if (v < 0.000001) {
             v = 0.000001;
         }
@@ -398,7 +396,7 @@ function setVolumeAction(i, song) {
         song.tracks[1].volume = v;
         } else if (i === 2) {
         player.cancelQueue(audioContext);
-        var v = vlm.value / 100;
+        let v = vlm.value / 100;
         if (v < 0.000001) {
             v = 0.000001;
         }
@@ -407,7 +405,7 @@ function setVolumeAction(i, song) {
         }
     } else {
         player.cancelQueue(audioContext);
-        var v = vlm.value / 100;
+        let v = vlm.value / 100;
         if (v < 0.000001) {
         v = 0.000001;
         }
@@ -417,7 +415,7 @@ function setVolumeAction(i, song) {
 }
 
 function handleInstrument(i, track) {
-    var info = player.loader.instrumentInfo(i);
+    let info = player.loader.instrumentInfo(i);
     player.loader.startLoad(audioContext, info.url, info.variable);
     document.getElementById('instButton'+track).textContent = info.title; 
     player.loader.waitLoad(function () {
@@ -428,7 +426,7 @@ function handleInstrument(i, track) {
 }
 
 function chooserIns(n, track) {
-    var html = `
+    let html = `
     <div>
         <button id="instButton${track}" class="btn btn-instrument dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Instruments
@@ -441,23 +439,23 @@ function chooserIns(n, track) {
 }
 
 function populateIns(n, track) {
-    var dropMenuIns = document.getElementById("selins"+track);
-    var instType = -1;
-    var counter = 0;
+    let dropMenuIns = document.getElementById("selins"+track);
+    let instType = -1;
+    let counter = 0;
 
     //create invisible element to make sure element 0 is at top 
-    var invisible = document.createElement("a")
+    let invisible = document.createElement("a")
     invisible.style.display = "hidden";
     dropMenuIns.insertBefore(invisible, dropMenuIns.lastChild);
 
-    for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
-        var sel = '';
+    for (let i = 0; i < player.loader.instrumentKeys().length; i++) {
+        let sel = '';
         if (i == n) {
             sel = ' selected';
         }
         if (instType != player.loader.instrumentInfo(i).p) {
             if(player.loader.instrumentInfo(i).title){
-                var option = document.createElement("a"),
+                let option = document.createElement("a"),
                     txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
                 option.appendChild(txt);
                 option.setAttribute('value', i + sel);
@@ -471,7 +469,7 @@ function populateIns(n, track) {
         instType = player.loader.instrumentInfo(i).p;
     }
 
-    var search = document.createElement("input");
+    let search = document.createElement("input");
     search.setAttribute('type', "text");
     search.setAttribute('placeholder', "Search...");
     search.setAttribute('id', "myInputIns"+track);
@@ -491,7 +489,7 @@ function loadNewChorale(path, tempo) {
 function handleExample(path, tempo) {
 
     //remove welcome message
-    var elem = document.getElementById("welcome-message");
+    let elem = document.getElementById("welcome-message");
     if(elem) {
         elem.parentNode.removeChild(elem); 
     }
@@ -499,13 +497,13 @@ function handleExample(path, tempo) {
     //call function to check query for tempo and file path 
     inPath = path; 
     console.log(path);
-    var xmlHttpRequest = new XMLHttpRequest();
+    let xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.open("GET", path, true);
     xmlHttpRequest.responseType = "arraybuffer";
     xmlHttpRequest.onload = function (e) {
-        var arrayBuffer = xmlHttpRequest.response;
+        let arrayBuffer = xmlHttpRequest.response;
         midiFile = new MIDIFile(arrayBuffer);
-        var song = midiFile.parseSong(tempo);
+        let song = midiFile.parseSong(tempo);
         startLoad(song);
     };
     xmlHttpRequest.send(null);
