@@ -38,13 +38,17 @@ function dropDownIns(i) {
 var practiceBtn = document.getElementById("fourpart");
 practiceBtn.addEventListener("click", function() {
     if(practice){
-    practice = false; 
-    var tempo = document.getElementById('tempo');
-    setTempo(72); 
+        practice = false; 
+        var tempo = document.getElementById('tempo');
+        setTempo(72); 
     } else {
-    practice = true;
-    var tempo = document.getElementById('tempo');
-    setTempo(72); 
+        if(song.tracks.length == 4) {
+            practice = true;
+            var tempo = document.getElementById('tempo');
+            setTempo(72); 
+        } else {
+            alert("Sorry but practice mode is not available for chorales for more than four voices at this time.");
+        }
     }      
 })
 
@@ -218,16 +222,10 @@ function buildControls(song) {
     const range = "range-slider";
 
     if (fourpart.checked && song.tracks.length != 4) {       //if not exactly four voices, no practice mode available -- future feature
-        // var html = html + `
-        //     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        //         Sorry but practice mode is not available for chorales for more than four voices at this time. 
-        //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        //             <span aria-hidden="true">&times;</span>
-        //         </button>
-        //     </div>`.trim();
-        // controls.innerHTML = html;
         alert("Sorry but practice mode is not available for chorales for more than four voices at this time." )
-        return; 
+        fourpart.checked = false;
+        setTempo(72);
+        // return; 
     }
 
     // Play, Pause, Title  
