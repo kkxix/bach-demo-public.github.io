@@ -312,7 +312,7 @@ function buildControls(song) {
             </div>`.trim();     
         } else {
             alert(`${practiceAlert}`);
-            fourpart.checked = false;
+            practice = false; 
             setTempo(72);
         }
     } else {        //if not practice mode 
