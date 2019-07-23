@@ -20,7 +20,7 @@ h1 {
     color: black; 
 }
 #site-title {
-    max-width: 25%;
+    max-width: 50%;
     font-weight: bold;
     margin-right: .5em;
     border: 2px solid #19669a;
