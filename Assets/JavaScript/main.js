@@ -218,14 +218,15 @@ function buildControls(song) {
     const range = "range-slider";
 
     if (fourpart.checked && song.tracks.length != 4) {       //if not exactly four voices, no practice mode available -- future feature
-        var html = html + `
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                Sorry but practice mode is not available for chorales for more than four voices at this time. 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>`.trim();
-        controls.innerHTML = html;
+        // var html = html + `
+        //     <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        //         Sorry but practice mode is not available for chorales for more than four voices at this time. 
+        //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //             <span aria-hidden="true">&times;</span>
+        //         </button>
+        //     </div>`.trim();
+        // controls.innerHTML = html;
+        alert("Sorry but practice mode is not available for chorales for more than four voices at this time." )
         return; 
     }
 
@@ -308,13 +309,14 @@ function buildControls(song) {
                 </div>
             </div>`.trim();     
         } else {
-            html = html + `
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                Sorry but practice mode is not available for chorales for more than four voices at this time. 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>`.trim();
+            // html = html + `
+            // <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            //     Sorry but practice mode is not available for chorales for more than four voices at this time. 
+            //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //         <span aria-hidden="true">&times;</span>
+            //     </button>
+            // </div>`.trim();
+            alert("Sorry but practice mode is not available for chorales for more than four voices at this time. ");
         }
     } else {        //if not practice mode 
         var fourPartArray = ['Soprano', 'Alto', 'Tenor', 'Bass'];
