@@ -27,6 +27,12 @@ h1 {
     padding: 2%;
     border-radius: 25px;
 }
+:hover {
+  box-shadow: 2px 0 40px;
+}
+#title-link:hover {
+  text-decoration: none;
+}
 h2 {
     color: darkgray;
 }

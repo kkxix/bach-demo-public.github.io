@@ -412,10 +412,53 @@ var fileNameArray = [
     `Assets/chorales-mid/bwv438.mid`,
     `Assets/chorales-mid/bwv846.mid`,]
 
-//44 non-fourpart chorales 
-// var irregularChorales = [
-//     ''
-// ]
+// 44 non-fourpart chorales 
+var irregularChorales = [
+    `Assets/chorales-mid/bwv1.6.mid`,
+    `Assets/chorales-mid/bwv8.6.mid`,
+    `Assets/chorales-mid/bwv12.7.mid`,
+    `Assets/chorales-mid/bwv19.7.mid`,
+    `Assets/chorales-mid/bwv27.6.mid`,
+    `Assets/chorales-mid/bwv29.8.mid`,
+    `Assets/chorales-mid/bwv31.9.mid`,
+    `Assets/chorales-mid/bwv41.6.mid`,
+    `Assets/chorales-mid/bwv52.6.mid`,
+    `Assets/chorales-mid/bwv59.3.mid`,
+    `Assets/chorales-mid/bwv70.11.mid`,
+    `Assets/chorales-mid/bwv79.3.mid`,
+    `Assets/chorales-mid/bwv79.6.mid`,
+    `Assets/chorales-mid/bwv91.6.mid`,
+    `Assets/chorales-mid/bwv95.7.mid`,
+    `Assets/chorales-mid/bwv97.9.mid`,
+    `Assets/chorales-mid/bwv112.5-sc.mid`,
+    `Assets/chorales-mid/bwv120.8-a.mid`,
+    `Assets/chorales-mid/bwv124.6.mid`,
+    `Assets/chorales-mid/bwv128.5.mid`,
+    `Assets/chorales-mid/bwv130.6.mid`,
+    `Assets/chorales-mid/bwv136.6.mid`,
+    `Assets/chorales-mid/bwv137.5.mid`,
+    `Assets/chorales-mid/bwv149.7.mid`,
+    `Assets/chorales-mid/bwv161.6.mid`,
+    `Assets/chorales-mid/bwv171.6.mid`,
+    `Assets/chorales-mid/bwv172.6.mid`,
+    `Assets/chorales-mid/bwv175.7.mid`,
+    `Assets/chorales-mid/bwv185.6.mid`,
+    `Assets/chorales-mid/bwv190.7-inst.mid`,
+    `Assets/chorales-mid/bwv195.6.mid`,
+    `Assets/chorales-mid/bwv227.3.mid`,
+    `Assets/chorales-mid/bwv248.9-1.mid`,
+    `Assets/chorales-mid/bwv248.9-s.mid`,
+    `Assets/chorales-mid/bwv248.17.mid`,
+    `Assets/chorales-mid/bwv248.23-2.mid`,
+    `Assets/chorales-mid/bwv248.35-3c.mid`,
+    `Assets/chorales-mid/bwv248.42-4.mid`,
+    `Assets/chorales-mid/bwv248.59-6.mid`,
+    `Assets/chorales-mid/bwv248.64-6.mid`,
+    `Assets/chorales-mid/bwv250.mid`,
+    `Assets/chorales-mid/bwv251.mid`,
+    `Assets/chorales-mid/bwv252.mid`,
+    `Assets/chorales-mid/bwv846.mid`    
+]
 
 for (var i = 0; i < fileNameArray.length; i++) {
 
@@ -426,6 +469,11 @@ for (var i = 0; i < fileNameArray.length; i++) {
     // a.setAttribute("href", "#");
     a.setAttribute("id", i);
     a.setAttribute("class", "dropdown-item");
+
+    //If more than 4 voices, warning color
+    if(irregularChorales.includes(fileNameArray[i])) {
+        a.style.backgroundColor = "lightyellow";
+    }
 
     //loadNewChorale is the entry-point into main.js
     a.setAttribute("onclick", `loadNewChorale("./${fileNameArray[i]}", 72)`);
