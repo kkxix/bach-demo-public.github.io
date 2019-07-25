@@ -70,6 +70,17 @@
 
     <!-- Select controls are the master controls that allow practice-mode toggling and choosing a chorale to load -->
     <div id='select-cntls'>
+
+      <!-- Practice mode -->
+      <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="fourpart">
+        Practice Mode
+      </button>
+
+      <script>
+        console.log($('#fourpart').active)
+      </script>
+
+      <!-- Select Chorale -->
       <div class="btn-group">
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -90,10 +101,11 @@
       </div>
 
       <!-- Practice mode checkbox (with a btn label to allow for styling) -->
-      <div class="btn-group">
+      <!-- <div class="btn-group">
         <input type="checkbox" id="fourpart">
         <label for="fourpart" class="btn">Practice Mode</label>
-      </div>
+      </div> -->
+
     </div>
   </div>
 

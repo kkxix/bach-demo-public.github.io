@@ -64,6 +64,7 @@ function dropDownIns(i) {
 //         }
 //     }      
 // })
+// var practiceBtn = document.getElementById("fourpart");
 $(`#fourpart`).on('click keypress', function(event){
     if(a11yClick(event) === true) {
         if (practice) {
@@ -74,20 +75,65 @@ $(`#fourpart`).on('click keypress', function(event){
                 setTempo(72); 
             }
         } else {
-            if(loadedsong.tracks.length == 4) {
-                practice = true; 
-                if (urlParams.has('tempo')) {
-                    setTempo(urlParams.get('tempo'));
+            practice = true; 
+            if(loadedsong) {
+                if (loadedsong.tracks.length == 4) {
+                    if (urlParams.has('tempo')) {
+                        setTempo(urlParams.get('tempo'));
+                    } else {
+                        setTempo(72);
+                    }
                 } else {
-                    setTempo(72);
+                    practice = false;
+                    alert(`${practiceAlert}`);
+                    practiceBtn.checked = false;
                 }
-            } else {
-                alert(`${practiceAlert}`);
-                practiceBtn.checked = false;
-            }
+            }            
         } 
     }
 })
+
+
+function loadNewChorale(path, tempo) {
+    if (loadedsong) {
+        inPath = path;
+        setTempo(72);
+    } else {
+        handleExample(path, tempo);
+    }
+}
+
+function handleExample(path, tempo) {
+
+    //remove welcome message
+    var elem = document.getElementById("welcome-message");
+    if (elem) {
+        elem.parentNode.removeChild(elem);
+    }
+
+    //call function to check query for tempo and file path 
+    inPath = path;
+    console.log(path);
+    var xmlHttpRequest = new XMLHttpRequest();
+    xmlHttpRequest.open("GET", path, true);
+    xmlHttpRequest.responseType = "arraybuffer";
+    xmlHttpRequest.onload = function (e) {
+        var arrayBuffer = xmlHttpRequest.response;
+        midiFile = new MIDIFile(arrayBuffer);
+        var song = midiFile.parseSong(tempo);
+        startLoad(song);
+    };
+    xmlHttpRequest.send(null);
+
+    //set practice mode 
+    if (urlParams.has('practice')) {
+        practice = urlParams.get('practice') == "true" ? true : false;
+        console.log("practice: " + practice);
+    }
+    else {
+        practice = false;
+    }
+}
 
 //Filter instruments by search 
 function filterFunctionIns(i) {
@@ -237,9 +283,10 @@ function buildControls(song) {
     var fourpart = document.getElementById('fourpart');
     var range = "range-slider";
 
-    if (fourpart.checked && song.tracks.length != 4) {       //if not exactly four voices, no practice mode available -- future feature
+    if (practice && song.tracks.length != 4) {       //if not exactly four voices, no practice mode available -- future feature
         alert(`${practiceAlert}`)
-        fourpart.checked = false;
+        // fourpart.checked = false;
+        $('#fourpart').button("toggle");
         setTempo(72);
         // return; 
     }
@@ -284,11 +331,12 @@ function buildControls(song) {
     html = html + `<div id="channels"><h3>Channels</h3>`;
 
     //If in practice mode, limit to two volume controllers 
-    if((fourpart.checked == true)) {
-        practice = true; 
-    } 
+    // if((fourpart.checked == true)) {
+    //     practice = true; 
+    // } 
     if (practice) {
-        fourpart.checked = true;
+        // fourpart.checked = true;
+        $('#fourpart').button("toggle")
         maxChannels = 4;
         if (maxChannels == song.tracks.length) {    
             var v = Math.round(100 * song.tracks[0].volume);
@@ -488,45 +536,4 @@ function populateIns(n, track) {
     search.setAttribute('id', "myInputIns"+track);
     search.setAttribute('onkeyup', 'filterFunctionIns(' + track +')');
     dropMenuIns.insertBefore(search, dropMenuIns.firstChild); 
-}
-
-function loadNewChorale(path, tempo) {
-    if(loadedsong) {
-        inPath = path;
-        setTempo(72);
-    } else {
-        handleExample(path, tempo); 
-    }
-}
-
-function handleExample(path, tempo) {
-
-    //remove welcome message
-    var elem = document.getElementById("welcome-message");
-    if(elem) {
-        elem.parentNode.removeChild(elem); 
-    }
-
-    //call function to check query for tempo and file path 
-    inPath = path; 
-    console.log(path);
-    var xmlHttpRequest = new XMLHttpRequest();
-    xmlHttpRequest.open("GET", path, true);
-    xmlHttpRequest.responseType = "arraybuffer";
-    xmlHttpRequest.onload = function (e) {
-        var arrayBuffer = xmlHttpRequest.response;
-        midiFile = new MIDIFile(arrayBuffer);
-        var song = midiFile.parseSong(tempo);
-        startLoad(song);
-    };
-    xmlHttpRequest.send(null);
-
-    //set practice mode 
-    if(urlParams.has('practice')){
-        practice = urlParams.get('practice') == "true" ? true : false;
-        console.log("practice: " + practice);
-    }
-    else {
-        practice = false; 
-    }
 }
