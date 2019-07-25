@@ -352,7 +352,7 @@ function buildControls(song) {
     mxlUrl = mxlUrl.substring(0, mxlUrl.length - 3)
     mxlUrl += "musicxml";
     console.log(mxlUrl); 
-    a.setAttribute("title", mxlUrl);
+    // a.setAttribute("title", mxlUrl);
     if(!practice) {
         readLocalFile(mxlUrl, audioContext) 
     }
