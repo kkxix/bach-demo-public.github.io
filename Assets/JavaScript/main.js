@@ -41,48 +41,54 @@ function dropDownIns(i) {
 }
 
 //Toggle practice mode 
-var practiceBtn = document.getElementById("fourpart");
-practiceBtn.addEventListener("click", function() {
-    if(practice){
-        practice = false; 
-        if (urlParams.has('tempo')) {
-            setTempo(urlParams.get('tempo')); 
-        } else {
-            setTempo(72); 
-        }
-    } else {
-        if(loadedsong.tracks.length == 4) {
-            practice = true; 
+// var practiceBtn = document.getElementById("fourpart");
+// practiceBtn.addEventListener("click", function() {
+//     if(practice){
+//         practice = false; 
+//         if (urlParams.has('tempo')) {
+//             setTempo(urlParams.get('tempo')); 
+//         } else {
+//             setTempo(72); 
+//         }
+//     } else {
+//         if(loadedsong.tracks.length == 4) {
+//             practice = true; 
+//             if (urlParams.has('tempo')) {
+//                 setTempo(urlParams.get('tempo'));
+//             } else {
+//                 setTempo(72);
+//             }
+//         } else {
+//             alert(`${practiceAlert}`);
+//             practiceBtn.checked = false;
+//         }
+//     }      
+// })
+$(`#fourpart`).on('click keypress', function(event){
+    if(a11yClick(event) === true) {
+        if (practice) {
+            practice = false;
             if (urlParams.has('tempo')) {
-                setTempo(urlParams.get('tempo'));
+                setTempo(urlParams.get('tempo')); 
             } else {
-                setTempo(72);
+                setTempo(72); 
             }
         } else {
-            alert(`${practiceAlert}`);
-            practiceBtn.checked = false;
-        }
-    }      
+            if(loadedsong.tracks.length == 4) {
+                practice = true; 
+                if (urlParams.has('tempo')) {
+                    setTempo(urlParams.get('tempo'));
+                } else {
+                    setTempo(72);
+                }
+            } else {
+                alert(`${practiceAlert}`);
+                practiceBtn.checked = false;
+            }
+        } 
+    }
 })
 
-//TODO: optimize filterFunction so there doesn't need to be 2 
-// Filter chorales by search 
-function filterFunction() {
-    var input, filter, ul, li, array;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    div = document.getElementById("myDropdown");
-    array = div.getElementsByTagName('a');
-    for (var i = 0; i < array.length; i++) {
-        txtValue = array[i].textContext || array[i].innerText;
-        console.log(txtValue);
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            array[i].style.display = "";
-        } else {
-            array[i].style.display = "none";
-        }
-    }
-}
 //Filter instruments by search 
 function filterFunctionIns(i) {
     var input, filter, ul, li, array;
