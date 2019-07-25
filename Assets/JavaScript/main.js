@@ -72,13 +72,13 @@ function filterFunction() {
     div = document.getElementById("myDropdown");
     array = div.getElementsByTagName('a');
     for (var i = 0; i < array.length; i++) {
-    txtValue = array[i].textContext || array[i].innerText;
-    console.log(txtValue);
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        array[i].style.display = "";
-    } else {
-        array[i].style.display = "none";
-    }
+        txtValue = array[i].textContext || array[i].innerText;
+        console.log(txtValue);
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            array[i].style.display = "";
+        } else {
+            array[i].style.display = "none";
+        }
     }
 }
 //Filter instruments by search 
