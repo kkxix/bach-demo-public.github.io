@@ -12,10 +12,12 @@ var practice = false;
 var sentWhen = 0; 
 var inPath = ""; 
 var choraleDropped = false; 
+
 var practiceAlert = "\
-                    Sorry but practice mode is not available for chorales \
-                    for more than four voices at this time. Please select a non-highlighted, \
-                    fourpart chorale in order to use practice mode.";
+Sorry but practice mode is not available for chorales \
+for more than four voices at this time. Please select a non-highlighted, \
+fourpart chorale in order to use practice mode.";
+
 var baseURL = "https://kkxix.github.io/bach-demo-public.github.io/"
 
 
