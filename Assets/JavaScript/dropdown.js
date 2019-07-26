@@ -492,7 +492,7 @@ function buildDropDown(values) {
 // })
 
 
-function filter(word) {
+function filter() {
     let length = items.lengt
     let input = document.getElementById("myInput");
     let word = input.value.toLowerCase();
