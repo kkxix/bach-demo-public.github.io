@@ -558,20 +558,22 @@ function populateIns(n, track) {
 
     let contents = []
     let values = player.loader.instrumentKeys(); 
+    let ins = null;
     var instType = -1;
     var counter = 0;
 
-    for (let name of values) {
+    for (let i = 0; i < values.length; i++) {
         // if (i == n ) {
         //     sel = ' selected';
         // }
-        if(instType != name.p){
-            if(name.title) {
-                contents.push(`<input type="button" id="ins${counter}" class="dropdown-item" type="button" value="${counter}: ${name.title}"/>`) 
+        ins = player.loader.instrumentInfo(i);
+        if(instType != ins.p){
+            if(ins.title) {
+                contents.push(`<input type="button" id="ins${counter}" class="dropdown-item" type="button" value="${counter}: ${ins.title}"/>`) 
                 counter++;
             }
         }
-        instType = name.p
+        instType = ins.p
     }
     $(`#menuItems${track}`).append(contents.join(""))
 
