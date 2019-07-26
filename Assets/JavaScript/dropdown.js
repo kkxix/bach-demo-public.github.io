@@ -487,14 +487,15 @@ function buildDropDown(values) {
 }
 
 //Capture the event when user types into the search box
-window.addEventListener('input', function () {
-    filter(search.value.trim().toLowerCase())
-})
+// window.addEventListener('input', function () {
+//     filter(search.value.trim().toLowerCase())
+// })
 
 
 function filter(word) {
-    let length = items.length
-    let collection = []
+    let length = items.lengt
+    let input = document.getElementById("myInput");
+    let word = input.value.toLowerCase();
     let hidden = 0
     for (let i = 0; i < length; i++) {
         if(items[i].value.toLowerCase().indexOf(word) > -1) {
