@@ -466,7 +466,7 @@ let search = document.getElementById("myInput")
 
 //Find every item inside the dropdown
 let choraleDiv = document.getElementById("menuItems")
-let items = choraleDiv.getElementsByClassName("dropdown-item")
+let chorales = choraleDiv.getElementsByClassName("dropdown-item")
 let counter = 0;
 
 function buildDropDown(values) {
@@ -494,20 +494,20 @@ function buildDropDown(values) {
 
 
 function filter() {
-    let length = items.length
+    let length = chorales.length
     let input = document.getElementById("myInput");
     let word = input.value.toLowerCase();
     let hidden = 0
     for (let i = 0; i < length; i++) {
-        if(items[i].value.toLowerCase().indexOf(word) > -1) {
-            $(items[i]).show()
+        if(chorales[i].value.toLowerCase().indexOf(word) > -1) {
+            $(chorales[i]).show()
         }
         else {
-            $(items[i]).hide()
+            $(chorales[i]).hide()
             hidden++
         }
     }
-    //If all items are hidden, show the empty view
+    //If all chorales are hidden, show the empty view
     if (hidden === length) {
         $('#empty').show()
     }
