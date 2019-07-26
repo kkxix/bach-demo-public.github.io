@@ -478,7 +478,7 @@ function chooserIns(n, track) {
             </button>
             <div class="dropdown-menu" aria-labelledby="instButton${track}" id="selins${track}">
                 <form class="px-4 py-2">
-                    <input type="search" class="form-control" id="myInputIns${track}" placeholder="Search..." autofocus="autofocus" onkeyup="filterfunctionIns(${track})">
+                    <input type="search" class="form-control" id="myInputIns${track}" placeholder="Search..." autofocus="autofocus" onkeyup="filterFunctionIns(${track})">
                 </form>
                 <div id="menuItems${track}"></div>
                 <div id="empty${track}" class="dropdown-header">No instruments found</div>
