@@ -29,43 +29,7 @@ if (urlParams.has('tempo') && urlParams.has('path')) {
     handleExample(urlParams.get('path'), urlParams.get('tempo'));
 } 
 
-// TODO : don't think these fxns necessary anymore 
-//Toggle dropdown 
-function dropDown() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-//Toggle instrument selection dropdown
-function dropDownIns(i) {
-    document.getElementById("selins"+i).classList.toggle("show");
-}
-
 //Toggle practice mode 
-// var practiceBtn = document.getElementById("fourpart");
-// practiceBtn.addEventListener("click", function() {
-//     if(practice){
-//         practice = false; 
-//         if (urlParams.has('tempo')) {
-//             setTempo(urlParams.get('tempo')); 
-//         } else {
-//             setTempo(72); 
-//         }
-//     } else {
-//         if(loadedsong.tracks.length == 4) {
-//             practice = true; 
-//             if (urlParams.has('tempo')) {
-//                 setTempo(urlParams.get('tempo'));
-//             } else {
-//                 setTempo(72);
-//             }
-//         } else {
-//             alert(`${practiceAlert}`);
-//             practiceBtn.checked = false;
-//         }
-//     }      
-// })
-// var practiceBtn = document.getElementById("fourpart");
-// $(`#fourpart`).on('click keypress', function(event){
 $(`#fourpart`).on('click', function (event) {
     if(a11yClick(event) === true) {
         if (practice) {
@@ -315,12 +279,7 @@ function buildControls(song) {
     //Start div for each channel (SATB)
     html = html + `<div id="channels"><h3>Channels</h3>`;
 
-    //If in practice mode, limit to two volume controllers 
-    // if((fourpart.checked == true)) {
-    //     practice = true; 
-    // } 
     if (practice) {
-        // fourpart.checked = true;
         $('#fourpart').button("toggle")
         maxChannels = 4;
         if (maxChannels == song.tracks.length) {    
@@ -461,14 +420,6 @@ function setVolumeAction(i, song) {
 }
 
 function chooserIns(n, track) {
-    // var html = `
-    // <div>
-    //     <button id="instButton${track}" class="btn btn-instrument dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    //         Instruments
-    //     </button>
-    //     <div id="selins${track}" class="dropdown-menu" aria-labelledby="instButton${track}"></div>
-    // </div>
-    // `.trim();
     var html = `
     <div class="btn-group">
         <div class="dropdown">
@@ -490,42 +441,6 @@ function chooserIns(n, track) {
 }
 
 function populateIns(n, track) {
-    // var dropMenuIns = document.getElementById("selins"+track);
-    // var instType = -1;
-    // var counter = 0;
-
-    // //create invisible element to make sure element 0 is at top 
-    // var invisible = document.createElement("a")
-    // invisible.style.display = "hidden";
-    // dropMenuIns.insertBefore(invisible, dropMenuIns.lastChild);
-
-    // for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
-    //     var sel = '';
-    //     if (i == n) {
-    //         sel = ' selected';
-    //     }
-    //     if (instType != player.loader.instrumentInfo(i).p) {
-    //         if(player.loader.instrumentInfo(i).title){
-    //             var option = document.createElement("a"),
-    //                 txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
-    //             option.appendChild(txt);
-    //             option.setAttribute('value', i + sel);
-    //             option.setAttribute('id', `ins${counter}`);
-    //             option.setAttribute("class", "dropdown-item");
-    //             option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
-    //             dropMenuIns.insertBefore(option, dropMenuIns.lastChild);
-    //             counter++;
-    //         }          
-    //     }
-    //     instType = player.loader.instrumentInfo(i).p;
-    // }
-
-    // var search = document.createElement("input");
-    // search.setAttribute('type', "text");
-    // search.setAttribute('placeholder', "Search...");
-    // search.setAttribute('id', "myInputIns"+track);
-    // search.setAttribute('onkeyup', 'filterFunctionIns(' + track +')');
-    // dropMenuIns.insertBefore(search, dropMenuIns.firstChild); 
 
     let contents = []
     let values = player.loader.instrumentKeys(); 
@@ -551,8 +466,6 @@ function populateIns(n, track) {
 
     //Hide the row that shows no items were found
     $(`empty${track}`).hide()
-
-    
 }
 
 function keyhandler(event, i, track) {
@@ -564,7 +477,6 @@ function keyhandler(event, i, track) {
 function handleInstrument(i, track) {
     var info = player.loader.instrumentInfo(i);
     player.loader.startLoad(audioContext, info.url, info.variable);
-    // document.getElementById('instButton'+track).textContent = info.title; 
     $(`#instButton${track}`).text(info.title);
     $(`#instButton${track}`).dropdown('toggle');
     player.loader.waitLoad(function () {

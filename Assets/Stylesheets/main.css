@@ -285,7 +285,7 @@ input[type=range] {
   max-width: 100%;
 }
 input[type=range]:focus {
-  outline: none;
+  border: 2px solid #19669a;
 }
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;

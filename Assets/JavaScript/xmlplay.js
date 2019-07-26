@@ -1283,6 +1283,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var e = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement;
         $('#fscr').prop('checked', e != null);
     });
-    document.body.addEventListener('keydown', keyDown);
+    // document.body.addEventListener('keydown', keyDown);
 });
 
