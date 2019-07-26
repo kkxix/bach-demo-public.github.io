@@ -130,9 +130,9 @@ function handleExample(path, tempo) {
         practice = urlParams.get('practice') == "true" ? true : false;
         console.log("practice: " + practice);
     }
-    else {
-        practice = false;
-    }
+    // else {
+    //     practice = false;
+    // }
 }
 
 //Filter instruments by search 
