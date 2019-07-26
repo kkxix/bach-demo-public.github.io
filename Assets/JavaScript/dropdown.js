@@ -519,6 +519,7 @@ $(`#menuItems`).on('click keypress', '.dropdown-item', function (event) {
     if (a11yClick(event) === true) {
         let path = $(this)[0].id;
         loadNewChorale(`./${path}`, 72);
+        $('#dropdownMenuButton').dropdown('toggle');
     }
 });
 function a11yClick(event) {

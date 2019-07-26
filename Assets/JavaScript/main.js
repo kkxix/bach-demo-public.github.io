@@ -478,17 +478,6 @@ function setVolumeAction(i, song) {
     };
 }
 
-function handleInstrument(i, track) {
-    var info = player.loader.instrumentInfo(i);
-    player.loader.startLoad(audioContext, info.url, info.variable);
-    // document.getElementById('instButton'+track).textContent = info.title; 
-    player.loader.waitLoad(function () {
-        console.log('loaded');
-        loadedsong.tracks[track].info = info;
-        loadedsong.tracks[track].id = i;
-    });
-}
-
 function chooserIns(n, track) {
     // var html = `
     // <div>
@@ -569,17 +558,12 @@ function populateIns(n, track) {
         ins = player.loader.instrumentInfo(i);
         if(instType != ins.p){
             if(ins.title) {
-                contents.push(`<input type="button" id="ins${counter}" class="dropdown-item" type="button" value="${counter}: ${ins.title}"/>`) 
+                contents.push(`<input type="button" id="${i}" class="dropdown-item" type="button" value="${counter}: ${ins.title}"
+                onclick = "return handleInstrument(${i}, ${track});" onkeypress = "return keyhandler(event, ${i}, ${track});"/>`) 
                 counter++;
             }
         }
         instType = ins.p
-
-        $(`#menuItems${track}`).on('click keypress', '.dropdown-item', function (event) {
-            if (a11yClick(event) === true) {
-                handleInstrument(`${ i }`, `${track}`)
-            }
-        });
     }
     $(`#menuItems${track}`).append(contents.join(""))
 
@@ -587,4 +571,23 @@ function populateIns(n, track) {
     $(`empty${track}`).hide()
 
     
+}
+
+function keyhandler(event, i, track) {
+    if (a11yClick(event) === true) {
+        handleInstrument(i, track); 
+    }
+}
+
+function handleInstrument(i, track) {
+    var info = player.loader.instrumentInfo(i);
+    player.loader.startLoad(audioContext, info.url, info.variable);
+    // document.getElementById('instButton'+track).textContent = info.title; 
+    $(`#instButton${track}`).text(info.title);
+    $(`#instButton${track}`).dropdown('toggle');
+    player.loader.waitLoad(function () {
+        console.log('loaded');
+        loadedsong.tracks[track].info = info;
+        loadedsong.tracks[track].id = i;
+    });
 }
