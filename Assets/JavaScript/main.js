@@ -69,11 +69,13 @@ $(`#fourpart`).on('click keypress', function(event){
     if(a11yClick(event) === true) {
         if (practice) {
             practice = false;
-            if (urlParams.has('tempo')) {
-                setTempo(urlParams.get('tempo')); 
-            } else {
-                setTempo(72); 
-            }
+            if(loadedsong) {
+                if (urlParams.has('tempo')) {
+                    setTempo(urlParams.get('tempo'));
+                } else {
+                    setTempo(72);
+                }
+            }            
         } else {
             practice = true; 
             if(loadedsong) {
