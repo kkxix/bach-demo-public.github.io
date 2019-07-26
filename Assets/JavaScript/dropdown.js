@@ -465,7 +465,8 @@ var irregularChorales = [
 let search = document.getElementById("myInput")
 
 //Find every item inside the dropdown
-let items = document.getElementsByClassName("dropdown-item")
+let choraleDiv = document.getElementById("menuItems")
+let items = choraleDiv.getElementsByClassName("dropdown-item")
 let counter = 0;
 
 function buildDropDown(values) {
