@@ -492,22 +492,17 @@ window.addEventListener('input', function () {
 })
 
 
-    //For every word entered by the user, check if the symbol starts with that word
-    //If it does show the symbol, else hide it
 function filter(word) {
     let length = items.length
     let collection = []
     let hidden = 0
     for (let i = 0; i < length; i++) {
-        // if (items[i].value.toLowerCase().startsWith(word)) {
-        //   $(items[i]).show()
-        // }
         if(items[i].value.toLowerCase().indexOf(word) > -1) {
             $(items[i]).show()
         }
         else {
             $(items[i]).hide()
-                    hidden++
+            hidden++
         }
     }
     //If all items are hidden, show the empty view

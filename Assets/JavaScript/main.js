@@ -490,53 +490,91 @@ function handleInstrument(i, track) {
 }
 
 function chooserIns(n, track) {
+    // var html = `
+    // <div>
+    //     <button id="instButton${track}" class="btn btn-instrument dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    //         Instruments
+    //     </button>
+    //     <div id="selins${track}" class="dropdown-menu" aria-labelledby="instButton${track}"></div>
+    // </div>
+    // `.trim();
     var html = `
-    <div>
-        <button id="instButton${track}" class="btn btn-instrument dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Instruments
-        </button>
-        <div id="selins${track}" class="dropdown-menu" aria-labelledby="instButton${track}"></div>
-    </div>
-    `.trim();
+    <div class="btn-group">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="instButton${track}" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Chorales
+            </button>
+            <div class="dropdown-menu" aria-labelledby="instButton${track}" id="selins${track}">
+                <form class="px-4 py-2">
+                    <input type="search" class="form-control" id="myInputIns${track}" placeholder="Search..." autofocus="autofocus">
+                </form>
+                <div id="menuItems${track}"></div>
+                <div id="empty${track}" class="dropdown-header">No instruments found</div>
+            </div>
+        </div>
+    </div>`.trim();
 
     return html;
 }
 
 function populateIns(n, track) {
-    var dropMenuIns = document.getElementById("selins"+track);
+    // var dropMenuIns = document.getElementById("selins"+track);
+    // var instType = -1;
+    // var counter = 0;
+
+    // //create invisible element to make sure element 0 is at top 
+    // var invisible = document.createElement("a")
+    // invisible.style.display = "hidden";
+    // dropMenuIns.insertBefore(invisible, dropMenuIns.lastChild);
+
+    // for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
+    //     var sel = '';
+    //     if (i == n) {
+    //         sel = ' selected';
+    //     }
+    //     if (instType != player.loader.instrumentInfo(i).p) {
+    //         if(player.loader.instrumentInfo(i).title){
+    //             var option = document.createElement("a"),
+    //                 txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
+    //             option.appendChild(txt);
+    //             option.setAttribute('value', i + sel);
+    //             option.setAttribute('id', `ins${counter}`);
+    //             option.setAttribute("class", "dropdown-item");
+    //             option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
+    //             dropMenuIns.insertBefore(option, dropMenuIns.lastChild);
+    //             counter++;
+    //         }          
+    //     }
+    //     instType = player.loader.instrumentInfo(i).p;
+    // }
+
+    // var search = document.createElement("input");
+    // search.setAttribute('type', "text");
+    // search.setAttribute('placeholder', "Search...");
+    // search.setAttribute('id', "myInputIns"+track);
+    // search.setAttribute('onkeyup', 'filterFunctionIns(' + track +')');
+    // dropMenuIns.insertBefore(search, dropMenuIns.firstChild); 
+
+    let contents = []
+    let values = player.loader.instrumentKeys(); 
     var instType = -1;
     var counter = 0;
 
-    //create invisible element to make sure element 0 is at top 
-    var invisible = document.createElement("a")
-    invisible.style.display = "hidden";
-    dropMenuIns.insertBefore(invisible, dropMenuIns.lastChild);
-
-    for (var i = 0; i < player.loader.instrumentKeys().length; i++) {
-        var sel = '';
-        if (i == n) {
+    for (let name of values) {
+        if (i == n ) {
             sel = ' selected';
         }
-        if (instType != player.loader.instrumentInfo(i).p) {
-            if(player.loader.instrumentInfo(i).title){
-                var option = document.createElement("a"),
-                    txt = document.createTextNode(counter + ': ' + player.loader.instrumentInfo(i).title);
-                option.appendChild(txt);
-                option.setAttribute('value', i + sel);
-                option.setAttribute('id', `ins${counter}`);
-                option.setAttribute("class", "dropdown-item");
-                option.setAttribute('onclick', "handleInstrument(" + i + ", " + track + ")");
-                dropMenuIns.insertBefore(option, dropMenuIns.lastChild);
+        if(instType != name.p){
+            if(name.title) {
+                contents.push(`<input type="button" id="ins${counter}" class="dropdown-item" type="button" value="${counter}: ${name.title}"/>`) 
                 counter++;
-            }          
+            }
         }
-        instType = player.loader.instrumentInfo(i).p;
+        instType = name.p
     }
+    $(`#menuItems${track}`).append(contents.join(""))
 
-    var search = document.createElement("input");
-    search.setAttribute('type', "text");
-    search.setAttribute('placeholder', "Search...");
-    search.setAttribute('id', "myInputIns"+track);
-    search.setAttribute('onkeyup', 'filterFunctionIns(' + track +')');
-    dropMenuIns.insertBefore(search, dropMenuIns.firstChild); 
+    //Hide the row that shows no items were found
+    $(`empty${track}`).hide()
 }
