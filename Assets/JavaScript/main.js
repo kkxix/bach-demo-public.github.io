@@ -562,9 +562,9 @@ function populateIns(n, track) {
     var counter = 0;
 
     for (let name of values) {
-        if (i == n ) {
-            sel = ' selected';
-        }
+        // if (i == n ) {
+        //     sel = ' selected';
+        // }
         if(instType != name.p){
             if(name.title) {
                 contents.push(`<input type="button" id="ins${counter}" class="dropdown-item" type="button" value="${counter}: ${name.title}"/>`) 
