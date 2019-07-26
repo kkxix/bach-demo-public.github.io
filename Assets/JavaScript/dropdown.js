@@ -493,7 +493,7 @@ function buildDropDown(values) {
 
 
 function filter() {
-    let length = items.lengt
+    let length = items.length
     let input = document.getElementById("myInput");
     let word = input.value.toLowerCase();
     let hidden = 0
