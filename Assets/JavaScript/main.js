@@ -481,7 +481,7 @@ function setVolumeAction(i, song) {
 function handleInstrument(i, track) {
     var info = player.loader.instrumentInfo(i);
     player.loader.startLoad(audioContext, info.url, info.variable);
-    document.getElementById('instButton'+track).textContent = info.title; 
+    // document.getElementById('instButton'+track).textContent = info.title; 
     player.loader.waitLoad(function () {
         console.log('loaded');
         loadedsong.tracks[track].info = info;
@@ -574,9 +574,17 @@ function populateIns(n, track) {
             }
         }
         instType = ins.p
+
+        $(`#menuItems${track}`).on('click keypress', '.dropdown-item', function (event) {
+            if (a11yClick(event) === true) {
+                handleInstrument(`${ i }`, `${track}`)
+            }
+        });
     }
     $(`#menuItems${track}`).append(contents.join(""))
 
     //Hide the row that shows no items were found
     $(`empty${track}`).hide()
+
+    
 }
