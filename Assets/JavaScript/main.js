@@ -138,24 +138,6 @@ function handleExample(path, tempo) {
     // }
 }
 
-//Filter instruments by search 
-function filterFunctionIns(i) {
-    var input, filter, ul, li, array;
-    input = document.getElementById("myInputIns"+i);
-    filter = input.value.toUpperCase();
-    div = document.getElementById("selins"+i);
-    array = div.getElementsByTagName('a');
-    for (var i = 0; i < array.length; i++) {
-        txtValue = array[i].textContext || array[i].innerText;
-        console.log(txtValue);  
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        array[i].style.display = "";
-        } else {
-        array[i].style.display = "none";
-        }
-    }
-}
-
 function stop() {
     audioContext.suspend(); 
 }
@@ -496,7 +478,7 @@ function chooserIns(n, track) {
             </button>
             <div class="dropdown-menu" aria-labelledby="instButton${track}" id="selins${track}">
                 <form class="px-4 py-2">
-                    <input type="search" class="form-control" id="myInputIns${track}" placeholder="Search..." autofocus="autofocus">
+                    <input type="search" class="form-control" id="myInputIns${track}" placeholder="Search..." autofocus="autofocus" onkeyup="filterfunctionIns(${track})">
                 </form>
                 <div id="menuItems${track}"></div>
                 <div id="empty${track}" class="dropdown-header">No instruments found</div>
@@ -590,4 +572,28 @@ function handleInstrument(i, track) {
         loadedsong.tracks[track].info = info;
         loadedsong.tracks[track].id = i;
     });
+}
+
+//Filter instruments by search 
+function filterFunctionIns(track) {
+    let hidden = 0;
+    let input = document.getElementById("myInputIns" + track);
+    let word = input.value.toLowerCase();
+    div = document.getElementById("menuItems" + track);
+    items = div.getElementsByClassName('dropdown-item');
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].value.toLowerCase().indexOf(word) > -1) {
+            $(items[i]).show()
+        }
+        else {
+            $(items[i]).hide()
+            hidden++
+        }
+    }
+    if (hidden === length) {
+        $(`#empty${track}`).show()
+    }
+    else {
+        $(`#empty${track}`).hide()
+    }
 }
