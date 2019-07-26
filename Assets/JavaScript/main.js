@@ -65,7 +65,8 @@ function dropDownIns(i) {
 //     }      
 // })
 // var practiceBtn = document.getElementById("fourpart");
-$(`#fourpart`).on('click keypress', function(event){
+// $(`#fourpart`).on('click keypress', function(event){
+$(`#fourpart`).on('click', function (event) {
     if(a11yClick(event) === true) {
         if (practice) {
             practice = false;
@@ -88,7 +89,7 @@ $(`#fourpart`).on('click keypress', function(event){
                 } else {
                     practice = false;
                     alert(`${practiceAlert}`);
-                    practiceBtn.checked = false;
+                    $('#fourpart').button("toggle");
                 }
             }            
         } 
